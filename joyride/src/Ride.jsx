@@ -1,14 +1,7 @@
-/// <reference path="react.d.ts" />
-
 import React, { Component } from "react";
+import { IRideProps } from './RideInterfaces.ts';
 
-interface IRide {
-    name: string;
-}
-
-interface IRideProps {
-    rides: IRide[]
-}
+import RideEntry from './RideEntry';
 
 class DynamicRides extends Component<IRideProps, any> {
 
@@ -20,8 +13,9 @@ class DynamicRides extends Component<IRideProps, any> {
         return (
             <div>
                 <ul>
-                    {this.props.rides.map((rides) => (
-                        <li>{rides.name}</li>
+                    {this.props.rides.map((rides, index) => (
+                        // <li key={index}>hi {rides.name} from {rides.departure} to {rides.destination} on {rides.time.toString()}</li>
+                        <RideEntry key={index} name={rides.name} departure={rides.departure} destination={rides.destination} time={rides.time}/>
                     ))}
                 </ul>
             </div>

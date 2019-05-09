@@ -10,7 +10,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={tractor} className="App-logo" alt="logo" />
-          <h2>Welcome to Joyride</h2>
+          <h2>JOYRIDE</h2>
         </div>
         <p className="App-intro">
           Click on the button to toggle the <code>direction</code>.

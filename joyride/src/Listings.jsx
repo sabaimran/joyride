@@ -34,9 +34,12 @@ class Listings extends Component {
 
     render() {
         
-        const mark = [ { name: "mark"} ];
-        const david = [ { name: "david"} ];
+        // These will have to be read from a database
+        const mark = [ { name: "mark", departure: "Oak Brook", destination: "Union", time: new Date() } , 
+                        { name: "samuel", departure: "O'hare", destination: "Altgeld", time: new Date() } ];
+        const david = [ { name: "david", departure: "Union", destination: "Oak Brook", time: new Date() } ];
         const rides = this.state.ChiToChamp ? mark : david;
+        console.log("DATE EXAMPLE " + new Date().toString());
         return (
             <div className="Listing">
                 <Heading ChiToChamp={this.state.ChiToChamp} /> 

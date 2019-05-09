@@ -1,5 +1,30 @@
 .App {
   text-align: center;
+  background-color: #EDC7B7;
+  height: 100%;
+
+  background-position: center center;
+  background-repeat:  no-repeat;
+  background-attachment: fixed;
+  background-size:  cover;
+
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+  
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+  
+  /* Set up positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.App-intro {
+  font-size: large;
 }
 
 .App-logo {
@@ -8,10 +33,11 @@
 }
 
 .App-header {
-  background-color: rgb(97, 145, 247);
+  background-color: #123C69;
   height: 150px;
   padding: 20px;
   color: white;
+  text-align: left;
 }
 
 .Listing {
@@ -23,10 +49,18 @@
   padding: 15px 30px;
 }
 
+.RideEntry {
+  border: #000000;
+  background-color: #EEE2DC;
+  padding: 10px 20px;
+  border-radius: 12px;
+  margin-bottom: 2%;
+}
+
 .toggleButton {
-  background-color: rgb(245, 187, 111);
+  background-color: #AC3B61;
   border: none;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -37,13 +71,14 @@
   border-radius: 12px;
 }
 
+.RideEntryField {
+  padding: 0%;
+  line-height: 1.0em;
+}
+
 .toggleButton:hover {
   background-color: #4CAF50; /* Green */
   color: white;
-}
-
-.App-intro {
-  font-size: large;
 }
 
 @keyframes App-logo-spin {
@@ -52,6 +87,6 @@
 }
 
 @keyframes App-logo-move {
-  from { transform: translate(-50px,15px); }
-  to { transform: translate(50px,15px); }
+  from { transform: translate(-10px,15px); }
+  to { transform: translate(90px,15px); }
 }
