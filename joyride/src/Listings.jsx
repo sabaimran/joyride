@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
+import DynamicRides from './Ride';
 
 class Listings extends Component {
+
     constructor(props) {
         super(props);
 
@@ -14,8 +16,8 @@ class Listings extends Component {
         return (
             <div>
                 <ul>
-                    {props.listings.map((listing) => (
-                        <li>{listing}</li>
+                    {props.rides.map((rides) => (
+                        <li>{rides.name}</li>
                     ))}
                 </ul>
             </div>
@@ -31,7 +33,10 @@ class Listings extends Component {
     }
 
     render() {
-        const numeros = this.state.ChiToChamp ? [1,2,3,4,5] : [5,4,3,2,1];
+        
+        const mark = [ { name: "mark"} ];
+        const david = [ { name: "david"} ];
+        const rides = this.state.ChiToChamp ? mark : david;
         return (
             <div className="Listing">
                 <Heading ChiToChamp={this.state.ChiToChamp} /> 
@@ -39,7 +44,8 @@ class Listings extends Component {
                     <button className="toggleButton" onClick={this.toggleList} type="button">Switch Directions</button>
                     <br></br>
                 </div>
-                <this.DynamicList listings={numeros} />
+                {/* <this.DynamicList rides={rides} /> */}
+                <DynamicRides rides={rides}/>
             </div>
         );
     }    
