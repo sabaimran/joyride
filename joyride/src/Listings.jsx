@@ -10,6 +10,18 @@ class Listings extends Component {
         };
     }
 
+    DynamicList(props) {
+        return (
+            <div>
+                <ul>
+                    {props.listings.map((listing) => (
+                        <li>{listing}</li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+
     toggleList = () => {
         this.setState(state => (
             {
@@ -19,6 +31,7 @@ class Listings extends Component {
     }
 
     render() {
+        const numeros = this.state.ChiToChamp ? [1,2,3,4,5] : [5,4,3,2,1];
         return (
             <div className="Listing">
                 <Heading ChiToChamp={this.state.ChiToChamp} /> 
@@ -26,6 +39,7 @@ class Listings extends Component {
                     <button className="toggleButton" onClick={this.toggleList} type="button">Switch Directions</button>
                     <br></br>
                 </div>
+                <this.DynamicList listings={numeros} />
             </div>
         );
     }    
