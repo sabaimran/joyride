@@ -23,8 +23,20 @@ module.exports = {
                 loader: 'ts-loader'
             },
             {
+                test: /\.svg$/,
+                loader: 'svg-loader'
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i, 
+                loader: 'url-loader',
+                options: {
+                    limit: 8000,
+                    name:'images/[hash]-[name].ext'
+                }
+            },
+            {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
-            }]  
+            }]
     }
 }

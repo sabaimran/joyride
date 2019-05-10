@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import '../css/App.css';
 import Listings from './Listings.jsx';
 
+const tractor = require('../images/tractor-72-194019.png');
+
 class App extends Component {
   render() {
     return (
       <div className="App">
         <div className="App-header">
-          {/* <img src={tractor} className="App-logo" alt="logo" /> */}
+          <img id="logo" src={tractor} className="App-logo" alt="logo" />
           <h2>JOYRIDE</h2>
         </div>
         <p className="App-intro">

@@ -10,6 +10,8 @@ class Listings extends Component {
         this.state = {
             ChiToChamp: true,
         };
+
+        this.toggleList = this.toggleList.bind(this);
     }
 
     DynamicList(props) {
