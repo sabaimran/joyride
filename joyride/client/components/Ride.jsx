@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { IRideProps } from './RideInterfaces.ts';
 
-import RideEntry from './RideEntry';
+import RideEntry from './RideEntry.jsx';
 
 class DynamicRides extends Component<IRideProps, any> {
 

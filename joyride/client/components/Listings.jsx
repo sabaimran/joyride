@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import DynamicRides from './Ride';
+import '../css/App.css';
+import DynamicRides from './Ride.jsx';
 
 class Listings extends Component {
 
@@ -24,7 +24,7 @@ class Listings extends Component {
         );
     }
 
-    toggleList = () => {
+    toggleList() {
         this.setState(state => (
             {
                 ChiToChamp: !state.ChiToChamp
@@ -58,4 +58,4 @@ const chiToChaText = "Chicago to Champaign";
 const chaToChiText = "Champaign to Chicago";
 const Heading = ({ ChiToChamp }) => ChiToChamp ? <h1>{chiToChaText}</h1> : <h1>{chaToChiText}</h1>;
 
-export default Listings
+export default Listings;
