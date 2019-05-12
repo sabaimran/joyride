@@ -76,6 +76,58 @@
   line-height: 1.0em;
 }
 
+/* .NewRideFormInput {
+  line-height: 1.0em;
+  display: block;
+  width: 65%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+} */
+/* 
+label.NewRideFormInput {
+  padding-right: 15px;
+} */
+
+.NewRideForm {
+  background-color: rgb(105, 146, 221);
+  text-align: left;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding: 15px 30px;
+}
+
+label {
+	color: #000000;
+	display: block;
+	margin: 0px 0px 5px 0px;
+}
+
+input, select {
+  margin: 0px 0px 15px 0px;
+	display: block;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	padding: 8px;
+	border-radius: 6px;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border: 2px solid #fff;
+	box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+	-webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+}
+
+input[type=submit].NewRideFormInput {
+  width:20%;
+}
+
 .toggleButton:hover {
   background-color: #4CAF50; /* Green */
   color: white;
