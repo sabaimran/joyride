@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import ChicagoPlaces from './LocationConstants.ts';
+import ChampaignPlaces from './LocationConstants.ts';
 
 class NewRide extends Component {
+
     constructor(props) {
         super(props);
         // const button = document.getElementById("new-form-button");
@@ -16,6 +19,10 @@ class NewRide extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
+
+        // this.ChicagoPlaces = ChicagoPlaces.bind(this);
+        // this.ChampaignPlaces = ChampaignPlaces.bind(this);
     }
 
     handleChange(event) {
@@ -35,6 +42,52 @@ class NewRide extends Component {
         event.preventDefault();
     }
 
+    DynamicDropDownMenu(props) {
+        console.log("chicago places in dynamicdropdown: "+ ChicagoPlaces);
+
+        let locationArray = [];
+        var locations: Map;
+        if (props.stop == "departure") {
+            locations = this.state.category == "ChicagoToChampaign" ? ChicagoPlaces : ChampaignPlaces;
+            console.log(locations.size+": locations length");
+            console.log(this.state.category+": category");
+            // not sure if you can map a map. might have to construct a for loop?
+            // return(
+            //     <select name={props.stop} value={this.state.departure} onChange={this.handleChange}>
+            //         {locations.map((key, place) => (
+            //             <option value={key}>{place}</option>
+            //         ))}
+            //     </select>
+            // );
+        } else {
+            locations = this.state.category == "ChampaignToChicago" ? ChicagoPlaces : ChampaignPlaces;
+            console.log(locations.size+": locations length");
+            console.log(this.state.category+": category");
+            // return(
+            //     <select name={props.stop} value={this.state.arrival} onChange={this.handleChange}>
+            //         {locations.map((key, place) => (
+            //             <option value={key}>{place}</option>
+            //         ))}
+            //     </select>
+            // )
+        }
+        // for (let [key, place] of locations) {
+        //     locationArray.push(
+        //         <option value={key}>{place}</option>
+        //     )
+        // }
+
+        console.log(typeof(locations))
+
+        Array.from(locations.keys()).forEach( key => console.log(key));
+
+        return (
+            <select name={props.stop} value={this.state.arrival} onChange={this.handleChange}>
+                {locationArray}
+            </select>
+        )
+    };
+
     render() {
         return (
             <div>
@@ -52,17 +105,20 @@ class NewRide extends Component {
                         <option value='ChampaignToChicago'>Champaign to Chicago</option>
                     </select>
 
-                    <label className="NewRideFormInput">Pick your departure</label>
+                    {/* <label className="NewRideFormInput">Pick your departure</label>
                     <select name="departure" value={this.state.departure} onChange={this.handleChange}>
-                        <option value='ChicagoToChampaign'>Chicago to Champaign</option>
-                        <option value='ChampaignToChicago'>Champaign to Chicago</option>
+                        <option value='OakBrook'>Oak Brook Mall</option>
+                        <option value='Woodfield'>Woodfield Mall</option>
+                        <option value='Ohare'>O'hare</option>
                     </select>
 
                     <label className="NewRideFormInput">Pick your destination</label>
                     <select name="arrival" value={this.state.arrival} onChange={this.handleChange}>
                         <option value='ChicagoToChampaign'>Chicago to Champaign</option>
                         <option value='ChampaignToChicago'>Champaign to Chicago</option>
-                    </select>
+                    </select> */}
+
+                    <this.DynamicDropDownMenu stop="departure" />
                     
                     <input className="NewRideFormInput" type="submit" value="Submit"/>
                 </form>
