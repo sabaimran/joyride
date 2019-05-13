@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ChicagoPlaces from './LocationConstants.ts';
-import ChampaignPlaces from './LocationConstants.ts';
+import LocationConstants from './LocationConstants.ts';
+// import ChampaignPlaces from './LocationConstants.ts';
 
 class NewRide extends Component {
 
@@ -43,14 +43,16 @@ class NewRide extends Component {
     }
 
     DynamicDropDownMenu(props) {
-        console.log("chicago places in dynamicdropdown: "+ ChicagoPlaces);
+        console.log("chicago places in dynamicdropdown: "+ LocationConstants.ChicagoPlaces.length);
+        console.log("chicago places in dynamicdropdown: "+ LocationConstants.ChampaignPlaces.length);
 
         let locationArray = [];
-        var locations: Map;
+        var locations;
         if (props.stop == "departure") {
-            locations = this.state.category == "ChicagoToChampaign" ? ChicagoPlaces : ChampaignPlaces;
-            console.log(locations.size+": locations length");
-            console.log(this.state.category+": category");
+            console.log("DEPARTURES DDDM");
+            locations = this.state.category == "ChicagoToChampaign" ? LocationConstants.ChicagoPlaces : LocationConstants.ChampaignPlaces;
+            // console.log(locations.size+": locations length");
+            // console.log(this.state.category+": category");
             // not sure if you can map a map. might have to construct a for loop?
             // return(
             //     <select name={props.stop} value={this.state.departure} onChange={this.handleChange}>
@@ -60,14 +62,16 @@ class NewRide extends Component {
             //     </select>
             // );
         } else {
-            locations = this.state.category == "ChampaignToChicago" ? ChicagoPlaces : ChampaignPlaces;
-            console.log(locations.size+": locations length");
-            console.log(this.state.category+": category");
+            console.log("ARRIVALS DDDM");
+            locations = this.state.category == "ChampaignToChicago" ? LocationConstants.ChicagoPlaces : LocationConstants.ChampaignPlaces;
+            // locations = ChampaignPlaces;
+            // console.log(locations.size+": locations length");
+            // console.log(this.state.category+": category");
             // return(
             //     <select name={props.stop} value={this.state.arrival} onChange={this.handleChange}>
-            //         {locations.map((key, place) => (
-            //             <option value={key}>{place}</option>
-            //         ))}
+                    // {locations.map((key, place) => (
+                    //     <option value={key}>{place}</option>
+                    // ))}
             //     </select>
             // )
         }
@@ -77,12 +81,36 @@ class NewRide extends Component {
         //     )
         // }
 
-        console.log(typeof(locations))
+        // console.log(typeof(locations))
 
-        Array.from(locations.keys()).forEach( key => console.log(key));
+        // Array.from(locations.keys()).forEach( key => console.log(key));
+        // Object.keys(locations).forEach(cat => {
+        //     console.log("cat: "+cat)
+        //     Object.keys(locations[cat]).forEach(key => {
+        //         console.log("key "+key)
+        //         console.log("result "+locations[cat][key].place);
+        //         // console.log("result "+locations[cat][key]);
+        //         locationArray.push(
+        //             <option value={key}>{locations[cat][key].place}</option>
+        //         )
+        //     })
+        // })
+        Object.keys(locations).forEach(key => {
+            console.log("key: "+key)
+            console.log("result "+locations[key].place);
+            // console.log("result "+locations[cat][key]);
+            locationArray.push(
+                <option value={key}>{locations[key].place}</option>
+            )
+        })
+
+
 
         return (
             <select name={props.stop} value={this.state.arrival} onChange={this.handleChange}>
+                {/* {locations.map((key, place) => (
+                    <option value={key}>{place}</option>
+                ))} */}
                 {locationArray}
             </select>
         )
@@ -118,7 +146,7 @@ class NewRide extends Component {
                         <option value='ChampaignToChicago'>Champaign to Chicago</option>
                     </select> */}
 
-                    <this.DynamicDropDownMenu stop="departure" />
+                    <this.DynamicDropDownMenu stop="arrival" />
                     
                     <input className="NewRideFormInput" type="submit" value="Submit"/>
                 </form>
