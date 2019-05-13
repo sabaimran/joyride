@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LocationConstants from './LocationConstants.ts';
-// import ChampaignPlaces from './LocationConstants.ts';
 
 class NewRide extends Component {
 
@@ -20,17 +19,12 @@ class NewRide extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
-
-        // this.ChicagoPlaces = ChicagoPlaces.bind(this);
-        // this.ChampaignPlaces = ChampaignPlaces.bind(this);
     }
 
     handleChange(event) {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-
-        // console.log("name "+name+" value "+value+" name "+name);
 
         this.setState({
             [name]: value
@@ -43,74 +37,28 @@ class NewRide extends Component {
     }
 
     DynamicDropDownMenu(props) {
-        console.log("chicago places in dynamicdropdown: "+ LocationConstants.ChicagoPlaces.length);
-        console.log("chicago places in dynamicdropdown: "+ LocationConstants.ChampaignPlaces.length);
-
         let locationArray = [];
         var locations;
+
+        var val;
         if (props.stop == "departure") {
-            console.log("DEPARTURES DDDM");
             locations = this.state.category == "ChicagoToChampaign" ? LocationConstants.ChicagoPlaces : LocationConstants.ChampaignPlaces;
-            // console.log(locations.size+": locations length");
-            // console.log(this.state.category+": category");
-            // not sure if you can map a map. might have to construct a for loop?
-            // return(
-            //     <select name={props.stop} value={this.state.departure} onChange={this.handleChange}>
-            //         {locations.map((key, place) => (
-            //             <option value={key}>{place}</option>
-            //         ))}
-            //     </select>
-            // );
+            val = this.state.departure;
         } else {
-            console.log("ARRIVALS DDDM");
             locations = this.state.category == "ChampaignToChicago" ? LocationConstants.ChicagoPlaces : LocationConstants.ChampaignPlaces;
-            // locations = ChampaignPlaces;
-            // console.log(locations.size+": locations length");
-            // console.log(this.state.category+": category");
-            // return(
-            //     <select name={props.stop} value={this.state.arrival} onChange={this.handleChange}>
-                    // {locations.map((key, place) => (
-                    //     <option value={key}>{place}</option>
-                    // ))}
-            //     </select>
-            // )
+            val = this.state.arrival;
         }
-        // for (let [key, place] of locations) {
-        //     locationArray.push(
-        //         <option value={key}>{place}</option>
-        //     )
-        // }
 
-        // console.log(typeof(locations))
-
-        // Array.from(locations.keys()).forEach( key => console.log(key));
-        // Object.keys(locations).forEach(cat => {
-        //     console.log("cat: "+cat)
-        //     Object.keys(locations[cat]).forEach(key => {
-        //         console.log("key "+key)
-        //         console.log("result "+locations[cat][key].place);
-        //         // console.log("result "+locations[cat][key]);
-        //         locationArray.push(
-        //             <option value={key}>{locations[cat][key].place}</option>
-        //         )
-        //     })
-        // })
         Object.keys(locations).forEach(key => {
             console.log("key: "+key)
             console.log("result "+locations[key].place);
-            // console.log("result "+locations[cat][key]);
             locationArray.push(
                 <option value={key}>{locations[key].place}</option>
             )
         })
 
-
-
         return (
-            <select name={props.stop} value={this.state.arrival} onChange={this.handleChange}>
-                {/* {locations.map((key, place) => (
-                    <option value={key}>{place}</option>
-                ))} */}
+            <select name={props.stop} value={val} onChange={this.handleChange}>
                 {locationArray}
             </select>
         )
@@ -145,7 +93,7 @@ class NewRide extends Component {
                         <option value='ChicagoToChampaign'>Chicago to Champaign</option>
                         <option value='ChampaignToChicago'>Champaign to Chicago</option>
                     </select> */}
-
+                    <this.DynamicDropDownMenu stop="departure" />
                     <this.DynamicDropDownMenu stop="arrival" />
                     
                     <input className="NewRideFormInput" type="submit" value="Submit"/>
