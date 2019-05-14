@@ -20,13 +20,13 @@ class App extends Component {
       <Router>
         <div className="App">
           <div className="App-header">
-          <Link to="/">
-            <img id="logo" src={tractor} className="App-logo" alt="logo" />
-          </Link>
-          <h2>JOYRIDE</h2>
-          <Link to="/newRide">
-            <button id="new-form-button" type="button" className="NewRide-Form-Button">New Ride</button>
-          </Link>
+            <Link to="/">
+              <img id="logo" src={tractor} className="App-logo" alt="logo" />
+            </Link>
+            <h2>JOYRIDE</h2>
+            <Link to="/newRide">
+              <button id="new-form-button" type="button" className="NewRide-Form-Button">New Ride</button>
+            </Link>
           </div>
           <Route exact path="/" component={Listings} />
           <Route path="/newRide" component={NewRide} />

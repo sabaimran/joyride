@@ -76,22 +76,6 @@
   line-height: 1.0em;
 }
 
-/* .NewRideFormInput {
-  line-height: 1.0em;
-  display: block;
-  width: 65%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-} */
-/* 
-label.NewRideFormInput {
-  padding-right: 15px;
-} */
-
 .NewRideForm {
   background-color: rgb(105, 146, 221);
   text-align: left;
@@ -124,8 +108,25 @@ input, select {
 	-webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
 }
 
+#new-form-button {
+  width:13%;
+  background-color: #AC3B61;
+  border: none;
+  color: rgb(255, 255, 255);
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0% 80%;
+  cursor: pointer;
+  border-radius: 12px;
+  position: absolute;
+  top: 10%;
+}
+
 input[type=submit].NewRideFormInput {
   width:20%;
+  cursor: pointer;
 }
 
 .toggleButton:hover {

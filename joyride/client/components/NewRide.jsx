@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import LocationConstants from './LocationConstants.ts';
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class NewRide extends Component {
 
@@ -13,21 +16,29 @@ class NewRide extends Component {
             category: 'ChicagoToChampaign',
             departure: '',
             destination: '',
-            date: ''
+            date: new Date()
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
     }
 
     handleChange(event) {
+        console.log(event);
         const target = event.target;
         const value = target.value;
         const name = target.name;
 
         this.setState({
             [name]: value
+        });
+    }
+
+    handleDateChange(date) {
+        this.setState({
+            date: date
         });
     }
 
@@ -50,8 +61,6 @@ class NewRide extends Component {
         }
 
         Object.keys(locations).forEach(key => {
-            console.log("key: "+key)
-            console.log("result "+locations[key].place);
             locationArray.push(
                 <option value={key}>{locations[key].place}</option>
             )
@@ -81,19 +90,12 @@ class NewRide extends Component {
                         <option value='ChampaignToChicago'>Champaign to Chicago</option>
                     </select>
 
-                    {/* <label className="NewRideFormInput">Pick your departure</label>
-                    <select name="departure" value={this.state.departure} onChange={this.handleChange}>
-                        <option value='OakBrook'>Oak Brook Mall</option>
-                        <option value='Woodfield'>Woodfield Mall</option>
-                        <option value='Ohare'>O'hare</option>
-                    </select>
+                    <label className="NewRideFormInput">Travel Date</label>
+                    <DatePicker name="date" selected={this.state.date} onChange={this.handleDateChange} />
 
-                    <label className="NewRideFormInput">Pick your destination</label>
-                    <select name="arrival" value={this.state.arrival} onChange={this.handleChange}>
-                        <option value='ChicagoToChampaign'>Chicago to Champaign</option>
-                        <option value='ChampaignToChicago'>Champaign to Chicago</option>
-                    </select> */}
+                    <label className="NewRideFormInput">Pick your departure</label>
                     <this.DynamicDropDownMenu stop="departure" />
+                    <label className="NewRideFormInput">Pick your destination</label>
                     <this.DynamicDropDownMenu stop="arrival" />
                     
                     <input className="NewRideFormInput" type="submit" value="Submit"/>
