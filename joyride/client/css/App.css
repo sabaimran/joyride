@@ -10,7 +10,7 @@
 
   /* Set rules to fill background */
   min-height: 100%;
-  min-width: 1024px;
+  min-width: 100%;
   
   /* Set up proportionate scaling */
   width: 100%;
@@ -83,6 +83,7 @@
   margin-left: 25%;
   margin-right: 25%;
   padding: 15px 30px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 label {
@@ -132,6 +133,16 @@ input[type=submit].NewRideFormInput {
 .toggleButton:hover {
   background-color: #4CAF50; /* Green */
   color: white;
+}
+
+.customCalendar {
+  font-size: 0.8em;
+}
+
+.searchFilter {
+  font-size: 0.8em;
+  margin-left: 20%;
+  font-family: 'Open Sans', sans-serif;
 }
 
 @keyframes App-logo-spin {

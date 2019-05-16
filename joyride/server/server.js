@@ -1,4 +1,7 @@
 //server/server.js
+
+// @TODO add env capability to add layer of abstraction bw app and private info
+
 const express = require('express');
 const router = require('./routes/routes.js')
 const path = require('path');
@@ -11,9 +14,15 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use('/', router);
 
 const uri = "mongodb+srv://sababa:021967@cluster0-ffkg5.azure.mongodb.net/test?retryWrites=true";
+// const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`;
 const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
+client.connect(() => {
+  const driversCollection = client.db("Users").collection("Drivers");
+  driversCollection.insertOne({
+    firstName: "Saba",
+    lastName: "Imran"
+  })
+  console.log("test connection to the client");
   // perform actions on the collection object
   client.close();
 });

@@ -1,7 +1,8 @@
-//server/routes/routes.js
+//server/routes/routes
 var express = require('express');
 var router = express.Router();
-router.get('/', function(req, res){
+router.get('*', function(req, res){
   res.render('index')
 });
+
 module.exports = router;

@@ -91,7 +91,7 @@ class NewRide extends Component {
                     </select>
 
                     <label className="NewRideFormInput">Travel Date</label>
-                    <DatePicker name="date" selected={this.state.date} onChange={this.handleDateChange} />
+                    <DatePicker className="customCalendar" name="date" selected={this.state.date} onChange={this.handleDateChange} showTimeInput timeInputLabel="Pickup time" minDate={new Date()}/>
 
                     <label className="NewRideFormInput">Pick your departure</label>
                     <this.DynamicDropDownMenu stop="departure" />
