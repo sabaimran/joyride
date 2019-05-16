@@ -11,7 +11,10 @@ const MongoClient = require('mongodb').MongoClient;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../client'));
 app.use(express.static(path.join(__dirname, '../client')));
+
+// const RideController = require("../client/controllers/RideController.ts");
 app.use('/', router);
+// app.use('/', RideController.router);
 
 const uri = "mongodb+srv://sababa:021967@cluster0-ffkg5.azure.mongodb.net/test?retryWrites=true";
 // const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`;
