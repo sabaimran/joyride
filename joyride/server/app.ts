@@ -25,6 +25,12 @@ class App {
     this.app.use(bodyParser.json());
   }
 
+  listen() {
+    this.app.listen(8000, () => {
+      console.log("listening to port 8000");
+    });
+  }
+
 //   private initializeErrorHandling() {
 //     this.app.use(errorMiddleware);
 //   }

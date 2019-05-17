@@ -8,4 +8,5 @@ const app = new App (
   ],
 );
 
-module.exports = app;
+// module.exports = app;
+app.listen();

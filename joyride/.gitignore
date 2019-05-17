@@ -5,6 +5,7 @@
 
 # temp files
 /dist
+/lib
 
 # testing
 /coverage
