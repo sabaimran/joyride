@@ -62,7 +62,7 @@ class NewRide extends Component {
 
         Object.keys(locations).forEach(key => {
             locationArray.push(
-                <option value={key}>{locations[key].place}</option>
+                <option key={key} value={key}>{locations[key].place}</option>
             )
         })
 

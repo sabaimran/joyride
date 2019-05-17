@@ -3,10 +3,11 @@
 // import * as mongoose from 'mongoose';
 // import Controller from '../client/interfaces/IController';
 
-var bodyParser = require("body-parser");
-var express = require("express");
-var mongoose = require("mongoose");
-var path = require('path');
+const bodyParser = require("body-parser");
+const express = require("express");
+const mongoose = require("mongoose");
+const path = require('path');
+const MongoClient = require('mongodb').MongoClient;
 
 class App {
 
@@ -40,15 +41,16 @@ class App {
 //   }
 
   initializeControllers(controllers) {
+    console.log('init routers');
+    controllers.forEach((controller) => {
+      this.app.use('/', controller.router);
+    });
+    
     var router = express.Router();
     router.get('*', function(req, res) {
       res.render('index');
     })
     this.app.use('/', router);
-    console.log('init routers');
-    controllers.forEach((controller) => {
-      this.app.use('/', controller.router);
-    });
   }
 
   connectToTheDatabase() {
@@ -59,8 +61,17 @@ class App {
     // } = process.env;
     // mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`);
     const uri = "mongodb+srv://sababa:021967@cluster0-ffkg5.azure.mongodb.net/test?retryWrites=true";
-    mongoose.connect(uri);
-    console.log("connected to mongooose");
+    const client = new MongoClient(uri, { useNewUrlParser: true });
+    client.connect(() => {
+      const driversCollection = client.db("Users").collection("Drivers");
+      driversCollection.insertOne({
+        firstName: "Saba",
+        lastName: "Imran"
+      })
+      console.log("test connection to the client");
+      // perform actions on the collection object
+      client.close();
+    });
   }
 }
 

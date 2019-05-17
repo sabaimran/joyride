@@ -54,16 +54,16 @@
   },
   "scripts": {
     "webpack": "webpack",
-    "buildserver": "babel ./server/notworking.ts -d dist",
+    "buildserver": "babel ./server/fullserver.ts -d dist",
     "trystart": "npm run webpack && npm run tempbuild",
     "start": "npm run webpack && nodemon --exec babel-node -- bin/www",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "check-types": "tsc",
-    "tempbuild": "babel server --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline && node .\\lib\\server.js",
-    "makebabel": "babel server --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline",
-    "startserver": "node .\\lib\\notworking.js",
+    "tempbuild": "babel server --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline && node .\\lib\\basicserver.js",
+    "makebabel": "babel server client --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline",
+    "startserver": "node .\\lib\\fullserver.js",
     "serve": "npm run webpack && npm run makebabel && npm run startserver"
   }
 }

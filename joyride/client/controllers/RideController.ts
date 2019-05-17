@@ -3,17 +3,19 @@ import Controller from '../interfaces/IController';
 import { IRide } from '../interfaces/IRide';
 import rideModel from '../schemas/Ride';
 
-class RideController implements Controller {
+export default class RideController implements Controller {
     public path = '/ride';
     public router = express.Router();
 
     private ride = rideModel;
 
     constructor() {
+        console.log("constructor");
         this.initRoutes();
     }
 
-    private initRoutes() {
+    public initRoutes() {
+        console.log("rides are being intialized");
         this.router.get(this.path, this.getAllRides);
         this.router.get(`${this.path}/:id`, this.getRideById);
         this.router.put(`${this.path}/:id`, this.modifyRide);
@@ -22,6 +24,7 @@ class RideController implements Controller {
     }
 
     private getAllRides = (request: express.Request, response: express.Response) => {
+        console.log("some navigation is working");
         this.ride.find().then((rides) => {
             response.send(rides)
         });
@@ -62,5 +65,3 @@ class RideController implements Controller {
         })
     }
 }
-
-export default RideController;
