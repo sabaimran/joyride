@@ -6,6 +6,7 @@
 var bodyParser = require("body-parser");
 var express = require("express");
 var mongoose = require("mongoose");
+var path = require('path');
 
 class App {
 
@@ -22,6 +23,9 @@ class App {
   }
   
   initializeMiddlewares() {
+    this.app.set('view engine', 'ejs');
+    this.app.set('views', path.join(__dirname, '../client'));
+    this.app.use(express.static(path.join(__dirname, '../client')));
     this.app.use(bodyParser.json());
   }
 
@@ -36,6 +40,12 @@ class App {
 //   }
 
   initializeControllers(controllers) {
+    var router = express.Router();
+    router.get('*', function(req, res) {
+      res.render('index');
+    })
+    this.app.use('/', router);
+    console.log('init routers');
     controllers.forEach((controller) => {
       this.app.use('/', controller.router);
     });
