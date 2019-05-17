@@ -60,6 +60,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "check-types": "tsc",
-    "tempbuild": "babel server client --out-dir lib --extensions \".ts,.tsx\" --source-maps inline"
+    "tempbuild": "babel server client --out-dir lib --extensions \".ts,.tsx\" --source-maps inline && node .\\lib\\notworking.js"
   }
 }

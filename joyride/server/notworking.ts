@@ -1,6 +1,6 @@
 //server/server.js
-var App = require("./app.ts");
-var RideController = require("../client/controllers/RideController");
+var App = require("./app").default;
+var RideController = require("./controllers/RideController").default;
 
 const app = new App (
   [
