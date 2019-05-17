@@ -13,14 +13,11 @@ module.exports = {
             {
                 test: /.jsx?$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['babel-preset-es2015', 'react']
-                }
+                exclude: /node_modules/
             },
             {
                 test: /\.(ts|tsx)?$/,
-                loader: 'ts-loader'
+                loader: ['babel-loader','ts-loader'],
             },
             {
                 test: /\.svg$/,
@@ -38,5 +35,8 @@ module.exports = {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
             }]
+    },
+    resolve: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }
 }

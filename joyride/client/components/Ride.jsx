@@ -3,9 +3,10 @@ import { IRideProps } from './RideInterfaces.ts';
 
 import RideEntry from './RideEntry.jsx';
 
-class DynamicRides extends Component<IRideProps, any> {
+// class DynamicRides extends Component<IRideProps, any> {
+class DynamicRides extends Component {
 
-    constructor(props: IRideProps) {
+    constructor(props) {
         super (props);
     }
 
@@ -23,4 +24,4 @@ class DynamicRides extends Component<IRideProps, any> {
     }    
 }
 
-export default DynamicRides
+export default DynamicRides;

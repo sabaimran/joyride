@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { IRide } from './RideInterfaces.ts';
 
-class RideEntry extends Component<IRide, any> {
-    constructor(props: IRide) {
+// with IRide as props
+class RideEntry extends Component {
+    constructor(props) {
         super(props);
     }
 

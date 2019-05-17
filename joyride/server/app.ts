@@ -1,12 +1,18 @@
-import * as bodyParser from 'body-parser';
-import * as express from 'express';
-import * as mongoose from 'mongoose';
-import Controller from '../client/interfaces/IController';
+// import * as bodyParser from 'body-parser';
+// import * as express from 'express';
+// import * as mongoose from 'mongoose';
+// import Controller from '../client/interfaces/IController';
+
+var bodyParser = require("body-parser");
+var express = require("express");
+var mongoose = require("mongoose");
 
 class App {
-  public app: express.Application;
 
-  constructor(controllers: Controller[]) {
+    // public app: express.Application;
+    public app;
+
+  constructor(controllers) {
     this.app = express();
 
     this.connectToTheDatabase();
@@ -14,18 +20,8 @@ class App {
     this.initializeControllers(controllers);
     // this.initializeErrorHandling();
   }
-
-  public listen() {
-    this.app.listen(process.env.PORT, () => {
-      console.log(`App listening on the port ${process.env.PORT}`);
-    });
-  }
-
-  public getServer() {
-    return this.app;
-  }
-
-  private initializeMiddlewares() {
+  
+  initializeMiddlewares() {
     this.app.use(bodyParser.json());
   }
 
@@ -33,13 +29,13 @@ class App {
 //     this.app.use(errorMiddleware);
 //   }
 
-  private initializeControllers(controllers: Controller[]) {
+  initializeControllers(controllers) {
     controllers.forEach((controller) => {
       this.app.use('/', controller.router);
     });
   }
 
-  private connectToTheDatabase() {
+  connectToTheDatabase() {
     // const {
     //   MONGO_USER,
     //   MONGO_PASSWORD,

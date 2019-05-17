@@ -1,6 +1,6 @@
 //server/server.js
-import App from './app';
-import RideController from '../client/controllers/RideController';
+var App = require("./app.ts");
+var RideController = require("../client/controllers/RideController");
 
 const app = new App (
   [
@@ -8,4 +8,4 @@ const app = new App (
   ],
 );
 
-export default app;
+module.exports = app;
