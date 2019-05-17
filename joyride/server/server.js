@@ -32,4 +32,6 @@ client.connect(() => {
 
 console.log("connected to mongo client");
 
-module.exports=app;
+app.listen(3000, () => {
+  console.log("listening at 3000");
+});
