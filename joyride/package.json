@@ -61,6 +61,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "check-types": "tsc",
-    "tempbuild": "babel server --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline && node .\\lib\\server.js"
+    "tempbuild": "babel server --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline && node .\\lib\\server.js",
+    "makebabel": "babel server --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline",
+    "startserver": "node .\\lib\\server.js",
+    "serve": "npm run webpack && npm run makebabel && npm run startserver"
   }
 }
