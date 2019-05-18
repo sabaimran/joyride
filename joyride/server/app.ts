@@ -61,17 +61,30 @@ class App {
     // } = process.env;
     // mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`);
     const uri = "mongodb+srv://sababa:021967@cluster0-ffkg5.azure.mongodb.net/test?retryWrites=true";
-    const client = new MongoClient(uri, { useNewUrlParser: true });
-    client.connect(() => {
-      const driversCollection = client.db("Users").collection("Drivers");
-      driversCollection.insertOne({
-        firstName: "Saba",
-        lastName: "Imran"
-      })
-      console.log("test connection to the client");
-      // perform actions on the collection object
-      client.close();
+    // mongoose way
+    mongoose.connect(uri, {useNewUrlParser: true});
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+      console.log("successfully connected");
     });
+
+    // mongodb way
+    // const client = new MongoClient(uri, { useNewUrlParser: true });
+    // client.connect(() => {
+    //   const driversCollection = client.db("Rides").collection("ChampaignToChicago");
+    //   driversCollection.insertOne({
+    //     firstName: "Saba",
+    //     lastName: "Imran",
+    //     date: new Date(),
+    //     destination: "Union",
+    //     departure: "Champaign",
+    //     category: "ChampaigntoChicago"
+    //   })
+    //   console.log("test connection to the client");
+    //   // perform actions on the collection object
+    //   // client.close();
+    // });
   }
 }
 

@@ -1,4 +1,5 @@
-import { Document, Model, Schema, model } from "mongoose";
+import { Document, Model, Schema, model, Mongoose } from "mongoose";
+import "mongoose";
 import { IRide } from '../interfaces/IRide';
 
 // @TODO determine which fields I want to keep in generic user.
@@ -10,6 +11,8 @@ const rideSchema = new Schema({
     destination: String,
     departure: String,
     category: String
+}, {
+    collection: 'Rides'
 });
 
 const rideModel = model<IRide & Document>('Ride', rideSchema);

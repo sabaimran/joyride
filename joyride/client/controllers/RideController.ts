@@ -48,6 +48,7 @@ export default class RideController implements Controller {
     private createRide = (request: express.Request, response: express.Response) => {
         // Should be a IRide interface
         const rideData = request.body;
+        console.log(request.body)
         const createdRide = new this.ride(rideData);
         createdRide.save().then((savedPost) => {
             response.send(savedPost);
@@ -58,9 +59,9 @@ export default class RideController implements Controller {
         const id = request.params.id;
         this.ride.findByIdAndDelete(id).then((successResponse) => {
             if (successResponse) {
-                response.send(200);
+                response.sendStatus(200);
             } else {
-                response.send(404);
+                response.sendStatus(404);
             }
         })
     }
