@@ -34,10 +34,26 @@ class Listings extends Component {
     // }
 
     getListOfRides() {
-        request('http://localhost:3000/ride', function (error, response, body) {
+        const uri = `http://localhost:${process.env.PORT}/ride`;
+        console.log(uri);
+
+        request(uri, function (error, response, body) {
             console.error('error:', error); // Print the error if one occurred
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for all rides query.
+
+            const rides = JSON.parse(body);
+            console.log(rides);
+
+            for (const ride of rides) {
+                console.log(ride.category);
+            }
+
+            // if (body) {
+            //     body.foreach(function (ride) {
+            //         console.log(ride);
+            //     })
+            // }
         });
     }
 

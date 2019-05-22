@@ -1,6 +1,8 @@
 //webpack.config.js
 var path = require('path');
 var webpack = require('webpack');
+require('dotenv').config();
+
 module.exports = {
     mode: 'development',
     entry: './client/index.js',
@@ -41,5 +43,12 @@ module.exports = {
     },
     node: {
         fs: 'empty'
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                PORT: process.env.PORT
+            }
+        })
+    ]
 }
