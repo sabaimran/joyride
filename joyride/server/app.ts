@@ -7,8 +7,6 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require('path');
-const MongoClient = require('mongodb').MongoClient;
-
 class App {
 
     // public app: express.Application;
@@ -23,16 +21,21 @@ class App {
     // this.initializeErrorHandling();
   }
   
-  initializeMiddlewares() {
+  private initializeMiddlewares() {
     this.app.set('view engine', 'ejs');
     this.app.set('views', path.join(__dirname, '../client'));
     this.app.use(express.static(path.join(__dirname, '../client')));
     this.app.use(bodyParser.json());
   }
 
+  public getServer() {
+    console.log('got server');
+    return this.app;
+  }
+
   listen() {
-    this.app.listen(8000, () => {
-      console.log("listening to port 8000");
+    this.app.listen(process.env.PORT, () => {
+      console.log(`listening to port ${process.env.PORT}`);
     });
   }
 
@@ -40,7 +43,7 @@ class App {
 //     this.app.use(errorMiddleware);
 //   }
 
-  initializeControllers(controllers) {
+  private initializeControllers(controllers) {
     console.log('init routers');
     controllers.forEach((controller) => {
       this.app.use('/', controller.router);
@@ -53,14 +56,16 @@ class App {
     this.app.use('/', router);
   }
 
-  connectToTheDatabase() {
-    // const {
-    //   MONGO_USER,
-    //   MONGO_PASSWORD,
-    //   MONGO_PATH,
-    // } = process.env;
+  private connectToTheDatabase() {
+    const {
+      MONGO_USER,
+      MONGO_PASSWORD,
+      MONGO_PATH,
+    } = process.env;
     // mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`);
-    const uri = "mongodb+srv://sababa:021967@cluster0-ffkg5.azure.mongodb.net/test?retryWrites=true";
+
+    
+    const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`;
     // mongoose way
     mongoose.connect(uri, {useNewUrlParser: true});
     const db = mongoose.connection;
@@ -68,6 +73,7 @@ class App {
     db.once('open', function() {
       console.log("successfully connected");
     });
+    
 
     // mongodb way
     // const client = new MongoClient(uri, { useNewUrlParser: true });

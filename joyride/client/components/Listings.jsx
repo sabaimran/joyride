@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '../css/App.css';
-import DynamicRides from './Ride.jsx';
+import DynamicRides from './DynamicRides.jsx';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import request from 'request';
 
 class Listings extends Component {
 
@@ -17,18 +18,27 @@ class Listings extends Component {
 
         this.toggleList = this.toggleList.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.getListOfRides = this.getListOfRides.bind(this);
     }
 
-    DynamicList(props) {
-        return (
-            <div>
-                <ul>
-                    {props.rides.map((rides) => (
-                        <li>{rides.name}</li>
-                    ))}
-                </ul>
-            </div>
-        );
+    // DynamicList(props) {
+    //     return (
+    //         <div>
+    //             <ul>
+    //                 {props.rides.map((rides) => (
+    //                     <li>{rides.name}</li>
+    //                 ))}
+    //             </ul>
+    //         </div>
+    //     );
+    // }
+
+    getListOfRides() {
+        request('http://localhost:3000/ride', function (error, response, body) {
+            console.error('error:', error); // Print the error if one occurred
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            console.log('body:', body); // Print the HTML for all rides query.
+        });
     }
 
     toggleList() {
@@ -66,6 +76,7 @@ class Listings extends Component {
                 </div>
                 {/* <this.DynamicList rides={rides} /> */}
                 <DynamicRides rides={rides}/>
+                <button className="toggleButton" onClick={this.getListOfRides} type="button">Get All Rides</button>
             </div>
         );
     }    
