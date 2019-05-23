@@ -13,7 +13,9 @@ class Listings extends Component {
 
         this.state = {
             ChiToChamp: true,
-            searchDate: new Date()
+            searchDate: new Date(),
+            RidesChiToChamp: [],
+            RidesChampToChi: []
         };
 
         this.toggleList = this.toggleList.bind(this);
@@ -21,21 +23,11 @@ class Listings extends Component {
         this.getListOfRides = this.getListOfRides.bind(this);
     }
 
-    // DynamicList(props) {
-    //     return (
-    //         <div>
-    //             <ul>
-    //                 {props.rides.map((rides) => (
-    //                     <li>{rides.name}</li>
-    //                 ))}
-    //             </ul>
-    //         </div>
-    //     );
-    // }
-
     getListOfRides() {
         const uri = `http://localhost:${process.env.PORT}/ride`;
         console.log(uri);
+        const displayRides = [];
+        const self = this;
 
         request(uri, function (error, response, body) {
             console.error('error:', error); // Print the error if one occurred
@@ -43,17 +35,28 @@ class Listings extends Component {
             console.log('body:', body); // Print the HTML for all rides query.
 
             const rides = JSON.parse(body);
-            console.log(rides);
+            // console.log(rides);
+
+            displayRides.push({ name: "mark", departure: "Oak Brook", destination: "Union", time: new Date() });
 
             for (const ride of rides) {
-                console.log(ride.category);
+                // console.log(ride);
+                displayRides.push({
+                    name: ride.firstName,
+                    departure: ride.departure,
+                    destination: ride.destination,
+                    time: new Date()
+                })
             }
 
-            // if (body) {
-            //     body.foreach(function (ride) {
-            //         console.log(ride);
-            //     })
-            // }
+            console.log('display rides: '+displayRides);
+
+            self.setState(state => ({
+                RidesChampToChi: displayRides
+            }));
+    
+            console.log('RidesChampToChi: '+this.state.RidesChampToChi);
+
         });
     }
 
@@ -72,12 +75,7 @@ class Listings extends Component {
     }
 
     render() {
-        
-        // These will have to be read from a database
-        const mark = [ { name: "mark", departure: "Oak Brook", destination: "Union", time: new Date() } , 
-                        { name: "samuel", departure: "O'hare", destination: "Altgeld", time: new Date() } ];
-        const david = [ { name: "david", departure: "Union", destination: "Oak Brook", time: new Date() } ];
-        const rides = this.state.ChiToChamp ? mark : david;
+        const rides = this.state.ChiToChamp ? this.state.RidesChampToChi : this.state.RidesChampToChi;
         console.log("DATE EXAMPLE " + new Date().toString());
         return (
             <div className="Listing">
@@ -90,7 +88,6 @@ class Listings extends Component {
                     <DatePicker className="searchFilter" name="searchDate" selected={this.state.searchDate} onChange={this.handleDateChange} dateFormat="MMMM d, yyyy" minDate={new Date()}/>
                     <br></br>
                 </div>
-                {/* <this.DynamicList rides={rides} /> */}
                 <DynamicRides rides={rides}/>
                 <button className="toggleButton" onClick={this.getListOfRides} type="button">Get All Rides</button>
             </div>
