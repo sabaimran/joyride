@@ -4,6 +4,9 @@ import { IRide } from '../interfaces/IRide';
 
 // @TODO determine which fields I want to keep in generic user.
 
+/**
+ * Schema for Ride objects in MongoDB.
+ */
 const rideSchema = new Schema({
     firstname: String,
     lastname: String,

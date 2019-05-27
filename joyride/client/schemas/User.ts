@@ -3,6 +3,9 @@ import { IUser } from '../interfaces/IUser';
 
 // @TODO determine which fields I want to keep in generic user.
 
+/**
+ * Schema for basic user object in MongoDB.
+ */
 const userSchema = new Schema({
     firstName: String,
     lastName: String,

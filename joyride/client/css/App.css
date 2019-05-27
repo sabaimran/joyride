@@ -1,6 +1,9 @@
+html {
+  height: 100vh;
+}
+
 .App {
   text-align: center;
-  background-color: #EDC7B7;
   height: 100%;
 
   background-position: center center;
