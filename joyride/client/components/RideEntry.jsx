@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-// with IRide as props
+/**
+ * The basic architecture for displaying a ride in Listings.jsx.
+ */
 class RideEntry extends Component {
     constructor(props) {
         super(props);

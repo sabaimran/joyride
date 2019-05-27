@@ -1,3 +1,6 @@
+/**
+ * Interface for Ride schema.
+ */
 export interface IRide {
     firstname: String,
     lastname: String,

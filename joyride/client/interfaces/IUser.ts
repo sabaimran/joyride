@@ -1,3 +1,6 @@
+/**
+ * Interface for User schema.
+ */
 export interface IUser {
     firstName: String,
     lastName: String,

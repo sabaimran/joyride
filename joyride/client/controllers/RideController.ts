@@ -12,8 +12,10 @@ export default class RideController implements Controller {
         this.initRoutes();
     }
 
+    /**
+     * Initialize all the routes.
+     */
     public initRoutes() {
-        console.log("rides are being intialized");
         this.router.get(this.path, this.getAllRides);
         this.router.get(`${this.path}/:id`, this.getRideById);
         this.router.put(`${this.path}/:id`, this.modifyRide);

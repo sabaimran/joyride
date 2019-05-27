@@ -7,13 +7,10 @@ import NewRide from './NewRide.jsx';
 
 const tractor = require('../images/tractor-72-194019.png');
 
+/**
+ * Main app entrypoint for React.
+ */
 class App extends Component {
-  // constructor() {
-  //   super();
-  //   this.setState = {
-  //     hideNewRideButton: false
-  //   };
-  // }
 
   render() {
     return (

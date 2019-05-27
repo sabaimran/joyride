@@ -11,8 +11,6 @@ class NewRide extends Component {
 
     constructor(props) {
         super(props);
-        // const button = document.getElementById("new-form-button");
-        // button.style.display = 'none';
         this.state = {
             firstname: '',
             lastname: '',
@@ -28,6 +26,10 @@ class NewRide extends Component {
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
     }
 
+    /**
+     * Update state when values are changed.
+     * @param {} event 
+     */
     handleChange(event) {
         const target = event.target;
         const value = target.value;

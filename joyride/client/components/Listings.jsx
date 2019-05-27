@@ -7,6 +7,9 @@ import LocationConstants from './LocationConstants.ts';
 import "react-datepicker/dist/react-datepicker.css";
 import request from 'request';
 
+/**
+ * Front page with all the rides available, subject to filter.
+ */
 class Listings extends Component {
 
     constructor(props) {
@@ -24,6 +27,9 @@ class Listings extends Component {
         this.getListOfRides();
     }
 
+    /**
+     * Depending on state, get the list of all relevant rides from mongodb.
+     */
     getListOfRides() {
         // Populate the main page with the list of rides in a specific direction.
         var uri = `http://localhost:${process.env.PORT}/ride?dir=`;
@@ -114,6 +120,9 @@ class Listings extends Component {
     }    
 }
 
+/**
+ * A lightweight component for displaying a heading.
+ */
 const chiToChaText = "Chicago to Champaign";
 const chaToChiText = "Champaign to Chicago";
 const Heading = ({ ChiToChamp }) => ChiToChamp ? <h1>{chiToChaText}</h1> : <h1>{chaToChiText}</h1>;
