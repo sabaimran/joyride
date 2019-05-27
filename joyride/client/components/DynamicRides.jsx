@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { IRideProps } from './RideInterfaces.ts';
 
 import RideEntry from './RideEntry.jsx';
 
@@ -15,7 +14,7 @@ class DynamicRides extends Component {
             <div>
                 <ul>
                     {this.props.rides.map((rides, index) => (
-                        <RideEntry key={index} name={rides.name} departure={rides.departure} destination={rides.destination} time={rides.time}/>
+                        <RideEntry key={index} name={rides.firstname+` `+rides.lastname} departure={rides.departure} destination={rides.destination} date={rides.date}/>
                     ))}
                 </ul>
             </div>

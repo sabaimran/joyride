@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/App.css';
 import DynamicRides from './DynamicRides.jsx';
 import DatePicker from "react-datepicker";
+import LocationConstants from './LocationConstants.ts';
 
 import "react-datepicker/dist/react-datepicker.css";
 import request from 'request';
@@ -21,15 +22,15 @@ class Listings extends Component {
         this.toggleList = this.toggleList.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.getListOfRides = this.getListOfRides.bind(this);
+        this.getListOfRides();
     }
 
     getListOfRides() {
         const uri = `http://localhost:${process.env.PORT}/ride`;
-        console.log(uri);
         const displayRides = [];
         const self = this;
 
-        request(uri, function (error, response, body) {
+        request.get(uri, function (error, response, body) {
             console.error('error:', error); // Print the error if one occurred
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for all rides query.
@@ -37,25 +38,41 @@ class Listings extends Component {
             const rides = JSON.parse(body);
             // console.log(rides);
 
-            displayRides.push({ name: "mark", departure: "Oak Brook", destination: "Union", time: new Date() });
-
+            // convert to array in order to use nice syntax. make sure to follow the schema pattens.
             for (const ride of rides) {
+                // @TODO sanitize data and delete this later.
+                const tempdate = ride.date ? ride.date : new Date();
+
+                var departure, destination;
+
+                if (ride.category == "ChicagoToChampaign") {
+                    console.log(LocationConstants.ChicagoPlaces[ride.departure]);
+                    console.log(LocationConstants.ChampaignPlaces[ride.destination]);
+
+                    departure = LocationConstants.ChicagoPlaces[ride.departure].place;
+                    destination = LocationConstants.ChampaignPlaces[ride.destination].place;
+                } else {
+                    console.log(LocationConstants.ChampaignPlaces[ride.departure]);
+                    console.log(LocationConstants.ChicagoPlaces[ride.destination]);
+                    
+                    departure = LocationConstants.ChampaignPlaces[ride.departure].place;
+                    destination = LocationConstants.ChicagoPlaces[ride.destination].place;
+                }
+                
+
                 // console.log(ride);
                 displayRides.push({
-                    name: ride.firstName,
-                    departure: ride.departure,
-                    destination: ride.destination,
-                    time: new Date()
+                    firstname: ride.firstname,
+                    lastname: ride.lastname,
+                    departure: departure,
+                    destination: destination,
+                    date: tempdate
                 })
             }
-
-            console.log('display rides: '+displayRides);
 
             self.setState(state => ({
                 RidesChampToChi: displayRides
             }));
-    
-            console.log('RidesChampToChi: '+this.state.RidesChampToChi);
 
         });
     }
@@ -75,8 +92,8 @@ class Listings extends Component {
     }
 
     render() {
+        // this.getListOfRides();
         const rides = this.state.ChiToChamp ? this.state.RidesChampToChi : this.state.RidesChampToChi;
-        console.log("DATE EXAMPLE " + new Date().toString());
         return (
             <div className="Listing">
                 <p className="App-intro">
@@ -89,7 +106,7 @@ class Listings extends Component {
                     <br></br>
                 </div>
                 <DynamicRides rides={rides}/>
-                <button className="toggleButton" onClick={this.getListOfRides} type="button">Get All Rides</button>
+                {/* <button className="toggleButton" onClick={this.getListOfRides} type="button">Get All Rides</button> */}
             </div>
         );
     }    

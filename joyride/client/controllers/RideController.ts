@@ -10,7 +10,6 @@ export default class RideController implements Controller {
     private ride = rideModel;
 
     constructor() {
-        console.log("constructor");
         this.initRoutes();
     }
 
@@ -24,7 +23,7 @@ export default class RideController implements Controller {
     }
 
     private getAllRides = (request: express.Request, response: express.Response) => {
-        console.log("some navigation is working");
+        console.log("get all rides");
         this.ride.find().then((rides) => {
             response.send(rides)
         });
@@ -48,7 +47,9 @@ export default class RideController implements Controller {
     private createRide = (request: express.Request, response: express.Response) => {
         // Should be a IRide interface
         const rideData = request.body;
-        console.log(request.body)
+        console.log('received data:');
+        console.log(request.body);
+        console.log('createride:\n '+request.body.firstname)
         const createdRide = new this.ride(rideData);
         createdRide.save().then((savedPost) => {
             response.send(savedPost);

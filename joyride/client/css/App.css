@@ -109,6 +109,10 @@ input, select {
 }
 
 #new-form-button {
+  top: 10%;
+}
+
+.HeaderButton {
   width:13%;
   background-color: #AC3B61;
   border: none;
@@ -121,7 +125,6 @@ input, select {
   cursor: pointer;
   border-radius: 12px;
   position: absolute;
-  top: 10%;
 }
 
 input[type=submit].NewRideFormInput {

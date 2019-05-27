@@ -1,6 +1,6 @@
 export interface IRide {
-    firstName: String,
-    lastName: String,
+    firstname: String,
+    lastname: String,
     date: Date,
     destination: String,
     departure: String,

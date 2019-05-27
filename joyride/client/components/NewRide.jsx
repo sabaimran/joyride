@@ -14,8 +14,8 @@ class NewRide extends Component {
             firstname: '',
             lastname: '',
             category: 'ChicagoToChampaign',
-            departure: '',
-            destination: '',
+            departure: 'oakbrook',
+            destination: 'union',
             date: new Date()
         };
 
@@ -26,7 +26,6 @@ class NewRide extends Component {
     }
 
     handleChange(event) {
-        console.log(event);
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -40,11 +39,27 @@ class NewRide extends Component {
         this.setState({
             date: date
         });
+        console.log('date of ride: '+this.state.date);
     }
 
     handleSubmit(event) {
-        alert("Your direction is " + this.state.value);
         event.preventDefault();
+        // Make the post request
+        const uri = `http://localhost:${process.env.PORT}/ride`;
+
+        const formdata = JSON.stringify(this.state);
+
+        fetch(uri, {
+            method: "POST",
+            body: formdata,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }).then(function(response) {
+            return response.json();
+          }).catch(function(err) {
+            console.log('Request failed', err);
+          });
     }
 
     DynamicDropDownMenu(props) {
@@ -57,7 +72,7 @@ class NewRide extends Component {
             val = this.state.departure;
         } else {
             locations = this.state.category == "ChampaignToChicago" ? LocationConstants.ChicagoPlaces : LocationConstants.ChampaignPlaces;
-            val = this.state.arrival;
+            val = this.state.destination;
         }
 
         Object.keys(locations).forEach(key => {
@@ -96,7 +111,7 @@ class NewRide extends Component {
                     <label className="NewRideFormInput">Pick your departure</label>
                     <this.DynamicDropDownMenu stop="departure" />
                     <label className="NewRideFormInput">Pick your destination</label>
-                    <this.DynamicDropDownMenu stop="arrival" />
+                    <this.DynamicDropDownMenu stop="destination" />
                     
                     <input className="NewRideFormInput" type="submit" value="Submit"/>
                 </form>

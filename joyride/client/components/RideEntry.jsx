@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { IRide } from './RideInterfaces.ts';
 
 // with IRide as props
 class RideEntry extends Component {
     constructor(props) {
         super(props);
+        console.log('ride entry date: '+props.date);
     }
 
     render() {
@@ -13,7 +13,7 @@ class RideEntry extends Component {
                 <h1 className="RideEntryField">{this.props.name}</h1>
                 <p className="RideEntryField">Pickup: {this.props.departure}</p>
                 <p className="RideEntryField">Drop-off: {this.props.destination}</p>
-                <p className="RideEntryField">{this.props.time.toString()}</p>
+                <p className="RideEntryField">{this.props.date.toString()}</p>
             </div>
         );
     }

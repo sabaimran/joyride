@@ -5,8 +5,8 @@ import { IRide } from '../interfaces/IRide';
 // @TODO determine which fields I want to keep in generic user.
 
 const rideSchema = new Schema({
-    firstName: String,
-    lastName: String,
+    firstname: String,
+    lastname: String,
     date: Date,
     destination: String,
     departure: String,
