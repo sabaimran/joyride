@@ -4,6 +4,9 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
+/**
+ * Page for creating a new ride entry.
+ */
 class NewRide extends Component {
 
     constructor(props) {
@@ -14,8 +17,8 @@ class NewRide extends Component {
             firstname: '',
             lastname: '',
             category: 'ChicagoToChampaign',
-            departure: '',
-            destination: '',
+            departure: 'oakbrook',
+            destination: 'union',
             date: new Date()
         };
 
@@ -26,7 +29,6 @@ class NewRide extends Component {
     }
 
     handleChange(event) {
-        console.log(event);
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -36,17 +38,44 @@ class NewRide extends Component {
         });
     }
 
+    /**
+     * Update the date specified in the calendar.
+     * @param {*} date 
+     */
     handleDateChange(date) {
         this.setState({
             date: date
         });
+        console.log('date of ride: '+this.state.date);
     }
 
+    /**
+     * Handle the form submit by creating a post request.
+     */
     handleSubmit(event) {
-        alert("Your direction is " + this.state.value);
         event.preventDefault();
+        // Make the post request
+        const uri = `http://localhost:${process.env.PORT}/ride`;
+
+        const formdata = JSON.stringify(this.state);
+
+        fetch(uri, {
+            method: "POST",
+            body: formdata,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }).then(function(response) {
+            return response.json();
+          }).catch(function(err) {
+            console.log('Request failed', err);
+          });
     }
 
+    /**
+     * Create a dropdown menu populated with specific locations.
+     * @param {*} props : specify which direction the dropdown menu would accomodate
+     */
     DynamicDropDownMenu(props) {
         let locationArray = [];
         var locations;
@@ -57,12 +86,12 @@ class NewRide extends Component {
             val = this.state.departure;
         } else {
             locations = this.state.category == "ChampaignToChicago" ? LocationConstants.ChicagoPlaces : LocationConstants.ChampaignPlaces;
-            val = this.state.arrival;
+            val = this.state.destination;
         }
 
         Object.keys(locations).forEach(key => {
             locationArray.push(
-                <option value={key}>{locations[key].place}</option>
+                <option key={key} value={key}>{locations[key].place}</option>
             )
         })
 
@@ -73,6 +102,9 @@ class NewRide extends Component {
         )
     };
 
+    /**
+     * A form for entering input to create a new ride entry in the database.
+     */
     render() {
         return (
             <div>
@@ -96,7 +128,7 @@ class NewRide extends Component {
                     <label className="NewRideFormInput">Pick your departure</label>
                     <this.DynamicDropDownMenu stop="departure" />
                     <label className="NewRideFormInput">Pick your destination</label>
-                    <this.DynamicDropDownMenu stop="arrival" />
+                    <this.DynamicDropDownMenu stop="destination" />
                     
                     <input className="NewRideFormInput" type="submit" value="Submit"/>
                 </form>

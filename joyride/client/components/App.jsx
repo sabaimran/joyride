@@ -25,8 +25,11 @@ class App extends Component {
             </Link>
             <h2>JOYRIDE</h2>
             <Link to="/newRide">
-              <button id="new-form-button" type="button" className="NewRide-Form-Button">New Ride</button>
+              <button id="new-form-button" type="button" className="HeaderButton">New Ride</button>
             </Link>
+            {/* <Link to="/explainme">
+              <button id="how-it-works-button" type="button" className="HeaderButton">New Ride</button>
+            </Link> */}
           </div>
           <Route exact path="/" component={Listings} />
           <Route path="/newRide" component={NewRide} />

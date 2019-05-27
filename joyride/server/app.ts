@@ -1,12 +1,18 @@
-import * as bodyParser from 'body-parser';
-import * as express from 'express';
-import * as mongoose from 'mongoose';
-import Controller from '../client/interfaces/IController';
+// import * as bodyParser from 'body-parser';
+// import * as express from 'express';
+// import * as mongoose from 'mongoose';
+// import Controller from '../client/interfaces/IController';
 
+const bodyParser = require("body-parser");
+const express = require("express");
+const mongoose = require("mongoose");
+const path = require('path');
 class App {
-  public app: express.Application;
 
-  constructor(controllers: Controller[]) {
+    // public app: express.Application;
+    public app;
+
+  constructor(controllers) {
     this.app = express();
 
     this.connectToTheDatabase();
@@ -14,41 +20,77 @@ class App {
     this.initializeControllers(controllers);
     // this.initializeErrorHandling();
   }
-
-  public listen() {
-    this.app.listen(process.env.PORT, () => {
-      console.log(`App listening on the port ${process.env.PORT}`);
-    });
+  
+  private initializeMiddlewares() {
+    this.app.set('view engine', 'ejs');
+    this.app.set('views', path.join(__dirname, '../client'));
+    this.app.use(express.static(path.join(__dirname, '../client')));
+    this.app.use(bodyParser.json());
   }
 
   public getServer() {
+    console.log('got server');
     return this.app;
   }
 
-  private initializeMiddlewares() {
-    this.app.use(bodyParser.json());
+  listen() {
+    this.app.listen(process.env.PORT, () => {
+      console.log(`listening to port ${process.env.PORT}`);
+    });
   }
 
 //   private initializeErrorHandling() {
 //     this.app.use(errorMiddleware);
 //   }
 
-  private initializeControllers(controllers: Controller[]) {
+  private initializeControllers(controllers) {
+    console.log('init routers');
     controllers.forEach((controller) => {
       this.app.use('/', controller.router);
     });
+    
+    var router = express.Router();
+    router.get('*', function(req, res) {
+      res.render('index');
+    })
+    this.app.use('/', router);
   }
 
   private connectToTheDatabase() {
-    // const {
-    //   MONGO_USER,
-    //   MONGO_PASSWORD,
-    //   MONGO_PATH,
-    // } = process.env;
+    const {
+      MONGO_USER,
+      MONGO_PASSWORD,
+      MONGO_PATH,
+    } = process.env;
     // mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`);
-    const uri = "mongodb+srv://sababa:021967@cluster0-ffkg5.azure.mongodb.net/test?retryWrites=true";
-    mongoose.connect(uri);
-    console.log("connected to mongooose");
+
+    
+    const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`;
+    // mongoose way
+    mongoose.connect(uri, {useNewUrlParser: true});
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+      console.log("successfully connected");
+    });
+    
+
+    // mongodb way
+    // const client = new MongoClient(uri, { useNewUrlParser: true });
+    // client.connect(() => {
+    //   const driversCollection = client.db("Rides").collection("ChampaignToChicago");
+    //   driversCollection.insertOne({
+    //     firstName: "Saba",
+    //     lastName: "Imran",
+    //     date: new Date(),
+    //     destination: "Union",
+    //     departure: "Champaign",
+    //     category: "ChampaigntoChicago"
+    //   })
+    //   console.log("test connection to the client");
+    //   // perform actions on the collection object
+    //   // client.close();
+    // });
   }
 }
 
