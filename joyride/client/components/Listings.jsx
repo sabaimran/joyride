@@ -32,8 +32,11 @@ class Listings extends Component {
      */
     getListOfRides() {
         // Populate the main page with the list of rides in a specific direction.
-        var uri = `http://localhost:${process.env.PORT}/ride?dir=`;
+        var uri = `http://localhost:${process.env.PORT}/ride`;
+        uri += "?dir=";
         uri += this.state.ChiToChamp ? "ChicagoToChampaign" : "ChampaignToChicago";
+        uri += "&date=";
+        uri += this.state.searchDate.toString();
 
         const displayRides = [];
         const self = this;
@@ -47,13 +50,13 @@ class Listings extends Component {
             destinationConsts = LocationConstants.ChicagoPlaces;
         }
 
-        // console.log("departure constants: ", departureConsts);
-        // console.log("destination constants: ", destinationConsts);
-
         request.get(uri, function (error, response, body) {
-            console.error('error:', error); // Print the error if one occurred
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-            console.log('body:', body); // Print the HTML for all rides query.
+            // Print the error if one occurred
+            console.error('error:', error); 
+            // Print the response status code if a response was received
+            console.log('statusCode:', response && response.statusCode); 
+            // Print the HTML for all rides query.
+            console.log('body:', body); 
 
             const rides = JSON.parse(body);
 
@@ -95,8 +98,14 @@ class Listings extends Component {
      * Handle when user modifies the date selected on the drop down calendar.
      */
     handleDateChange(date) {
+        const tempdate = new Date(date);
+        console.log(this.state.searchDate);
+        
+        // Get the 00:00:00 time date to help with search.
         this.setState({
-            searchDate: date
+            searchDate: new Date(tempdate.toDateString())
+        }, function() {
+            this.getListOfRides();
         });
     }
 
@@ -114,7 +123,6 @@ class Listings extends Component {
                     <br></br>
                 </div>
                 <DynamicRides rides={this.state.Rides}/>
-                {/* <button className="toggleButton" onClick={this.getListOfRides} type="button">Get All Rides</button> */}
             </div>
         );
     }    

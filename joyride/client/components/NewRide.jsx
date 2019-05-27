@@ -17,13 +17,15 @@ class NewRide extends Component {
             category: 'ChicagoToChampaign',
             departure: 'oakbrook',
             destination: 'union',
-            date: new Date()
+            date: new Date(),
+            errorMessage: 'all good'
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
+        this.Errors = this.Errors.bind(this);
     }
 
     /**
@@ -56,22 +58,29 @@ class NewRide extends Component {
      */
     handleSubmit(event) {
         event.preventDefault();
-        // Make the post request
-        const uri = `http://localhost:${process.env.PORT}/ride`;
+        if (!this.state.firstname || 
+            !this.state.lastname) {
+                this.setState({
+                    errorMessage: "Need to fill in a name!"
+                });
+        } else {
+            // Make the post request
+            const uri = `http://localhost:${process.env.PORT}/ride`;
 
-        const formdata = JSON.stringify(this.state);
+            const formdata = JSON.stringify(this.state);
 
-        fetch(uri, {
-            method: "POST",
-            body: formdata,
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }).then(function(response) {
-            return response.json();
-          }).catch(function(err) {
-            console.log('Request failed', err);
-          });
+            fetch(uri, {
+                method: "POST",
+                body: formdata,
+                headers: {
+                "Content-Type": "application/json"
+                }
+            }).then(function(response) {
+                return response.json();
+            }).catch(function(err) {
+                console.log('Request failed', err);
+            });
+        }
     }
 
     /**
@@ -84,10 +93,14 @@ class NewRide extends Component {
 
         var val;
         if (props.stop == "departure") {
-            locations = this.state.category == "ChicagoToChampaign" ? LocationConstants.ChicagoPlaces : LocationConstants.ChampaignPlaces;
+            locations = this.state.category == "ChicagoToChampaign" ? 
+            LocationConstants.ChicagoPlaces : 
+            LocationConstants.ChampaignPlaces;
             val = this.state.departure;
         } else {
-            locations = this.state.category == "ChampaignToChicago" ? LocationConstants.ChicagoPlaces : LocationConstants.ChampaignPlaces;
+            locations = this.state.category == "ChampaignToChicago" ? 
+            LocationConstants.ChicagoPlaces : 
+            LocationConstants.ChampaignPlaces;
             val = this.state.destination;
         }
 
@@ -105,12 +118,22 @@ class NewRide extends Component {
     };
 
     /**
+     * Display errors if there are any.
+     */
+    Errors() {
+        console.log(this.state.errorMessage);
+        return (
+            <div className="NewRide-Errors">{this.state.errorMessage}</div>
+        )
+    }
+
+    /**
      * A form for entering input to create a new ride entry in the database.
      */
     render() {
         return (
-            <div>
-                <p>This is a new ride form, hello.</p>
+            <div className="NewRideForm-container">
+                <this.Errors/>
                 <form className="NewRideForm" onSubmit={this.handleSubmit}>
                     <label className="NewRideFormInput">First name</label>
                     <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} />

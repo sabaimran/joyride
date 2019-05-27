@@ -29,10 +29,21 @@ export default class RideController implements Controller {
     private getAllRides = (request: express.Request, response: express.Response) => {
         console.log("get list of rides");
 
-        const dir = request.query.dir;
         // If direction is specificed, show only one direction.
+        const dir = request.query.dir;
+
+        const date = new Date(request.query.date);
+        console.log("date in controller: ", date);
+
+        // When ready, specify also $lte in the date filter. 
+        // (https://stackoverflow.com/questions/39940595/gte-and-lte-in-mongoose-with-multiple-condition)
         if (dir) {
-            this.ride.find({category: dir}).then((rides) => {
+            this.ride.find({
+                category: dir,
+                date: {
+                    $gte: date
+                }
+            }).then((rides) => {
                 response.send(rides)
             });
         } else {

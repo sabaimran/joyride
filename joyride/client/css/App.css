@@ -51,12 +51,21 @@ html {
   padding: 15px 30px;
 }
 
+.NewRide-Errors {
+  text-align: left;
+  padding: 10px 2px;
+}
+
 .RideEntry {
   border: #000000;
   background-color: #EEE2DC;
   padding: 10px 20px;
   border-radius: 12px;
   margin-bottom: 2%;
+}
+
+#timestamp {
+  font-size: 18px;
 }
 
 .toggleButton {
@@ -80,12 +89,15 @@ html {
 
 .NewRideForm {
   background-color: rgb(105, 146, 221);
+  font-family: 'Open Sans', sans-serif;
+  padding: 15px 30px;
+}
+
+.NewRideForm-container {
   text-align: left;
   width: 50%;
   margin-left: 25%;
   margin-right: 25%;
-  padding: 15px 30px;
-  font-family: 'Open Sans', sans-serif;
 }
 
 label {
