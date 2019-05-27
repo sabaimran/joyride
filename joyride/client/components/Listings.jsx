@@ -15,8 +15,7 @@ class Listings extends Component {
         this.state = {
             ChiToChamp: true,
             searchDate: new Date(),
-            RidesChiToChamp: [],
-            RidesChampToChi: []
+            Rides: []
         };
 
         this.toggleList = this.toggleList.bind(this);
@@ -26,9 +25,26 @@ class Listings extends Component {
     }
 
     getListOfRides() {
-        const uri = `http://localhost:${process.env.PORT}/ride`;
+        // Populate the main page with the list of rides in a specific direction.
+        var uri = `http://localhost:${process.env.PORT}/ride?dir=`;
+        uri += this.state.ChiToChamp ? "ChicagoToChampaign" : "ChampaignToChicago";
+        // console.log(uri);
+        console.log("chi to champ? "+this.state.ChiToChamp);
+
         const displayRides = [];
         const self = this;
+
+        var departureConsts, destinationConsts;
+        if (this.state.ChiToChamp) {
+            departureConsts = LocationConstants.ChicagoPlaces;
+            destinationConsts = LocationConstants.ChampaignPlaces;
+        } else {
+            departureConsts = LocationConstants.ChampaignPlaces;
+            destinationConsts = LocationConstants.ChicagoPlaces;
+        }
+
+        // console.log("departure constants: ", departureConsts);
+        // console.log("destination constants: ", destinationConsts);
 
         request.get(uri, function (error, response, body) {
             console.error('error:', error); // Print the error if one occurred
@@ -36,55 +52,59 @@ class Listings extends Component {
             console.log('body:', body); // Print the HTML for all rides query.
 
             const rides = JSON.parse(body);
-            // console.log(rides);
 
-            // convert to array in order to use nice syntax. make sure to follow the schema pattens.
+            console.log(departureConsts, destinationConsts);
+
+            // Convert to array in order to use nice syntax. make sure to follow the schema pattens.
             for (const ride of rides) {
-                // @TODO sanitize data and delete this later.
-                const tempdate = ride.date ? ride.date : new Date();
+                console.log("ride", ride);
 
-                var departure, destination;
-
-                if (ride.category == "ChicagoToChampaign") {
-                    console.log(LocationConstants.ChicagoPlaces[ride.departure]);
-                    console.log(LocationConstants.ChampaignPlaces[ride.destination]);
-
-                    departure = LocationConstants.ChicagoPlaces[ride.departure].place;
-                    destination = LocationConstants.ChampaignPlaces[ride.destination].place;
-                } else {
-                    console.log(LocationConstants.ChampaignPlaces[ride.departure]);
-                    console.log(LocationConstants.ChicagoPlaces[ride.destination]);
-                    
-                    departure = LocationConstants.ChampaignPlaces[ride.departure].place;
-                    destination = LocationConstants.ChicagoPlaces[ride.destination].place;
-                }
-                
+                var departurePlace, destinationPlace;
+                // departurePlace = LocationConstants.ChicagoPlaces[ride.departure].place;
+                departurePlace = (departureConsts[ride.departure]).place;
+                // console.log("departure place: ", departurePlace);
+                // console.log(ride.destination);
+                // console.log(LocationConstants.ChampaignPlaces[ride.destination]);
+                // destinationPlace = LocationConstants.ChampaignPlaces[ride.destination].place;
+                destinationPlace = (destinationConsts[ride.destination]).place
+                // console.log("destination place: ", destinationPlace);
+                // console.log('places: ', departurePlace, destinationPlace);
 
                 // console.log(ride);
                 displayRides.push({
                     firstname: ride.firstname,
                     lastname: ride.lastname,
-                    departure: departure,
-                    destination: destination,
-                    date: tempdate
+                    departure: departurePlace,
+                    destination: destinationPlace,
+                    date: ride.date
                 })
             }
 
             self.setState(state => ({
-                RidesChampToChi: displayRides
+                Rides: displayRides
             }));
 
         });
     }
 
+    /**
+     * Handle when user presses the toggle button to switch the direction of rides.
+     */
     toggleList() {
-        this.setState(state => (
-            {
+        console.log("current state: ", this.state.ChiToChamp);
+        this.setState(state => ({
                 ChiToChamp: !state.ChiToChamp
-            }
-        ));
+        }), function() {
+            this.getListOfRides();
+        });
+        
+        console.log("after state: ", this.state.ChiToChamp);
+        // this.getListOfRides();
     }
 
+    /**
+     * Handle when user modifies the date selected on the drop down calendar.
+     */
     handleDateChange(date) {
         this.setState({
             searchDate: date
@@ -93,7 +113,6 @@ class Listings extends Component {
 
     render() {
         // this.getListOfRides();
-        const rides = this.state.ChiToChamp ? this.state.RidesChampToChi : this.state.RidesChampToChi;
         return (
             <div className="Listing">
                 <p className="App-intro">
@@ -105,7 +124,7 @@ class Listings extends Component {
                     <DatePicker className="searchFilter" name="searchDate" selected={this.state.searchDate} onChange={this.handleDateChange} dateFormat="MMMM d, yyyy" minDate={new Date()}/>
                     <br></br>
                 </div>
-                <DynamicRides rides={rides}/>
+                <DynamicRides rides={this.state.Rides}/>
                 {/* <button className="toggleButton" onClick={this.getListOfRides} type="button">Get All Rides</button> */}
             </div>
         );

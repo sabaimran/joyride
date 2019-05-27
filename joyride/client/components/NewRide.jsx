@@ -4,6 +4,9 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
+/**
+ * Page for creating a new ride entry.
+ */
 class NewRide extends Component {
 
     constructor(props) {
@@ -35,6 +38,10 @@ class NewRide extends Component {
         });
     }
 
+    /**
+     * Update the date specified in the calendar.
+     * @param {*} date 
+     */
     handleDateChange(date) {
         this.setState({
             date: date
@@ -42,6 +49,9 @@ class NewRide extends Component {
         console.log('date of ride: '+this.state.date);
     }
 
+    /**
+     * Handle the form submit by creating a post request.
+     */
     handleSubmit(event) {
         event.preventDefault();
         // Make the post request
@@ -62,6 +72,10 @@ class NewRide extends Component {
           });
     }
 
+    /**
+     * Create a dropdown menu populated with specific locations.
+     * @param {*} props : specify which direction the dropdown menu would accomodate
+     */
     DynamicDropDownMenu(props) {
         let locationArray = [];
         var locations;
@@ -88,6 +102,9 @@ class NewRide extends Component {
         )
     };
 
+    /**
+     * A form for entering input to create a new ride entry in the database.
+     */
     render() {
         return (
             <div>

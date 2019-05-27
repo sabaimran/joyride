@@ -2,7 +2,9 @@ import React, { Component } from "react";
 
 import RideEntry from './RideEntry.jsx';
 
-// class DynamicRides extends Component<IRideProps, any> {
+/**
+ * Populate ride objects in to the listing page.
+ */
 class DynamicRides extends Component {
 
     constructor(props) {

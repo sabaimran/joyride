@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 class RideEntry extends Component {
     constructor(props) {
         super(props);
-        console.log('ride entry date: '+props.date);
     }
 
     render() {

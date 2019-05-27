@@ -1,6 +1,5 @@
 import * as express from 'express';
 import Controller from '../interfaces/IController';
-import { IRide } from '../interfaces/IRide';
 import rideModel from '../schemas/Ride';
 
 export default class RideController implements Controller {
@@ -22,13 +21,28 @@ export default class RideController implements Controller {
         this.router.post(this.path, this.createRide);
     }
 
+    /**
+     * Get all the entries following the Ride schema.
+     */
     private getAllRides = (request: express.Request, response: express.Response) => {
-        console.log("get all rides");
-        this.ride.find().then((rides) => {
-            response.send(rides)
-        });
+        console.log("get list of rides");
+
+        const dir = request.query.dir;
+        // If direction is specificed, show only one direction.
+        if (dir) {
+            this.ride.find({category: dir}).then((rides) => {
+                response.send(rides)
+            });
+        } else {
+            this.ride.find().then((rides) => {
+                response.send(rides);
+            });
+        }
     }
 
+    /**
+     * Get a ride by the specific ID.
+     */
     private getRideById = (request: express.Request, response: express.Response) => {
         const id = request.params.id;
         this.ride.findById(id).then((ride) => {
@@ -36,6 +50,9 @@ export default class RideController implements Controller {
         });
     }
 
+    /**
+     * Update information regarding a ride.
+     */
     private modifyRide = (request: express.Request, response: express.Response) => {
         const id = request.params.id;
         const rideData = request.body;
@@ -44,6 +61,9 @@ export default class RideController implements Controller {
         });
     }
 
+    /**
+     * Add a new ride to the database.
+     */
     private createRide = (request: express.Request, response: express.Response) => {
         // Should be a IRide interface
         const rideData = request.body;
@@ -56,6 +76,9 @@ export default class RideController implements Controller {
         });
     }
 
+    /**
+     * Delete a ride by its ID number.
+     */
     private deleteRide = (request: express.Request, response: express.Response) => {
         const id = request.params.id;
         this.ride.findByIdAndDelete(id).then((successResponse) => {
