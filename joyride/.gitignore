@@ -12,6 +12,7 @@
 
 # production
 /build
+/client/bundle.js
 
 # misc
 .DS_Store
