@@ -17,6 +17,7 @@
 .DS_Store
 .env
 .vscode
+4.1.2
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
