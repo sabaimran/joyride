@@ -28,8 +28,6 @@ class Listings extends Component {
         // Populate the main page with the list of rides in a specific direction.
         var uri = `http://localhost:${process.env.PORT}/ride?dir=`;
         uri += this.state.ChiToChamp ? "ChicagoToChampaign" : "ChampaignToChicago";
-        // console.log(uri);
-        console.log("chi to champ? "+this.state.ChiToChamp);
 
         const displayRides = [];
         const self = this;
@@ -53,24 +51,13 @@ class Listings extends Component {
 
             const rides = JSON.parse(body);
 
-            console.log(departureConsts, destinationConsts);
-
             // Convert to array in order to use nice syntax. make sure to follow the schema pattens.
             for (const ride of rides) {
-                console.log("ride", ride);
 
                 var departurePlace, destinationPlace;
-                // departurePlace = LocationConstants.ChicagoPlaces[ride.departure].place;
                 departurePlace = (departureConsts[ride.departure]).place;
-                // console.log("departure place: ", departurePlace);
-                // console.log(ride.destination);
-                // console.log(LocationConstants.ChampaignPlaces[ride.destination]);
-                // destinationPlace = LocationConstants.ChampaignPlaces[ride.destination].place;
                 destinationPlace = (destinationConsts[ride.destination]).place
-                // console.log("destination place: ", destinationPlace);
-                // console.log('places: ', departurePlace, destinationPlace);
 
-                // console.log(ride);
                 displayRides.push({
                     firstname: ride.firstname,
                     lastname: ride.lastname,
@@ -91,15 +78,11 @@ class Listings extends Component {
      * Handle when user presses the toggle button to switch the direction of rides.
      */
     toggleList() {
-        console.log("current state: ", this.state.ChiToChamp);
         this.setState(state => ({
                 ChiToChamp: !state.ChiToChamp
         }), function() {
             this.getListOfRides();
         });
-        
-        console.log("after state: ", this.state.ChiToChamp);
-        // this.getListOfRides();
     }
 
     /**
