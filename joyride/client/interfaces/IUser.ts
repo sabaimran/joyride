@@ -2,8 +2,10 @@
  * Interface for User schema.
  */
 export interface IUser {
-    firstName: String,
-    lastName: String,
+    firstname: String,
+    lastname: String,
     email: String,
-    license?: String
+    password: String,
+    aboutme: String,
+    license: String
 }

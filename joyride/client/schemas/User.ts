@@ -5,12 +5,15 @@ import { IUser } from '../interfaces/IUser';
 
 /**
  * Schema for basic user object in MongoDB.
+ * email must be @illinois.edu
  */
 const userSchema = new Schema({
-    firstName: String,
-    lastName: String,
+    firstname: String,
+    lastname: String,
     email: String,
-    license: String
+    password: String,
+    license: String,
+    aboutme: String
 });
 
 const userModel = model<IUser & Document>('User', userSchema);

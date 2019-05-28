@@ -18,7 +18,7 @@ class NewRide extends Component {
             departure: 'oakbrook',
             destination: 'union',
             date: new Date(),
-            errorMessage: 'all good'
+            errorMessage: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -133,6 +133,7 @@ class NewRide extends Component {
     render() {
         return (
             <div className="NewRideForm-container">
+                <h1 className="formInput">Create a new ride</h1>
                 <this.Errors/>
                 <form className="NewRideForm" onSubmit={this.handleSubmit}>
                     <label className="NewRideFormInput">First name</label>

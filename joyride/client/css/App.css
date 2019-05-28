@@ -51,6 +51,27 @@ html {
   padding: 15px 30px;
 }
 
+.UserAccountContainer {
+  text-align: left;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  background-color:  rgb(105, 146, 221);
+  padding: 15px 30px;
+}
+
+.UserAccountFormInput {
+  font-family: 'Open Sans', sans-serif;
+}
+
+input[type=submit] {
+  width:20%;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
 .NewRide-Errors {
   text-align: left;
   padding: 10px 2px;
@@ -88,16 +109,31 @@ html {
 }
 
 .NewRideForm {
-  background-color: rgb(105, 146, 221);
   font-family: 'Open Sans', sans-serif;
-  padding: 15px 30px;
 }
 
 .NewRideForm-container {
+  background-color: rgb(105, 146, 221);
   text-align: left;
   width: 50%;
   margin-left: 25%;
   margin-right: 25%;
+  padding: 15px 30px;
+}
+
+h1.formInput {
+  font-size: 20px;
+  text-align: left;
+  margin-left: 0px;
+  padding: 0;
+}
+
+input, select, textarea, option {
+  font-family: 'Open Sans', sans-serif;
+}
+
+textarea {
+  width: 100%;
 }
 
 label {
@@ -127,6 +163,10 @@ input, select {
   top: 10%;
 }
 
+#register-button {
+  top: 20%;
+}
+
 .HeaderButton {
   width:13%;
   background-color: #AC3B61;
@@ -142,10 +182,10 @@ input, select {
   position: absolute;
 }
 
-input[type=submit].NewRideFormInput {
+/* input[type=submit].NewRideFormInput {
   width:20%;
   cursor: pointer;
-}
+} */
 
 .toggleButton:hover {
   background-color: #4CAF50; /* Green */
