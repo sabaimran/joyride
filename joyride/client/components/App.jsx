@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Listings from './Listings.jsx';
 import NewRide from './NewRide.jsx';
 import Register from './Register.jsx';
+import About from './About.jsx'
 
 const tractor = require('../images/tractor-72-194019.png');
 
@@ -30,10 +31,14 @@ class App extends Component {
             <Link to="/register">
               <button id="register-button" type="button" className="HeaderButton">Sign up</button>
             </Link>
+            <Link to="/about">
+              <button id="about-page-button" type="button" className="HeaderButton">About me</button>
+            </Link>
           </div>
           <Route exact path="/" component={Listings} />
           <Route path="/newRide" component={NewRide} />
           <Route path="/register" component={Register} />
+          <Route path="/about" component={About} />
         </div>
       </Router>
     );

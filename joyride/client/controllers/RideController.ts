@@ -33,7 +33,6 @@ export default class RideController implements Controller {
         const dir = request.query.dir;
 
         const date = new Date(request.query.date);
-        console.log("date in controller: ", date);
 
         // When ready, specify also $lte in the date filter. 
         // (https://stackoverflow.com/questions/39940595/gte-and-lte-in-mongoose-with-multiple-condition)

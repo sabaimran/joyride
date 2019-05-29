@@ -42,6 +42,18 @@ html {
   text-align: left;
 }
 
+.AboutPage {
+  font-family: 'Open Sans', sans-serif;
+  padding: 15px 30px;
+}
+
+p.AboutPage {
+  margin-left: 25%;
+  margin-right: 25%;
+  padding: 15px 30px;
+  text-align: left;
+}
+
 .Listing {
   background-color: rgb(105, 146, 221);
   text-align: left;
@@ -165,6 +177,10 @@ input, select {
 
 #register-button {
   top: 20%;
+}
+
+#about-page-button {
+  top: 30%;
 }
 
 .HeaderButton {

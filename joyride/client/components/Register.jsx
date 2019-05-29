@@ -34,6 +34,11 @@ export default class Register extends Component {
         });
     }
 
+    /**
+     * When user submits the form.
+     * 
+     * @TODO sanitize the data, notify user of errors, and make a post request here to create a new user. 
+     */
     handleSubmit(event) {
         event.preventDefault();
         alert("hello");
