@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+const minPasswordLength = 4;
+
 /**
  * A registration form for new users.
  */
@@ -9,15 +11,18 @@ export default class Register extends Component {
         super(props);
 
         this.state = {
-            firstName: '',
-            lastName: '',
+            firstname: '',
+            lastname: '',
             email: '',
             password: '',
             license: '',
-            aboutme: ''
+            aboutme: '',
+            errorMessage: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.Errors = this.Errors.bind(this);
     }
 
     /**
@@ -41,13 +46,65 @@ export default class Register extends Component {
      */
     handleSubmit(event) {
         event.preventDefault();
-        alert("hello");
+        const letters = /^[A-Za-z]+$/;
+        const illinoisEmail = /^\w+@illinois+?\.edu$/;
+
+        if (!this.state.firstname || 
+            !this.state.lastname || 
+            !this.state.firstname.match(letters) ||
+            !this.state.lastname.match(letters)) {
+            this.setState({
+                errorMessage: 'Must enter in a valid first and last name.'
+            });
+        } else if (!this.state.email ||
+            !this.state.email.match(illinoisEmail)) {
+            this.setState({
+                errorMessage: 'Must enter a valid @illinois.edu email address.'
+            });
+        } else if (!this.state.password ||
+            this.state.password.length <= minPasswordLength) {
+            this.setState({
+                errorMessage: 'Enter in a password! Anything you like, it just has to be longer than 4 characters.'
+            })
+        } else if (!this.state.aboutme) {
+            this.setState({
+                errorMessage: 'Please tell us a little about yourself! This helps encourage trust across the platform.'
+            })
+        } else {
+            console.log('post request for new user');
+            // Make the post request
+            const uri = `http://localhost:${process.env.PORT}/user/signup`;
+
+            const formdata = JSON.stringify(this.state);
+
+            fetch(uri, {
+                method: "POST",
+                body: formdata,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(function(response) {
+                return response.json();
+            }).catch(function(err) {
+                console.log('Request failed', err);
+            });
+        }
+    }
+
+    /**
+     * Display errors if there are any.
+     */
+    Errors() {
+        return (
+            <div className="Form-Errors">{this.state.errorMessage}</div>
+        )
     }
 
     render () {
         return (
             <div className="UserAccountContainer">
                 <h1 className="formInput">Who are you?</h1>
+                <this.Errors />
                 <form className="UserAccountForm" onSubmit={this.handleSubmit}>
                     <label className="UserAccountFormInput">First name</label>
                     <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} />

@@ -84,7 +84,7 @@ input[type=submit] {
   font-family: 'Open Sans', sans-serif;
 }
 
-.NewRide-Errors {
+.Form-Errors {
   text-align: left;
   padding: 10px 2px;
 }

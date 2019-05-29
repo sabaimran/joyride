@@ -123,7 +123,7 @@ class NewRide extends Component {
     Errors() {
         console.log(this.state.errorMessage);
         return (
-            <div className="NewRide-Errors">{this.state.errorMessage}</div>
+            <div className="Form-Errors">{this.state.errorMessage}</div>
         )
     }
 

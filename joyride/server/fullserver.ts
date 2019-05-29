@@ -4,12 +4,12 @@ import 'dotenv/config';
 var App = require("./app").default;
 // path is relative to the JS files in /lib
 var RideController = require("./controllers/RideController").default;
-
-const rideRouter = new RideController();
+var UserController = require("./controllers/UserController").default;
 
 const app = new App (
   [
-    rideRouter
+    new RideController(),
+    new UserController()
   ],
 );
 
