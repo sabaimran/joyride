@@ -1,4 +1,6 @@
 import * as express from 'express';
+import * as jwt from 'jsonwebtoken';
+
 import Controller from '../interfaces/IController';
 import userModel from '../schemas/User';
 
@@ -22,6 +24,8 @@ export default class UserController implements Controller {
     public initRoutes() {
         this.router.get(`${this.path}/allusers`, this.getAllusers);
         this.router.get(`${this.path}/:id`, this.getUserById);
+        this.router.post(`${this.path}/login`, this.login);
+        this.router.post(`${this.path}/checktoken`, this.checkToken);
         this.router.post(`${this.path}/signup`, this.createNewUser);
         this.router.delete(`${this.path}`, this.deleteUser);
         this.router.put(`${this.path}`, this.modifyUser);
@@ -87,6 +91,75 @@ export default class UserController implements Controller {
         console.log('get all users');
         this.user.find().then((users) => {
             response.send(users);
+        });
+    }
+
+    /**
+     * Login user from email and password.
+     */
+    private login = (request: express.Request, response: express.Response) => {
+        console.log('called login');
+        const loginData = request.body;
+        const email = loginData.email;
+        const password = loginData.password;
+
+        this.user.findOne({ email: email }).then((founduser) => {
+            if (founduser) {
+                const token = this.createToken(founduser.id);
+    
+                return response.json({
+                    success: true,
+                    token
+                });
+            } else {
+                console.log('user not found');
+                response.sendStatus(404);
+            }
+        });
+    }
+
+    /**
+     * Create a new signed JSON Web Token.
+     * @param id ID from a user object.
+     */
+    private createToken(id) {
+        // SIGNING OPTIONS
+        const signOptions = {
+            expiresIn:  "168h"
+        };
+
+        const token = jwt.sign({ id }, process.env.PRIVATE_KEY, signOptions);
+
+        return token;
+    }
+
+    /**
+     * Check if a JWT is active and valid.
+     */
+    private checkToken = (request: express.Request, response: express.Response) => {
+        // Get token from header somehow.
+        const token = request.params.token;
+        jwt.verify(token, process.env.PRIVATE_KEY, (err, decoded) => {
+            if (err) {
+                return response.json({
+                    success: false,
+                    message: 'Invalid token'
+                });
+            } else {
+                this.user.findById(decoded.id).then((founduser) => {
+                    if (founduser) {
+                        return response.json({
+                            success: true,
+                            founduser
+                        });
+                    } else {
+                        response.json({
+                            success: false,
+                            message: 'User not found'
+                        }).sendStatus(404);
+                    }
+                });
+            }
         });
     }
 }
