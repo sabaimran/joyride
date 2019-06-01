@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 /**
  * Page for creating a new ride entry.
+ * @TODO make sure user is logged in before they're creating a ride.
  */
 class NewRide extends Component {
 

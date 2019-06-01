@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { nextTick } from 'q';
 
 /**
  * A Login form for returning users.
+ * @TODO redirect to main page on login.
  */
 export default class Login extends Component {
 
@@ -40,30 +42,23 @@ export default class Login extends Component {
      */
     handleSubmit(event) {
         event.preventDefault();
-        console.log('submit handler');
         const illinoisEmail = /^\w+@illinois+?\.edu$/;
 
-        // First make sure appropriate data is passed in.
+        var errorMessage = '';
 
+        // First make sure appropriate data is passed in.
         if (!this.state.email ||
             !this.state.email.match(illinoisEmail)) {
-            this.setState({
-                errorMessage: 'Must enter a valid @illinois.edu email address.'
-            });
+                errorMessage = 'Must enter a valid @illinois.edu email address.';
         } else if (!this.state.password) {
-            this.setState({
-                errorMessage: 'Enter in your password!'
-            })
+            errorMessage = 'Enter in your password!';
         } else {
-            console.log('post request to login returning user');
-            this.setState({
-                errorMessage: ''
-            });
             // Make the post request
             const uri = `http://localhost:${process.env.PORT}/user/login`;
 
             const formdata = JSON.stringify(this.state);
-            console.log('starting post request');
+            // remove this line when cleaning out code. 
+            self=this;
 
             fetch(uri, {
                 method: "POST",
@@ -72,15 +67,27 @@ export default class Login extends Component {
                     "Content-Type": "application/json"
                 }
             }).then(function(response) {
-                // If successful.
                 console.log('logged in');
-                console.log(response.token);
-                console.log(response.body.token);
-                return response.json();
+                if (response.status == 404) {
+                    errorMessage = "Sorry, we couldn't find someone with that email and password.";
+                    throw new Error("User not found.");
+                } else {
+                    return response.json();
+                }
+            }).then(function(jsonresponse) {
+                // If successful.
+                console.log(jsonresponse.token);
             }).catch(function(err) {
+                self.setState({
+                    errorMessage: errorMessage
+                });
                 console.log('Request failed', err);
             });
         }
+
+        this.setState({
+            errorMessage: errorMessage
+        });
     }
 
     /**
@@ -97,17 +104,17 @@ export default class Login extends Component {
          * @TODO change these classNames to differentiate from the reigstration form
         */
         return (
-            <div className="UserAccountContainer">
+            <div className="LoginContainer">
                 <h1 className="formInput">Welcome back!</h1>
                 <this.Errors />
-                <form className="UserAccountForm" onSubmit={this.handleSubmit}>
-                    <label className="UserAccountFormInput">Email Address</label>
+                <form className="LoginForm" onSubmit={this.handleSubmit}>
+                    <label className="LoginFormInput">Email Address</label>
                     <input type="text" name="email" value={this.state.email} onChange={this.handleChange} />
 
-                    <label className="UserAccountFormInput">Password</label>
+                    <label className="LoginFormInput">Password</label>
                     <input type="text" name="password" value={this.state.password} onChange={this.handleChange} />
 
-                    <input className="UserAccountFormInput" type="submit" value="Submit"/>
+                    <input className="LoginFormInput" type="submit" value="Submit"/>
                 </form>
             </div>
         )

@@ -15,6 +15,7 @@ const tractor = require('../images/tractor-72-194019.png');
  * Main app entrypoint for React.
  * @TODO determine which entry points I need and how to structure the header.
  * @TODO create a landing page for successful submissions.
+ * @TODO automatically detect if user is logged in using checkToken route in UserController.jsx to hide/show certain buttons.
  */
 class App extends Component {
 

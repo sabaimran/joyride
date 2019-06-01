@@ -33,6 +33,7 @@ export default class UserController implements Controller {
 
     /**
      * New user sign up.
+     * @TODO save encrypted passwords.
      */
     private createNewUser = (request: express.Request, response: express.Response) => {
         console.log("create new user");
@@ -96,6 +97,7 @@ export default class UserController implements Controller {
 
     /**
      * Login user from email and password.
+     * @TODO use encryption to process the passwords.
      */
     private login = (request: express.Request, response: express.Response) => {
         console.log('called login');

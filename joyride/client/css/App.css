@@ -76,6 +76,19 @@ p.AboutPage {
   font-family: 'Open Sans', sans-serif;
 }
 
+.LoginContainer {
+  text-align: left;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  background-color:  rgb(105, 146, 221);
+  padding: 15px 30px;
+}
+
+.LoginFormInput {
+  font-family: 'Open Sans', sans-serif;
+}
+
 input[type=submit] {
   width:20%;
   cursor: pointer;

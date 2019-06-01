@@ -9,6 +9,7 @@ import request from 'request';
 
 /**
  * Front page with all the rides available, subject to filter.
+ * @TODO make Listings actionable to contact the driver.
  */
 class Listings extends Component {
 
