@@ -106,6 +106,11 @@ export default class UserController implements Controller {
         this.user.findOne({ email: email }).then((founduser) => {
             if (founduser) {
                 const token = this.createToken(founduser.id);
+
+                // Create a token and attach it to the header.
+                const tokenData = this.createToken(token);
+                console.log('set cookie');
+                response.setHeader('Set-Cookie', [this.createCookie(tokenData)]);
     
                 return response.json({
                     success: true,
@@ -137,29 +142,41 @@ export default class UserController implements Controller {
      * Check if a JWT is active and valid.
      */
     private checkToken = (request: express.Request, response: express.Response) => {
-        // Get token from header somehow.
-        const token = request.params.token;
-        jwt.verify(token, process.env.PRIVATE_KEY, (err, decoded) => {
-            if (err) {
-                return response.json({
-                    success: false,
-                    message: 'Invalid token'
-                });
-            } else {
-                this.user.findById(decoded.id).then((founduser) => {
-                    if (founduser) {
-                        return response.json({
-                            success: true,
-                            founduser
-                        });
-                    } else {
-                        response.json({
-                            success: false,
-                            message: 'User not found'
-                        }).sendStatus(404);
-                    }
-                });
-            }
-        });
+        // Get token from cookies.
+        const cookies = request.cookies;
+        if (cookies && cookies.Authorization) { 
+            const token = cookies.Authorization;
+            console.log(token);
+            jwt.verify(token, process.env.PRIVATE_KEY, (err, decoded) => {
+                if (err) {
+                    return response.json({
+                        success: false,
+                        message: 'Invalid token'
+                    });
+                } else {
+                    this.user.findById(decoded.id).then((founduser) => {
+                        if (founduser) {
+                            return response.json({
+                                success: true,
+                                founduser
+                            });
+                        } else {
+                            response.json({
+                                success: false,
+                                message: 'User not found'
+                            }).sendStatus(404);
+                        }
+                    });
+                }
+            });
+        }
     }
+
+    /**
+     * Create cookie from token to be stored in the user's site.
+     * @param token token returned from JWT sign
+     */
+    private createCookie(token) {
+        return `Authorization=${token}; HttpOnly; Max-Età=${token.expiresIn}`;
+      }
 }

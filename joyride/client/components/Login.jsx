@@ -40,25 +40,30 @@ export default class Login extends Component {
      */
     handleSubmit(event) {
         event.preventDefault();
+        console.log('submit handler');
         const illinoisEmail = /^\w+@illinois+?\.edu$/;
+
+        // First make sure appropriate data is passed in.
 
         if (!this.state.email ||
             !this.state.email.match(illinoisEmail)) {
             this.setState({
                 errorMessage: 'Must enter a valid @illinois.edu email address.'
             });
-        } else if (!this.state.password ||
-            this.state.password.length <= minPasswordLength) {
+        } else if (!this.state.password) {
             this.setState({
                 errorMessage: 'Enter in your password!'
             })
         } else {
             console.log('post request to login returning user');
+            this.setState({
+                errorMessage: ''
+            });
             // Make the post request
-            /**
             const uri = `http://localhost:${process.env.PORT}/user/login`;
 
             const formdata = JSON.stringify(this.state);
+            console.log('starting post request');
 
             fetch(uri, {
                 method: "POST",
@@ -67,11 +72,14 @@ export default class Login extends Component {
                     "Content-Type": "application/json"
                 }
             }).then(function(response) {
+                // If successful.
+                console.log('logged in');
+                console.log(response.token);
+                console.log(response.body.token);
                 return response.json();
             }).catch(function(err) {
                 console.log('Request failed', err);
             });
-            */
         }
     }
 
@@ -90,7 +98,7 @@ export default class Login extends Component {
         */
         return (
             <div className="UserAccountContainer">
-                <h1 className="formInput">Who are you?</h1>
+                <h1 className="formInput">Welcome back!</h1>
                 <this.Errors />
                 <form className="UserAccountForm" onSubmit={this.handleSubmit}>
                     <label className="UserAccountFormInput">Email Address</label>

@@ -183,6 +183,10 @@ input, select {
   top: 30%;
 }
 
+#login-button {
+  top: 40%;
+}
+
 .HeaderButton {
   width:13%;
   background-color: #AC3B61;
