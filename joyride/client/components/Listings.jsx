@@ -9,7 +9,7 @@ import request from 'request';
 
 /**
  * Front page with all the rides available, subject to filter.
- * @TODO make Listings actionable to contact the driver.
+ * @TODO make Listings actionable to contact the driver and populate firstname/lastname from userID.
  */
 class Listings extends Component {
 

@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 /**
  * Page for creating a new ride entry.
- * @TODO make sure user is logged in before they're creating a ride.
+ * @TODO make sure user is logged in before they're creating a ride, and store userID instead of firstname/lastname.
  */
 class NewRide extends Component {
 
@@ -27,6 +27,8 @@ class NewRide extends Component {
         this.handleDateChange = this.handleDateChange.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
         this.Errors = this.Errors.bind(this);
+
+        // Check for active token. If not, then prompt user to sign in or register.
     }
 
     /**
@@ -67,6 +69,8 @@ class NewRide extends Component {
         } else {
             // Make the post request
             const uri = `http://localhost:${process.env.PORT}/ride`;
+
+            // Get user id and send it in with the post request. 
 
             const formdata = JSON.stringify(this.state);
 
