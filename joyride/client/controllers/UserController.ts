@@ -107,16 +107,14 @@ export default class UserController implements Controller {
 
         this.user.findOne({ email: email }).then((founduser) => {
             if (founduser) {
-                const token = this.createToken(founduser.id);
-
                 // Create a token and attach it to the header.
-                const tokenData = this.createToken(token);
+                const tokenData = this.createToken(founduser.id);
                 console.log('set cookie');
                 response.setHeader('Set-Cookie', [this.createCookie(tokenData)]);
     
                 return response.json({
                     success: true,
-                    token
+                    tokenData
                 });
             } else {
                 console.log('user not found');
@@ -144,12 +142,19 @@ export default class UserController implements Controller {
      * Check if a JWT is active and valid.
      */
     private checkToken = (request: express.Request, response: express.Response) => {
+        console.log('check token method');
         // Get token from cookies.
         const cookies = request.cookies;
         if (cookies && cookies.Authorization) { 
             const token = cookies.Authorization;
             console.log(token);
             jwt.verify(token, process.env.PRIVATE_KEY, (err, decoded) => {
+
+                const decodedpayload = jwt.decode(token);
+                console.log(decodedpayload);
+                console.log('verified');
+                console.log(decoded);
+                console.log(decoded.id);
                 if (err) {
                     return response.json({
                         success: false,

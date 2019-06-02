@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import request from 'request';
+
 import LocationConstants from './LocationConstants.ts';
 import DatePicker from "react-datepicker";
 
@@ -28,7 +30,27 @@ class NewRide extends Component {
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
         this.Errors = this.Errors.bind(this);
 
+        this.signedInUser();
+
         // Check for active token. If not, then prompt user to sign in or register.
+    }
+
+    /**
+     * See if user is signed in. If so, open the new ride form. If not, prompt them to sign in.
+     */
+    signedInUser() {
+        const uri = `http://localhost:${process.env.PORT}/user/checktoken`;
+
+        fetch(uri, {
+            method: "POST"
+        }).then(function(response) {
+            return response.json();
+        }).then(function(jsonresponse) {
+            console.log(jsonresponse);
+        }).catch(function(err) {
+            console.log('Request failed', err);
+        });
+
     }
 
     /**
