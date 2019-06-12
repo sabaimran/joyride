@@ -19,6 +19,45 @@ const tractor = require('../images/tractor-72-194019.png');
  */
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        isUserSignedIn: false
+    };
+    this.signedInUser();
+  }
+
+  /**
+   * See if user is signed in.
+   */
+  signedInUser() {
+    const uri = `http://localhost:${process.env.PORT}/user/checktoken`;
+
+    const self = this;
+
+    fetch(uri, {
+        method: "POST"
+    }).then(function(response) {
+        // set firstname and lastname here in self.setstate
+        if (response.ok) {
+          console.log('do something here');
+        } else if (response.status == 200) {
+          console.log('or do something here');
+        } else if (response.status == 401) {
+          console.log('user not logged in');
+        } else if (response.status == 404) {
+          console.log('user does not exist');
+        }
+        return response.json();
+    }).then(function(jsonresponse) {
+        console.log(jsonresponse);
+    }).catch(function(err) {
+        console.log('Request failed', err);
+    });
+  }
+
+
   render() {
     return (
       <Router>
@@ -48,8 +87,8 @@ class App extends Component {
           <Route path="/login" component={Login} />
         </div>
       </Router>
-    );
-  }
+      );
+    }
 }
 
 export default App;

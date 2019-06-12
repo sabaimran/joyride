@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import request from 'request';
 
 import LocationConstants from './LocationConstants.ts';
@@ -21,7 +22,8 @@ class NewRide extends Component {
             departure: 'oakbrook',
             destination: 'union',
             date: new Date(),
-            errorMessage: ''
+            errorMessage: '',
+            loggedin: true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -41,9 +43,18 @@ class NewRide extends Component {
     signedInUser() {
         const uri = `http://localhost:${process.env.PORT}/user/checktoken`;
 
+        const self = this;
+
         fetch(uri, {
             method: "POST"
         }).then(function(response) {
+            // set firstname and lastname here in self.setstate
+            if (response.status == 404 || 
+                response.status == 401) {
+                    self.setState(state => ({
+                        loggedin: false
+                    }));
+            }
             return response.json();
         }).then(function(jsonresponse) {
             console.log(jsonresponse);
@@ -158,6 +169,17 @@ class NewRide extends Component {
      * A form for entering input to create a new ride entry in the database.
      */
     render() {
+        console.log('this.state.loggedin: ', this.state.loggedin)
+        /**
+         * @TODO
+         * If no user is logged in, then redirect to the login screen (Or signup?).
+         */
+        if (!this.state.loggedin) {
+            return (
+                <Redirect to="/login"/>
+            );
+        }
+
         return (
             <div className="NewRideForm-container">
                 <h1 className="formInput">Create a new ride</h1>

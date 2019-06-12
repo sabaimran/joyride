@@ -36,13 +36,16 @@ export default class RideController implements Controller {
 
         // When ready, specify also $lte in the date filter. 
         // (https://stackoverflow.com/questions/39940595/gte-and-lte-in-mongoose-with-multiple-condition)
+        // Sort rides in order.
         if (dir) {
             this.ride.find({
                 category: dir,
                 date: {
                     $gte: date
                 }
-            }).then((rides) => {
+            }).sort(
+                {date: '1'}
+            ).then((rides) => {
                 response.send(rides)
             });
         } else {

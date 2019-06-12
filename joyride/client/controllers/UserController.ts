@@ -147,14 +147,7 @@ export default class UserController implements Controller {
         const cookies = request.cookies;
         if (cookies && cookies.Authorization) { 
             const token = cookies.Authorization;
-            console.log(token);
             jwt.verify(token, process.env.PRIVATE_KEY, (err, decoded) => {
-
-                const decodedpayload = jwt.decode(token);
-                console.log(decodedpayload);
-                console.log('verified');
-                console.log(decoded);
-                console.log(decoded.id);
                 if (err) {
                     return response.json({
                         success: false,
@@ -163,19 +156,24 @@ export default class UserController implements Controller {
                 } else {
                     this.user.findById(decoded.id).then((founduser) => {
                         if (founduser) {
-                            return response.json({
+                            return response.status(200).json({
                                 success: true,
                                 founduser
                             });
                         } else {
-                            response.json({
+                            response.status(404).json({
                                 success: false,
                                 message: 'User not found'
-                            }).sendStatus(404);
+                            });
                         }
                     });
                 }
             });
+        } else {
+            return response.status(401).json({
+                success: false,
+                message: 'User not logged in'
+            });;
         }
     }
 
@@ -185,5 +183,5 @@ export default class UserController implements Controller {
      */
     private createCookie(token) {
         return `Authorization=${token}; HttpOnly; Max-Età=${token.expiresIn}`;
-      }
+    }
 }
