@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
 import Controller from '../interfaces/IController';
@@ -35,14 +36,24 @@ export default class UserController implements Controller {
      * New user sign up.
      * @TODO save encrypted passwords.
      */
-    private createNewUser = (request: express.Request, response: express.Response) => {
+    private createNewUser = async (request: express.Request, response: express.Response) => {
         console.log("create new user");
         const userData = request.body;
+        if ( await this.user.findOne( {email: userData.email}) ) {
+            response.status(401).json({
+                success: false,
+                message: 'User already exists'
+            });
+        } else {
+            const hashedPassword = await bcrypt.hash(userData.password, 10);
+            userData.password = hashedPassword;
+            console.log(userData);
 
-        const createdUser = new this.user(userData);
-        createdUser.save().then((savedUser) => {
-            response.send(savedUser);
-        })
+            const createdUser = new this.user(userData);
+            createdUser.save().then((savedUser) => {
+                response.send(savedUser);
+            })
+        }
     }
 
     /**
@@ -103,19 +114,26 @@ export default class UserController implements Controller {
         console.log('called login');
         const loginData = request.body;
         const email = loginData.email;
-        const password = loginData.password;
 
-        this.user.findOne({ email: email }).then((founduser) => {
+        this.user.findOne({ email: email }).then(async (founduser) => {
             if (founduser) {
-                // Create a token and attach it to the header.
-                const tokenData = this.createToken(founduser.id);
-                console.log('set cookie');
-                response.setHeader('Set-Cookie', [this.createCookie(tokenData)]);
-    
-                return response.json({
-                    success: true,
-                    tokenData
-                });
+                const isCorrectPassword = await bcrypt.compare(loginData.password, founduser.password.toString());
+                if (isCorrectPassword) {
+                    // Create a token and attach it to the header.
+                    const tokenData = this.createToken(founduser.id);
+                    console.log('set cookie');
+                    response.setHeader('Set-Cookie', [this.createCookie(tokenData)]);
+        
+                    return response.json({
+                        success: true,
+                        tokenData
+                    });
+                } else {
+                    return response.status(401).json({
+                        success: false,
+                        message: 'Incorrect credentials'
+                    });
+                }
             } else {
                 console.log('user not found');
                 response.sendStatus(404);
