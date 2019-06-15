@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import tractor from './tractor.svg';
 import '../css/App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
 
 import Listings from './Listings.jsx';
 import NewRide from './NewRide.jsx';
@@ -67,18 +67,24 @@ class App extends Component {
               <img id="logo" src={tractor} className="App-logo" alt="logo" />
             </Link>
             <h2>JOYRIDE</h2>
-            <Link to="/newRide">
-              <button id="new-form-button" type="button" className="HeaderButton">New Ride</button>
-            </Link>
-            <Link to="/register">
-              <button id="register-button" type="button" className="HeaderButton">Sign up</button>
-            </Link>
-            <Link to="/about">
-              <button id="about-page-button" type="button" className="HeaderButton">About me</button>
-            </Link>
-            <Link to="/login">
-              <button id="login-button" type="button" className="HeaderButton">Log in</button>
-            </Link>
+            <div className="mainMenu">
+              <NavLink className="menuOption" to="/newRide">
+                New Ride
+                {/* <button id="new-form-button" type="button" className="HeaderButton">New Ride</button> */}
+              </NavLink>
+              <NavLink className="menuOption" to="/register">
+                Sign up
+                {/* <button id="register-button" type="button" className="HeaderButton">Sign up</button> */}
+              </NavLink>
+              <NavLink className="menuOption" to="/about">
+                About me
+                {/* <button id="about-page-button" type="button" className="HeaderButton">About me</button> */}
+              </NavLink>
+              <NavLink className="menuOption" to="/login">
+                Log in
+                {/* <button id="login-button" type="button" className="HeaderButton">Log in</button> */}
+              </NavLink>
+            </div>
           </div>
           <Route exact path="/" component={Listings} />
           <Route path="/newRide" component={NewRide} />

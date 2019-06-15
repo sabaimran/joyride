@@ -25,6 +25,7 @@ export default class UserController implements Controller {
     public initRoutes() {
         this.router.get(`${this.path}/allusers`, this.getAllusers);
         this.router.get(`${this.path}/:id`, this.getUserById);
+        this.router.post(`${this.path}/logout`, this.logOut);
         this.router.post(`${this.path}/login`, this.login);
         this.router.post(`${this.path}/checktoken`, this.checkToken);
         this.router.post(`${this.path}/signup`, this.createNewUser);
@@ -75,7 +76,7 @@ export default class UserController implements Controller {
      * Delete a user.
      */
     private deleteUser = (request: express.Request, response: express.Response) => {
-        const id = request.params.id;
+        const id = request.query.id;
         this.user.findByIdAndDelete(id).then((successResponse) => {
             if (successResponse) {
                 response.sendStatus(200);
@@ -165,6 +166,7 @@ export default class UserController implements Controller {
         const cookies = request.cookies;
         if (cookies && cookies.Authorization) { 
             const token = cookies.Authorization;
+            // Verify that the token is valid and active.
             jwt.verify(token, process.env.PRIVATE_KEY, (err, decoded) => {
                 if (err) {
                     return response.json({
@@ -172,6 +174,7 @@ export default class UserController implements Controller {
                         message: 'Invalid token'
                     });
                 } else {
+                    // If valid token, get the current user. 
                     this.user.findById(decoded.id).then((founduser) => {
                         if (founduser) {
                             return response.status(200).json({
@@ -188,6 +191,7 @@ export default class UserController implements Controller {
                 }
             });
         } else {
+            // No user was logged in. 
             return response.status(401).json({
                 success: false,
                 message: 'User not logged in'
@@ -201,5 +205,13 @@ export default class UserController implements Controller {
      */
     private createCookie(token) {
         return `Authorization=${token}; HttpOnly; Max-Età=${token.expiresIn}`;
+    }
+
+    /**
+     * Sign out the user.
+     */
+    private logOut = (request: express.Request, response: express.Response) => {
+        response.setHeader('Set-Cookie', ['Authorization=;Max-age=0']);
+        response.send(200);
     }
 }

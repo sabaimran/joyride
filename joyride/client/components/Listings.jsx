@@ -53,7 +53,9 @@ class Listings extends Component {
 
         request.get(uri, function (error, response, body) {
             // Print the error if one occurred
-            console.error('error:', error); 
+            if (error) {
+                console.error('error:', error); 
+            }
             // Print the response status code if a response was received
             console.log('statusCode:', response && response.statusCode); 
             // Print the HTML for all rides query.

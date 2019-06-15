@@ -48,7 +48,7 @@ class NewRide extends Component {
         fetch(uri, {
             method: "POST"
         }).then(function(response) {
-            // set firstname and lastname here in self.setstate
+            // Check if login worked. If not, then show not logged in. 
             if (response.status == 404 || 
                 response.status == 401) {
                     self.setState(state => ({
@@ -56,8 +56,14 @@ class NewRide extends Component {
                     }));
             }
             return response.json();
-        }).then(function(jsonresponse) {
-            console.log(jsonresponse);
+        }).then(function(signinResult) {
+            // If there is a user signed in, populate the fisrt and last name fields.
+            if(signinResult.success) {
+                self.setState(state => ({
+                    firstname: signinResult.founduser.firstname,
+                    lastname: signinResult.founduser.lastname
+                }));
+            }
         }).catch(function(err) {
             console.log('Request failed', err);
         });
@@ -186,10 +192,10 @@ class NewRide extends Component {
                 <this.Errors/>
                 <form className="NewRideForm" onSubmit={this.handleSubmit}>
                     <label className="NewRideFormInput">First name</label>
-                    <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} />
+                    <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} readOnly />
 
                     <label className="NewRideFormInput">Last name</label>
-                    <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} />
+                    <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} readOnly />
 
                     <label className="NewRideFormInput">Choose your category</label>
                     <select name="category" value={this.state.category} onChange={this.handleChange}>

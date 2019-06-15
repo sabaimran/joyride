@@ -200,6 +200,33 @@ input, select {
   top: 40%;
 }
 
+.active {
+  font-weight: bold;
+  color: rgb(50, 129, 76);
+  background: rgb(255, 255, 255);
+}
+
+.menuOption {
+  padding: 10px 10px 10px 10px;
+  text-align: right;
+  position: relative;
+  margin-left: 5%;
+  color: mediumpurple;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menuOption:hover {
+  color: white;
+}
+
+.mainMenu {
+  position: fixed;
+  right: 0%;
+  margin-top: -3%;
+}
+
 .HeaderButton {
   width:13%;
   background-color: #AC3B61;
@@ -214,11 +241,6 @@ input, select {
   border-radius: 12px;
   position: absolute;
 }
-
-/* input[type=submit].NewRideFormInput {
-  width:20%;
-  cursor: pointer;
-} */
 
 .toggleButton:hover {
   background-color: #4CAF50; /* Green */

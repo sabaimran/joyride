@@ -31,7 +31,8 @@ export default class RideController implements Controller {
 
         // If direction is specificed, show only one direction.
         const dir = request.query.dir;
-
+        
+        // If date is specificed, show only dates greater than that one.
         const date = new Date(request.query.date);
 
         // When ready, specify also $lte in the date filter. 
