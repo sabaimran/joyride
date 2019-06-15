@@ -19,6 +19,7 @@ export default class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.Errors = this.Errors.bind(this);
+        // on login, window.location.reload(); so that app.jsx can show the correct menu options.
     }
 
     /**
