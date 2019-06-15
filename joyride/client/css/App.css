@@ -204,27 +204,29 @@ input, select {
   font-weight: bold;
   color: rgb(50, 129, 76);
   background: rgb(255, 255, 255);
+  border-radius: 3px;
 }
 
 .menuOption {
   padding: 10px 10px 10px 10px;
   text-align: right;
   position: relative;
-  margin-left: 5%;
-  color: mediumpurple;
+  color: rgb(196, 141, 221);
   text-decoration: none;
   font-size: 20px;
   font-weight: bold;
 }
 
 .menuOption:hover {
-  color: white;
+  color: rgb(75, 187, 84);
 }
 
 .mainMenu {
   position: fixed;
-  right: 0%;
+  right: 2.5%;
   margin-top: -3%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .HeaderButton {
