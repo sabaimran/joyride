@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import request from 'request';
 
 import LocationConstants from './LocationConstants.ts';
 import DatePicker from "react-datepicker";

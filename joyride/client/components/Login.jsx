@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { nextTick } from 'q';
 
 /**
  * A Login form for returning users.

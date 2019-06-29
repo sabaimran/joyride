@@ -8,6 +8,8 @@ import NewRide from './NewRide.jsx';
 import Register from './Register.jsx';
 import About from './About.jsx'
 import Login from './Login.jsx';
+import Logout from './LogOut.jsx';
+import LogOut from './LogOut.jsx';
 
 const tractor = require('../images/tractor-72-194019.png');
 
@@ -84,6 +86,10 @@ class App extends Component {
                 Log in
                 {/* <button id="login-button" type="button" className="HeaderButton">Log in</button> */}
               </NavLink>
+              <NavLink className="menuOption" to="/logout">
+                Log out
+                {/* <button id="login-button" type="button" className="HeaderButton">Log in</button> */}
+              </NavLink>
             </div>
           </div>
           <Route exact path="/" component={Listings} />
@@ -91,6 +97,7 @@ class App extends Component {
           <Route path="/register" component={Register} />
           <Route path="/about" component={About} />
           <Route path="/login" component={Login} />
+          <Route path="/logout" component={LogOut} />
         </div>
       </Router>
       );
