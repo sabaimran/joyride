@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Redirect from 'react-router-dom';
 
 /**
  * A Login form for returning users.
@@ -12,13 +13,23 @@ export default class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            errorMessage: ''
+            errorMessage: '',
+            loggedIn: false,
+            shouldRedirect: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.Errors = this.Errors.bind(this);
         // on login, window.location.reload(); so that app.jsx can show the correct menu options.
+    }
+
+    onComponentDidMount() {
+        if (this.state.loggedIn) {
+            this.setState({
+                shouldRedirect: true
+            });
+        }
     }
 
     /**
@@ -77,6 +88,12 @@ export default class Login extends Component {
             }).then(function(jsonresponse) {
                 // If successful.
                 console.log(jsonresponse.token);
+                self.setState({
+                    loggedIn: true
+                }, () => {
+                    window.location.reload();
+                });
+
             }).catch(function(err) {
                 self.setState({
                     errorMessage: errorMessage
@@ -103,6 +120,11 @@ export default class Login extends Component {
         /**
          * @TODO change these classNames to differentiate from the reigstration form
         */
+        if (this.state.shouldRedirect) {
+            return (
+                <Redirect to="/"/>
+            )
+        }
         return (
             <div className="LoginContainer">
                 <h1 className="formInput">Welcome back!</h1>

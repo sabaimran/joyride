@@ -27,6 +27,9 @@ class App extends Component {
     this.state = {
         isUserSignedIn: false
     };
+  }
+
+  componentDidMount() {
     this.signedInUser();
   }
 
@@ -42,14 +45,21 @@ class App extends Component {
         method: "POST"
     }).then(function(response) {
         // set firstname and lastname here in self.setstate
-        if (response.ok) {
+        if (response.ok && response.status == 200) {
           console.log('do something here');
-        } else if (response.status == 200) {
-          console.log('or do something here');
+          self.setState(state => ({
+            isUserSignedIn: true
+          }));
         } else if (response.status == 401) {
           console.log('user not logged in');
+          self.setState(state => ({
+            isUserSignedIn: false
+          }));
         } else if (response.status == 404) {
           console.log('user does not exist');
+          self.setState(state => ({
+            isUserSignedIn: false
+          }));
         }
         return response.json();
     }).then(function(jsonresponse) {
@@ -70,11 +80,11 @@ class App extends Component {
             </Link>
             <h2>JOYRIDE</h2>
             <div className="mainMenu">
-              <NavLink className="menuOption" to="/newRide">
+              <NavLink className="menuOption" to="/newRide" hidden={!this.state.isUserSignedIn}>
                 New Ride
                 {/* <button id="new-form-button" type="button" className="HeaderButton">New Ride</button> */}
               </NavLink>
-              <NavLink className="menuOption" to="/register">
+              <NavLink className="menuOption" to="/register" hidden={this.state.isUserSignedIn}>
                 Sign up
                 {/* <button id="register-button" type="button" className="HeaderButton">Sign up</button> */}
               </NavLink>
@@ -82,11 +92,11 @@ class App extends Component {
                 About me
                 {/* <button id="about-page-button" type="button" className="HeaderButton">About me</button> */}
               </NavLink>
-              <NavLink className="menuOption" to="/login">
+              <NavLink className="menuOption" to="/login" hidden={this.state.isUserSignedIn}>
                 Log in
                 {/* <button id="login-button" type="button" className="HeaderButton">Log in</button> */}
               </NavLink>
-              <NavLink className="menuOption" to="/logout">
+              <NavLink className="menuOption" to="/logout" hidden={!this.state.isUserSignedIn}>
                 Log out
                 {/* <button id="login-button" type="button" className="HeaderButton">Log in</button> */}
               </NavLink>
