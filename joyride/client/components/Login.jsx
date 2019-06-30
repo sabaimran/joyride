@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Redirect from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 /**
  * A Login form for returning users.
  * @TODO redirect to main page on login.
  */
-export default class Login extends Component {
+class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -21,15 +21,49 @@ export default class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.Errors = this.Errors.bind(this);
+        this.signedInUser();
         // on login, window.location.reload(); so that app.jsx can show the correct menu options.
     }
 
-    onComponentDidMount() {
-        if (this.state.loggedIn) {
-            this.setState({
-                shouldRedirect: true
-            });
-        }
+    /**
+     * Once page is loaded, check if user is signed in and then reload the page.
+     */
+    // componentDidMount() {
+    //     console.log('component is mounted');
+    //     // this.signedInUser();
+    // }
+
+    /**
+     * See if user is signed in. If so, open the new ride form. If not, prompt them to sign in.
+     */
+    signedInUser() {
+        const uri = `http://localhost:${process.env.PORT}/user/checktoken`;
+
+        const self = this;
+
+        fetch(uri, {
+            method: "POST"
+        }).then(function(response) {
+            // Check if login worked. If not, then show not logged in. 
+            if (response.status == 404 || 
+                response.status == 401) {
+                    self.setState(state => ({
+                        loggedIn: false
+                    })
+                );
+            }
+            return response.json();
+        }).then(function(signinResult) {
+            // If there is a user signed in, set loggedIn to true and reload the page.
+            if(signinResult.success) {
+                self.setState(state => ({
+                    loggedIn: true
+                }));
+            }
+        }).catch(function(err) {
+            console.log('Request failed', err);
+        });
+
     }
 
     /**
@@ -88,11 +122,10 @@ export default class Login extends Component {
             }).then(function(jsonresponse) {
                 // If successful.
                 console.log(jsonresponse.token);
-                self.setState({
+                self.setState(state => ({
                     loggedIn: true
-                }, () => {
-                    window.location.reload();
-                });
+                }));
+                // window.location.reload();
 
             }).catch(function(err) {
                 self.setState({
@@ -117,12 +150,15 @@ export default class Login extends Component {
     }
 
     render () {
-        /**
-         * @TODO change these classNames to differentiate from the reigstration form
-        */
+
         if (this.state.shouldRedirect) {
             return (
-                <Redirect to="/"/>
+                <Redirect to="/about"/>
+            )
+        }
+        if (this.state.loggedIn) {
+            return (
+                <Redirect to="/about"/>
             )
         }
         return (
@@ -142,3 +178,6 @@ export default class Login extends Component {
         )
     }
 }
+
+export default Login;
+

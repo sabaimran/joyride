@@ -8,7 +8,6 @@ import NewRide from './NewRide.jsx';
 import Register from './Register.jsx';
 import About from './About.jsx'
 import Login from './Login.jsx';
-import Logout from './LogOut.jsx';
 import LogOut from './LogOut.jsx';
 
 const tractor = require('../images/tractor-72-194019.png');
