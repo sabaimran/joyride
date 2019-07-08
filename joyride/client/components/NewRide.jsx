@@ -27,6 +27,7 @@ class NewRide extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
         this.Errors = this.Errors.bind(this);
@@ -84,6 +85,32 @@ class NewRide extends Component {
     }
 
     /**
+     * Update category and departure/destination state when category is changed.
+     * @param {} event 
+     */
+    handleCategoryChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+
+        if (value == "ChicagoToChampaign") {
+            this.setState({
+                departure: 'oakbrook',
+                destination: 'union'
+            });
+        } else {
+            this.setState({
+                departure: 'union',
+                destination: 'oakbrook'
+            });
+        }
+    }
+
+    /**
      * Update the date specified in the calendar.
      * @param {*} date 
      */
@@ -135,18 +162,22 @@ class NewRide extends Component {
         var locations;
 
         var val;
+
+        // Departure dropdown menu.
         if (props.stop == "departure") {
             locations = this.state.category == "ChicagoToChampaign" ? 
             LocationConstants.ChicagoPlaces : 
             LocationConstants.ChampaignPlaces;
             val = this.state.departure;
         } else {
-            locations = this.state.category == "ChampaignToChicago" ? 
-            LocationConstants.ChicagoPlaces : 
-            LocationConstants.ChampaignPlaces;
+            // Destination dropdown menu.
+            locations = this.state.category == "ChicagoToChampaign" ? 
+            LocationConstants.ChampaignPlaces : 
+            LocationConstants.ChicagoPlaces;
             val = this.state.destination;
         }
 
+        // Pair all menu items with their values.
         Object.keys(locations).forEach(key => {
             locationArray.push(
                 <option key={key} value={key}>{locations[key].place}</option>
@@ -197,7 +228,7 @@ class NewRide extends Component {
                     <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} readOnly />
 
                     <label className="NewRideFormInput">Choose your category</label>
-                    <select name="category" value={this.state.category} onChange={this.handleChange}>
+                    <select name="category" value={this.state.category} onChange={this.handleCategoryChange}>
                         <option value='ChicagoToChampaign'>Chicago to Champaign</option>
                         <option value='ChampaignToChicago'>Champaign to Chicago</option>
                     </select>
