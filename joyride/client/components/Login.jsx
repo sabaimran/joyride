@@ -14,8 +14,7 @@ class Login extends Component {
             email: '',
             password: '',
             errorMessage: '',
-            loggedIn: false,
-            shouldRedirect: false
+            loggedIn: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -24,14 +23,6 @@ class Login extends Component {
         this.signedInUser();
         // on login, window.location.reload(); so that app.jsx can show the correct menu options.
     }
-
-    /**
-     * Once page is loaded, check if user is signed in and then reload the page.
-     */
-    // componentDidMount() {
-    //     console.log('component is mounted');
-    //     // this.signedInUser();
-    // }
 
     /**
      * See if user is signed in. If so, open the new ride form. If not, prompt them to sign in.
@@ -113,7 +104,7 @@ class Login extends Component {
                 }
             }).then(function(response) {
                 console.log('logged in');
-                if (response.status == 404) {
+                if (response.status !== 200) {
                     errorMessage = "Sorry, we couldn't find someone with that email and password.";
                     throw new Error("User not found.");
                 } else {
@@ -125,7 +116,7 @@ class Login extends Component {
                 self.setState(state => ({
                     loggedIn: true
                 }));
-                // window.location.reload();
+                window.location.reload();
 
             }).catch(function(err) {
                 self.setState({
@@ -150,15 +141,9 @@ class Login extends Component {
     }
 
     render () {
-
-        if (this.state.shouldRedirect) {
-            return (
-                <Redirect to="/about"/>
-            )
-        }
         if (this.state.loggedIn) {
             return (
-                <Redirect to="/about"/>
+                <Redirect to="/"/>
             )
         }
         return (

@@ -14,14 +14,12 @@ class DynamicRides extends Component {
     render () {
         return (
             <div>
-                <ul>
-                    {this.props.rides.map((rides, index) => (
-                        <RideEntry key={index} name={rides.firstname+` `+rides.lastname} departure={rides.departure} destination={rides.destination} date={rides.date}/>
-                    ))}
-                </ul>
+                {this.props.rides.map((ride, index) => (
+                    <RideEntry key={index} driverID={ride.driverID} departure={ride.departure} destination={ride.destination} date={ride.date}/>
+                ))}
             </div>
         );
-    }    
+    }
 }
 
 export default DynamicRides;

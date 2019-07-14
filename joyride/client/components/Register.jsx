@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 const minPasswordLength = 4;
 
@@ -17,7 +18,8 @@ export default class Register extends Component {
             password: '',
             license: '',
             aboutme: '',
-            errorMessage: ''
+            errorMessage: '',
+            loggedIn: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -77,6 +79,8 @@ export default class Register extends Component {
 
             const formdata = JSON.stringify(this.state);
 
+            self = this;
+
             fetch(uri, {
                 method: "POST",
                 body: formdata,
@@ -84,7 +88,12 @@ export default class Register extends Component {
                     "Content-Type": "application/json"
                 }
             }).then(function(response) {
-                return response.json();
+                if (response.status === 200) {
+                    self.setState({
+                        loggedIn: true
+                    });
+                    window.location.reload();
+                }
             }).catch(function(err) {
                 console.log('Request failed', err);
             });
@@ -101,6 +110,13 @@ export default class Register extends Component {
     }
 
     render () {
+
+        if (this.state.loggedIn) {
+            return (
+                <Redirect to="/"/>
+            )
+        }
+
         return (
             <div className="UserAccountContainer">
                 <h1 className="formInput">Who are you?</h1>

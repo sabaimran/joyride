@@ -133,6 +133,10 @@ input[type=submit] {
   line-height: 1.0em;
 }
 
+ul.RideEntry {
+  padding: 0px;
+}
+
 .NewRideForm {
   font-family: 'Open Sans', sans-serif;
 }
@@ -222,7 +226,7 @@ input, select {
 }
 
 .mainMenu {
-  position: fixed;
+  position: absolute;
   right: 2.5%;
   margin-top: -3%;
   margin-left: auto;

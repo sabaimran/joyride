@@ -10,8 +10,7 @@ import { IRide } from '../interfaces/IRide';
  * Schema for Ride objects in MongoDB.
  */
 const rideSchema = new Schema({
-    firstname: String,
-    lastname: String,
+    driverID: String,
     date: Date,
     destination: String,
     departure: String,

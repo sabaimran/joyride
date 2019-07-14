@@ -7,7 +7,7 @@ class LogOut extends Component {
         super(props);
 
         this.state = {
-            loggedin: true
+            loggedIn: true
         };
 
         // on login, window.location.reload(); so that app.jsx can show the correct menu options.
@@ -24,10 +24,12 @@ class LogOut extends Component {
             method: "POST"
         }).then(function(response) {
             console.log('logged out');
-            self.setState({
-                loggedin: false
-            });
-            return response.json();
+            if (response.status === 200) {
+                self.setState({
+                    loggedIn: false
+                });
+            }
+            window.location.reload();
         });
     }
 
@@ -36,7 +38,7 @@ class LogOut extends Component {
          * @TODO change these classNames to differentiate from the reigstration form
         */
 
-        if (!this.state.loggedin) {
+        if (!this.state.loggedIn) {
             return (
                 <Redirect to="/"/>
             );

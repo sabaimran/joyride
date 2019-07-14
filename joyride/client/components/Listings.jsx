@@ -71,8 +71,7 @@ class Listings extends Component {
                 destinationPlace = (destinationConsts[ride.destination]).place
 
                 displayRides.push({
-                    firstname: ride.firstname,
-                    lastname: ride.lastname,
+                    driverID: ride.driverID,
                     departure: departurePlace,
                     destination: destinationPlace,
                     date: ride.date

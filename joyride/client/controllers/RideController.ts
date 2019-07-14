@@ -85,7 +85,6 @@ export default class RideController implements Controller {
         const rideData = request.body;
         console.log('received data:');
         console.log(request.body);
-        console.log('createride:\n '+request.body.firstname)
         const createdRide = new this.ride(rideData);
         createdRide.save().then((savedPost) => {
             response.send(savedPost);

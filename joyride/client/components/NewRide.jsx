@@ -22,7 +22,8 @@ class NewRide extends Component {
             destination: 'union',
             date: new Date(),
             errorMessage: '',
-            loggedin: true
+            loggedin: true,
+            driverID: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -61,7 +62,8 @@ class NewRide extends Component {
             if(signinResult.success) {
                 self.setState(state => ({
                     firstname: signinResult.founduser.firstname,
-                    lastname: signinResult.founduser.lastname
+                    lastname: signinResult.founduser.lastname,
+                    driverID: signinResult.founduser._id
                 }));
             }
         }).catch(function(err) {
