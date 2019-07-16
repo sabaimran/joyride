@@ -16,7 +16,7 @@ const tractor = require('../images/tractor-72-194019.png');
  * Main app entrypoint for React.
  * @TODO determine which entry points I need and how to structure the header.
  * @TODO create a landing page for successful submissions.
- * @TODO automatically detect if user is logged in using checkToken route in UserController.jsx to hide/show certain buttons.
+ * @TODO create an account page with ability to manage rides.
  */
 class App extends Component {
 
@@ -81,23 +81,18 @@ class App extends Component {
             <div className="mainMenu">
               <NavLink className="menuOption" to="/newRide" hidden={!this.state.isUserSignedIn}>
                 New Ride
-                {/* <button id="new-form-button" type="button" className="HeaderButton">New Ride</button> */}
               </NavLink>
               <NavLink className="menuOption" to="/register" hidden={this.state.isUserSignedIn}>
                 Sign up
-                {/* <button id="register-button" type="button" className="HeaderButton">Sign up</button> */}
               </NavLink>
               <NavLink className="menuOption" to="/about">
                 About me
-                {/* <button id="about-page-button" type="button" className="HeaderButton">About me</button> */}
               </NavLink>
               <NavLink className="menuOption" to="/login" hidden={this.state.isUserSignedIn}>
                 Log in
-                {/* <button id="login-button" type="button" className="HeaderButton">Log in</button> */}
               </NavLink>
               <NavLink className="menuOption" to="/logout" hidden={!this.state.isUserSignedIn}>
                 Log out
-                {/* <button id="login-button" type="button" className="HeaderButton">Log in</button> */}
               </NavLink>
             </div>
           </div>
