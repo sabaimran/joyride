@@ -108,6 +108,7 @@ input[type=submit] {
   padding: 10px 20px;
   border-radius: 12px;
   margin-bottom: 2%;
+  box-shadow: 10px 10px 5px grey;
 }
 
 #timestamp {
@@ -131,6 +132,17 @@ input[type=submit] {
 .RideEntryField {
   padding: 0%;
   line-height: 1.0em;
+}
+
+h1.RideEntryField {
+  display: inline-block;
+}
+
+div#datestamp {
+  float: right;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  font-size: 1.3em;
 }
 
 ul.RideEntry {

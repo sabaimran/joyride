@@ -9,6 +9,7 @@ import Register from './Register.jsx';
 import About from './About.jsx'
 import Login from './Login.jsx';
 import LogOut from './LogOut.jsx';
+import MyAccount from './MyAccount.jsx';
 
 const tractor = require('../images/tractor-72-194019.png');
 
@@ -79,6 +80,9 @@ class App extends Component {
             </Link>
             <h2>JOYRIDE</h2>
             <div className="mainMenu">
+              <NavLink className="menuOption" to="/myaccount" hidden={!this.state.isUserSignedIn}>
+                My Account
+              </NavLink>
               <NavLink className="menuOption" to="/newRide" hidden={!this.state.isUserSignedIn}>
                 New Ride
               </NavLink>
@@ -102,6 +106,7 @@ class App extends Component {
           <Route path="/about" component={About} />
           <Route path="/login" component={Login} />
           <Route path="/logout" component={LogOut} />
+          <Route path="/myaccount" component={MyAccount} />
         </div>
       </Router>
       );

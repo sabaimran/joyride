@@ -68,9 +68,12 @@ class Listings extends Component {
 
                 var departurePlace, destinationPlace;
                 departurePlace = (departureConsts[ride.departure]).place;
-                destinationPlace = (destinationConsts[ride.destination]).place
+                destinationPlace = (destinationConsts[ride.destination]).place;
+
+                console.log(ride);
 
                 displayRides.push({
+                    key: ride._id,
                     driverID: ride.driverID,
                     departure: departurePlace,
                     destination: destinationPlace,

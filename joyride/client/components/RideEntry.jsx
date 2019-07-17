@@ -24,18 +24,12 @@ class RideEntry extends Component {
 
         const date = new Date(this.props.date);
 
-        const year = date.getFullYear();
-
-        const month = date.getMonth();
-
-        const day = date.getDay();
-
         const hours = date.getHours();
 
-        const minutes = date.getMinutes();
+        const minutes = (date.getMinutes()<10 ? '0' : '')+date.getMinutes();
 
         return (
-            <div className="RideEntryField" id="datestamp">{date.toLocaleString()}</div>
+            <div className="RideEntryField" id="datestamp">{hours}:{minutes}</div>
         );
     }
     
@@ -60,7 +54,7 @@ class RideEntry extends Component {
                     user: JSON.parse(body)
                 });
 
-                console.log(self.state.user);
+                console.log("user in ride entry:" + self.state.user.firstname);
             }
         });
     }
@@ -75,10 +69,10 @@ class RideEntry extends Component {
             return (
                 <div className="RideEntry">
                     <h1 className="RideEntryField">{this.state.user.firstname+" "+this.state.user.lastname}</h1>
-                    <p className="RideEntryField">Pickup: {this.props.departure}</p>
-                    <p className="RideEntryField">Drop-off: {this.props.destination}</p>
-                    {/* <p className="RideEntryField">{this.props.date.toString()}</p> */}
                     <this.showDate/>
+                    <div className="RideEntryField">Pickup: {this.props.departure}</div>
+                    <div className="RideEntryField">Drop-off: {this.props.destination}</div>
+                    {/* <p className="RideEntryField">{this.props.date.toString()}</p> */}
                 </div>
             );
         }

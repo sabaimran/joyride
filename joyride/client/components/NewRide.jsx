@@ -23,7 +23,8 @@ class NewRide extends Component {
             date: new Date(),
             errorMessage: '',
             loggedin: true,
-            driverID: ''
+            driverID: '',
+            submitted: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -140,6 +141,7 @@ class NewRide extends Component {
             // Get user id and send it in with the post request. 
 
             const formdata = JSON.stringify(this.state);
+            self = this;
 
             fetch(uri, {
                 method: "POST",
@@ -148,6 +150,9 @@ class NewRide extends Component {
                 "Content-Type": "application/json"
                 }
             }).then(function(response) {
+                self.setState({
+                    submitted: true
+                });
                 return response.json();
             }).catch(function(err) {
                 console.log('Request failed', err);
@@ -218,6 +223,11 @@ class NewRide extends Component {
             );
         }
 
+        if (this.state.submitted) {
+            return (
+                <Redirect to="/login" />
+            )
+        }
         return (
             <div className="NewRideForm-container">
                 <h1 className="formInput">Create a new ride</h1>

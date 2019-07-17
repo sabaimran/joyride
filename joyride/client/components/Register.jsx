@@ -132,7 +132,7 @@ export default class Register extends Component {
                     <input type="text" name="email" value={this.state.email} onChange={this.handleChange} />
 
                     <label className="UserAccountFormInput">Password</label>
-                    <input type="text" name="password" value={this.state.password} onChange={this.handleChange} />
+                    <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
 
                     <label className="UserAccountFormInput">About yourself!</label>
                     <textarea type="text" rows="5" name="aboutme" value={this.state.aboutme} onChange={this.handleChange} />
