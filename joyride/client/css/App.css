@@ -57,10 +57,10 @@ p.AboutPage {
 .Listing {
   background-color: rgb(105, 146, 221);
   text-align: left;
-  width: 75%;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 20%;
+  margin-right: 20%;
   padding: 15px 30px;
+  border-radius: 5px;
 }
 
 .UserAccountContainer {
@@ -273,6 +273,11 @@ input, select {
   font-size: 0.8em;
   margin-left: 20%;
   font-family: 'Open Sans', sans-serif;
+}
+
+.UserAccount {
+  text-align: left;
+  width: 80%;
 }
 
 @keyframes App-logo-spin {

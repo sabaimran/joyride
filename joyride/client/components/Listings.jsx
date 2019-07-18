@@ -118,9 +118,6 @@ class Listings extends Component {
         // this.getListOfRides();
         return (
             <div className="Listing">
-                <p className="App-intro">
-                    Click on the button to toggle the <code>direction</code>.
-                </p>
                 <Heading ChiToChamp={this.state.ChiToChamp} /> 
                 <div>
                     <button className="toggleButton" onClick={this.toggleList} type="button">Switch Directions</button>

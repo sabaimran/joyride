@@ -35,7 +35,7 @@ class DynamicRides extends Component {
             for (let ride of this.props.rides) {
                 if (this.withoutTime(ride.date) > startDate) {
                     startDate = this.withoutTime(ride.date);
-                    rideGroups.push(<h1 key={startDate}>{startDate.getMonth()} / {startDate.getDay()}</h1>)
+                    rideGroups.push(<h1 key={startDate}>{startDate.getMonth()+1} / {startDate.getDate()}</h1>)
                 }
                 rideGroups.push(
                     <RideEntry key={ride.key} driverID={ride.driverID} departure={ride.departure} destination={ride.destination} date={ride.date}/>

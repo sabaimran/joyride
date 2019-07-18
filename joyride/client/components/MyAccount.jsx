@@ -95,12 +95,10 @@ class MyAccount extends Component {
     }
 
     /**
-     * A form for entering input to create a new ride entry in the database.
+     * The user's account page.
      */
     render() {
-        console.log('this.state.loggedin: ', this.state.loggedin)
         /**
-         * @TODO
          * If no user is logged in, then redirect to the login screen (Or signup?).
          */
         if (!this.state.loggedin) {
@@ -113,6 +111,7 @@ class MyAccount extends Component {
             return (
                 <div className="UserAccount">
                     <h1>Hi, {this.state.user.firstname} </h1>
+                    <p>{this.state.user.aboutme}</p>
                 </div>
             )
         } else {

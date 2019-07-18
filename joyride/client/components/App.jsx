@@ -10,6 +10,7 @@ import About from './About.jsx'
 import Login from './Login.jsx';
 import LogOut from './LogOut.jsx';
 import MyAccount from './MyAccount.jsx';
+import DropdownMenu from './DropdownMenu.jsx';
 
 const tractor = require('../images/tractor-72-194019.png');
 
@@ -23,6 +24,9 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+
+    this.scrHeight = window.innerHeight;
+    this.scrWidth = window.innerWidth;
 
     this.state = {
         isUserSignedIn: false
@@ -79,6 +83,7 @@ class App extends Component {
               <img id="logo" src={tractor} className="App-logo" alt="logo" />
             </Link>
             <h2>JOYRIDE</h2>
+            <DropdownMenu width={this.scrWidth}/>
             <div className="mainMenu">
               <NavLink className="menuOption" to="/myaccount" hidden={!this.state.isUserSignedIn}>
                 My Account
