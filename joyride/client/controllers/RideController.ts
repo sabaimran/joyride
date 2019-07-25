@@ -31,19 +31,22 @@ export default class RideController implements Controller {
 
         // If direction is specificed, show only one direction.
         const dir = request.query.dir;
-
+        
+        // If date is specificed, show only dates greater than that one.
         const date = new Date(request.query.date);
-        console.log("date in controller: ", date);
 
         // When ready, specify also $lte in the date filter. 
         // (https://stackoverflow.com/questions/39940595/gte-and-lte-in-mongoose-with-multiple-condition)
+        // Sort rides in order.
         if (dir) {
             this.ride.find({
                 category: dir,
                 date: {
                     $gte: date
                 }
-            }).then((rides) => {
+            }).sort(
+                {date: '1'}
+            ).then((rides) => {
                 response.send(rides)
             });
         } else {
@@ -82,7 +85,6 @@ export default class RideController implements Controller {
         const rideData = request.body;
         console.log('received data:');
         console.log(request.body);
-        console.log('createride:\n '+request.body.firstname)
         const createdRide = new this.ride(rideData);
         createdRide.save().then((savedPost) => {
             response.send(savedPost);

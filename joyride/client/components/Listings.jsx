@@ -9,6 +9,7 @@ import request from 'request';
 
 /**
  * Front page with all the rides available, subject to filter.
+ * @TODO make Listings actionable to contact the driver and populate firstname/lastname from userID.
  */
 class Listings extends Component {
 
@@ -52,7 +53,9 @@ class Listings extends Component {
 
         request.get(uri, function (error, response, body) {
             // Print the error if one occurred
-            console.error('error:', error); 
+            if (error) {
+                console.error('error:', error); 
+            }
             // Print the response status code if a response was received
             console.log('statusCode:', response && response.statusCode); 
             // Print the HTML for all rides query.
@@ -65,11 +68,13 @@ class Listings extends Component {
 
                 var departurePlace, destinationPlace;
                 departurePlace = (departureConsts[ride.departure]).place;
-                destinationPlace = (destinationConsts[ride.destination]).place
+                destinationPlace = (destinationConsts[ride.destination]).place;
+
+                console.log(ride);
 
                 displayRides.push({
-                    firstname: ride.firstname,
-                    lastname: ride.lastname,
+                    key: ride._id,
+                    driverID: ride.driverID,
                     departure: departurePlace,
                     destination: destinationPlace,
                     date: ride.date
@@ -113,9 +118,6 @@ class Listings extends Component {
         // this.getListOfRides();
         return (
             <div className="Listing">
-                <p className="App-intro">
-                    Click on the button to toggle the <code>direction</code>.
-                </p>
                 <Heading ChiToChamp={this.state.ChiToChamp} /> 
                 <div>
                     <button className="toggleButton" onClick={this.toggleList} type="button">Switch Directions</button>

@@ -2,8 +2,7 @@
  * Interface for Ride schema.
  */
 export interface IRide {
-    firstname: String,
-    lastname: String,
+    driverID: String,
     date: Date,
     destination: String,
     departure: String,

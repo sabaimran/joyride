@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import request from 'request';
 
 /**
  * The basic architecture for displaying a ride in Listings.jsx.
@@ -7,7 +8,13 @@ class RideEntry extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            user: '',
+            userNotFound: false
+        }
+
         this.showDate = this.showDate.bind(this);
+        this.getUser(this.props.driverID);
     }
 
     /**
@@ -16,39 +23,59 @@ class RideEntry extends Component {
     showDate() {
 
         const date = new Date(this.props.date);
-        // console.log(date);
-        // console.log(date.toLocaleDateString('en-US'));
-        // console.log(date.toLocaleString('en-US'));
-        // console.log(date.toLocaleTimeString('en-US'));
-
-        const year = date.getFullYear();
-
-        const month = date.getMonth();
-
-        const day = date.getDay();
 
         const hours = date.getHours();
 
-        const minutes = date.getMinutes();
+        const minutes = (date.getMinutes()<10 ? '0' : '')+date.getMinutes();
 
         return (
-            <div className="RideEntryField" id="datestamp">{date.toLocaleString()}</div>
+            <div className="RideEntryField" id="datestamp">{hours}:{minutes}</div>
         );
+    }
+    
+    /**
+     * From the ride object, extract the driver's ID to look them up in the DB and get relevant infos.
+     */
+    getUser(driverID) {
+        var uri = `http://localhost:${process.env.PORT}/user/${driverID}`;
+
+        const self = this;
+
+        request.get(uri, function (error, response, body) {
+            // Print the error if one occurred
+            if (error) {
+                // Should the ride be deleted?
+                console.error('error:', error); 
+                self.setState({
+                    userNotFound: true
+                });
+            } else if (response.statusCode === 200) {
+                self.setState({
+                    user: JSON.parse(body)
+                });
+
+                console.log("user in ride entry:" + self.state.user.firstname);
+            }
+        });
     }
 
     /**
      * Render a listing.
      */
     render() {
-        return (
-            <div className="RideEntry">
-                <h1 className="RideEntryField">{this.props.name}</h1>
-                <p className="RideEntryField">Pickup: {this.props.departure}</p>
-                <p className="RideEntryField">Drop-off: {this.props.destination}</p>
-                {/* <p className="RideEntryField">{this.props.date.toString()}</p> */}
-                <this.showDate/>
-            </div>
-        );
+        if (this.state.userNotFound) {
+            return(null);
+        } else {
+            return (
+                <div className="RideEntry">
+                    <h1 className="RideEntryField">{this.state.user.firstname+" "+this.state.user.lastname}</h1>
+                    <this.showDate/>
+                    <div className="RideEntryField">Pickup: {this.props.departure}</div>
+                    <div className="RideEntryField">Drop-off: {this.props.destination}</div>
+                    {/* <p className="RideEntryField">{this.props.date.toString()}</p> */}
+                </div>
+            );
+        }
     }
 }
 

@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require('path');
+const cookieParser = require('cookie-parser');
+
 class App {
 
     // public app: express.Application;
@@ -26,6 +28,7 @@ class App {
     this.app.set('views', path.join(__dirname, '../client'));
     this.app.use(express.static(path.join(__dirname, '../client')));
     this.app.use(bodyParser.json());
+    this.app.use(cookieParser());
   }
 
   public getServer() {

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+
 import LocationConstants from './LocationConstants.ts';
 import DatePicker from "react-datepicker";
 
@@ -6,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 /**
  * Page for creating a new ride entry.
+ * @TODO make sure user is logged in before they're creating a ride, and store userID instead of firstname/lastname.
  */
 class NewRide extends Component {
 
@@ -18,14 +21,56 @@ class NewRide extends Component {
             departure: 'oakbrook',
             destination: 'union',
             date: new Date(),
-            errorMessage: 'all good'
+            errorMessage: '',
+            loggedin: true,
+            driverID: '',
+            submitted: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
         this.Errors = this.Errors.bind(this);
+
+        this.signedInUser();
+
+        // Check for active token. If not, then prompt user to sign in or register.
+    }
+
+    /**
+     * See if user is signed in. If so, open the new ride form. If not, prompt them to sign in.
+     */
+    signedInUser() {
+        const uri = `http://localhost:${process.env.PORT}/user/checktoken`;
+
+        const self = this;
+
+        fetch(uri, {
+            method: "POST"
+        }).then(function(response) {
+            // Check if login worked. If not, then show not logged in. 
+            if (response.status == 404 || 
+                response.status == 401) {
+                    self.setState(state => ({
+                        loggedin: false
+                    }));
+            }
+            return response.json();
+        }).then(function(signinResult) {
+            // If there is a user signed in, populate the fisrt and last name fields.
+            if(signinResult.success) {
+                self.setState(state => ({
+                    firstname: signinResult.founduser.firstname,
+                    lastname: signinResult.founduser.lastname,
+                    driverID: signinResult.founduser._id
+                }));
+            }
+        }).catch(function(err) {
+            console.log('Request failed', err);
+        });
+
     }
 
     /**
@@ -40,6 +85,32 @@ class NewRide extends Component {
         this.setState({
             [name]: value
         });
+    }
+
+    /**
+     * Update category and departure/destination state when category is changed.
+     * @param {} event 
+     */
+    handleCategoryChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+
+        if (value == "ChicagoToChampaign") {
+            this.setState({
+                departure: 'oakbrook',
+                destination: 'union'
+            });
+        } else {
+            this.setState({
+                departure: 'union',
+                destination: 'oakbrook'
+            });
+        }
     }
 
     /**
@@ -67,7 +138,10 @@ class NewRide extends Component {
             // Make the post request
             const uri = `http://localhost:${process.env.PORT}/ride`;
 
+            // Get user id and send it in with the post request. 
+
             const formdata = JSON.stringify(this.state);
+            self = this;
 
             fetch(uri, {
                 method: "POST",
@@ -76,6 +150,9 @@ class NewRide extends Component {
                 "Content-Type": "application/json"
                 }
             }).then(function(response) {
+                self.setState({
+                    submitted: true
+                });
                 return response.json();
             }).catch(function(err) {
                 console.log('Request failed', err);
@@ -92,18 +169,22 @@ class NewRide extends Component {
         var locations;
 
         var val;
+
+        // Departure dropdown menu.
         if (props.stop == "departure") {
             locations = this.state.category == "ChicagoToChampaign" ? 
             LocationConstants.ChicagoPlaces : 
             LocationConstants.ChampaignPlaces;
             val = this.state.departure;
         } else {
-            locations = this.state.category == "ChampaignToChicago" ? 
-            LocationConstants.ChicagoPlaces : 
-            LocationConstants.ChampaignPlaces;
+            // Destination dropdown menu.
+            locations = this.state.category == "ChicagoToChampaign" ? 
+            LocationConstants.ChampaignPlaces : 
+            LocationConstants.ChicagoPlaces;
             val = this.state.destination;
         }
 
+        // Pair all menu items with their values.
         Object.keys(locations).forEach(key => {
             locationArray.push(
                 <option key={key} value={key}>{locations[key].place}</option>
@@ -123,7 +204,7 @@ class NewRide extends Component {
     Errors() {
         console.log(this.state.errorMessage);
         return (
-            <div className="NewRide-Errors">{this.state.errorMessage}</div>
+            <div className="Form-Errors">{this.state.errorMessage}</div>
         )
     }
 
@@ -131,18 +212,35 @@ class NewRide extends Component {
      * A form for entering input to create a new ride entry in the database.
      */
     render() {
+        console.log('this.state.loggedin: ', this.state.loggedin)
+        /**
+         * @TODO
+         * If no user is logged in, then redirect to the login screen (Or signup?).
+         */
+        if (!this.state.loggedin) {
+            return (
+                <Redirect to="/login"/>
+            );
+        }
+
+        if (this.state.submitted) {
+            return (
+                <Redirect to="/login" />
+            )
+        }
         return (
             <div className="NewRideForm-container">
+                <h1 className="formInput">Create a new ride</h1>
                 <this.Errors/>
                 <form className="NewRideForm" onSubmit={this.handleSubmit}>
                     <label className="NewRideFormInput">First name</label>
-                    <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} />
+                    <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} readOnly />
 
                     <label className="NewRideFormInput">Last name</label>
-                    <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} />
+                    <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} readOnly />
 
                     <label className="NewRideFormInput">Choose your category</label>
-                    <select name="category" value={this.state.category} onChange={this.handleChange}>
+                    <select name="category" value={this.state.category} onChange={this.handleCategoryChange}>
                         <option value='ChicagoToChampaign'>Chicago to Champaign</option>
                         <option value='ChampaignToChicago'>Champaign to Chicago</option>
                     </select>
