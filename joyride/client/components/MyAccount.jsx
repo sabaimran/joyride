@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import LocationConstants from './LocationConstants.ts';
 
 /**
  * Page for managing user account
@@ -10,7 +11,8 @@ class MyAccount extends Component {
         super(props);
         this.state = {
             loggedin: true,
-            user: null
+            user: null,
+            rides: null
         };
 
         this.signedInUser();
@@ -46,6 +48,61 @@ class MyAccount extends Component {
             console.log('Request failed', err);
         });
 
+    }
+
+    /**
+     * Get all rides for this user. TODO: check if the API endpoint works and make the rendering.
+     */
+    getRidesByUserID() {
+        // Populate the main page with the list of rides in a specific direction.
+        var uri = `http://localhost:${process.env.PORT}/ride/bydriver`;
+        uri += `?driverID=${this.user._id}`;
+
+        const displayRides = [];
+        const self = this;
+
+        request.get(uri, function (error, response, body) {
+            // Print the error if one occurred
+            if (error) {
+                console.error('error:', error); 
+            }
+            // Print the response status code if a response was received
+            console.log('statusCode:', response && response.statusCode); 
+            // Print the HTML for all rides query.
+            console.log('body:', body); 
+
+            const rides = JSON.parse(body);
+
+            // Convert to array in order to use nice syntax. make sure to follow the schema pattens.
+            for (const ride of rides) {
+
+                var departureConsts, destinationConsts;
+                if (this.state.ChiToChamp) {
+                    departureConsts = LocationConstants.ChicagoPlaces;
+                    destinationConsts = LocationConstants.ChampaignPlaces;
+                } else {
+                    departureConsts = LocationConstants.ChampaignPlaces;
+                    destinationConsts = LocationConstants.ChicagoPlaces;
+                }
+
+                var departurePlace, destinationPlace;
+                departurePlace = (departureConsts[ride.departure]).place;
+                destinationPlace = (destinationConsts[ride.destination]).place;
+
+                displayRides.push({
+                    key: ride._id,
+                    driverID: ride.driverID,
+                    departure: departurePlace,
+                    destination: destinationPlace,
+                    date: ride.date
+                })
+            }
+
+            self.setState(state => ({
+                rides: displayRides
+            }));
+
+        });
     }
 
     /**

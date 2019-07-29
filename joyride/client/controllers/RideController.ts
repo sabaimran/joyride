@@ -18,6 +18,7 @@ export default class RideController implements Controller {
     public initRoutes() {
         this.router.get(this.path, this.getAllRides);
         this.router.get(`${this.path}/:id`, this.getRideById);
+        this.router.get(`${this.path}/bydriver`, this.getAllRidesByDriverID);
         this.router.put(`${this.path}/:id`, this.modifyRide);
         this.router.delete(`${this.path}/:id`, this.deleteRide);
         this.router.post(this.path, this.createRide);
@@ -53,6 +54,27 @@ export default class RideController implements Controller {
             this.ride.find().then((rides) => {
                 response.send(rides);
             });
+        }
+    }
+
+    /**
+     * Get all the entries following the Ride schema.
+     */
+    private getAllRidesByDriverID = (request: express.Request, response: express.Response) => {
+        // Get the driverID
+        const driverID = request.query.driverID;
+
+        // Sort rides in order.
+        if (driverID) {
+            this.ride.find({
+                driverID: driverID
+            }).sort(
+                {date: '1'}
+            ).then((rides) => {
+                response.send(rides)
+            });
+        } else {
+            return null;
         }
     }
 
