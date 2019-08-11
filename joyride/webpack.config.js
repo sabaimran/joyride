@@ -5,7 +5,7 @@ require('dotenv').config();
 
 module.exports = {
     mode: 'development',
-    entry: './client/index.js',
+    entry: './client/index.jsx',
     output: {
         path: path.join(__dirname, 'client'),
         filename: 'bundle.js'
