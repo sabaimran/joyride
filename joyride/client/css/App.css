@@ -61,6 +61,7 @@ p.AboutPage {
   margin-right: 20%;
   padding: 15px 30px;
   border-radius: 5px;
+  margin-top: 2%;
 }
 
 .UserAccountContainer {
@@ -70,6 +71,8 @@ p.AboutPage {
   margin-right: 25%;
   background-color:  rgb(105, 146, 221);
   padding: 15px 30px;
+  border-radius: 10px;
+  margin-top: 2%;
 }
 
 .UserAccountFormInput {
@@ -83,6 +86,7 @@ p.AboutPage {
   margin-right: 25%;
   background-color:  rgb(105, 146, 221);
   padding: 15px 30px;
+  margin-top: 2%;
 }
 
 .LoginFormInput {
@@ -113,6 +117,18 @@ input[type=submit] {
 
 #timestamp {
   font-size: 18px;
+}
+
+#NoRides {
+  text-align: center;
+  font-weight: 100;
+  font-size: 20px;
+}
+
+#userRides {
+  text-align: center;
+  font-weight: 200;
+  font-size: 30px;
 }
 
 .toggleButton {
@@ -159,6 +175,7 @@ ul.RideEntry {
   width: 50%;
   margin-left: 25%;
   margin-right: 25%;
+  margin-top: 2%;
   padding: 15px 30px;
 }
 

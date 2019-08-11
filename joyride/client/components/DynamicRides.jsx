@@ -41,8 +41,12 @@ class DynamicRides extends Component {
                     <RideEntry key={ride.key} driverID={ride.driverID} departure={ride.departure} destination={ride.destination} date={ride.date}/>
                 );
             }
+            return rideGroups;
+        } else {
+            return (
+                <div id="NoRides">No rides yet!</div>
+            );
         }
-        return rideGroups;
     }
 
     render () {

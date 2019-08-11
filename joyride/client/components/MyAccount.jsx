@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import LocationConstants from './LocationConstants.ts';
+import DynamicRides from './DynamicRides';
+
+import request from 'request';
 
 /**
  * Page for managing user account
@@ -12,7 +15,7 @@ class MyAccount extends Component {
         this.state = {
             loggedin: true,
             user: null,
-            rides: null
+            rides: []
         };
 
         this.signedInUser();
@@ -40,9 +43,11 @@ class MyAccount extends Component {
         }).then(function(signinResult) {
             // If there is a user signed in, populate the fisrt and last name fields.
             if(signinResult.success) {
-                self.setState(state => ({
+                self.setState({
                     user: signinResult.founduser
-                }));
+                }, () => {
+                    self.getRidesByUserID();
+                });
             }
         }).catch(function(err) {
             console.log('Request failed', err);
@@ -56,7 +61,9 @@ class MyAccount extends Component {
     getRidesByUserID() {
         // Populate the main page with the list of rides in a specific direction.
         var uri = `http://localhost:${process.env.PORT}/ride/bydriver`;
-        uri += `?driverID=${this.user._id}`;
+        uri += `?driverID=${this.state.user._id}`;
+
+        console.log(uri);
 
         const displayRides = [];
         const self = this;
@@ -77,7 +84,7 @@ class MyAccount extends Component {
             for (const ride of rides) {
 
                 var departureConsts, destinationConsts;
-                if (this.state.ChiToChamp) {
+                if (ride.category == "ChicagoToChampaign") {
                     departureConsts = LocationConstants.ChicagoPlaces;
                     destinationConsts = LocationConstants.ChampaignPlaces;
                 } else {
@@ -166,14 +173,16 @@ class MyAccount extends Component {
 
         if (this.state.user !== null) {
             return (
-                <div className="UserAccount">
+                <div className="UserAccountContainer">
                     <h1>Hi, {this.state.user.firstname} </h1>
                     <p>{this.state.user.aboutme}</p>
+                    <p id="userRides">I'm driving!</p>
+                    <DynamicRides rides={this.state.rides}/>
                 </div>
             )
         } else {
             return (
-                <div className="UserAccount">
+                <div className="UserAccountContainer">
                     Loading user content :)
                 </div>
             );

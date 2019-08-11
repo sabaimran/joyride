@@ -17,8 +17,8 @@ export default class RideController implements Controller {
      */
     public initRoutes() {
         this.router.get(this.path, this.getAllRides);
-        this.router.get(`${this.path}/:id`, this.getRideById);
         this.router.get(`${this.path}/bydriver`, this.getAllRidesByDriverID);
+        this.router.get(`${this.path}/:id`, this.getRideById);
         this.router.put(`${this.path}/:id`, this.modifyRide);
         this.router.delete(`${this.path}/:id`, this.deleteRide);
         this.router.post(this.path, this.createRide);
@@ -33,7 +33,7 @@ export default class RideController implements Controller {
         // If direction is specificed, show only one direction.
         const dir = request.query.dir;
         
-        // If date is specificed, show only dates greater than that one.
+        // If date is specificed, show only dates greater than or equal to that one.
         const date = new Date(request.query.date);
 
         // When ready, specify also $lte in the date filter. 
@@ -61,20 +61,28 @@ export default class RideController implements Controller {
      * Get all the entries following the Ride schema.
      */
     private getAllRidesByDriverID = (request: express.Request, response: express.Response) => {
-        // Get the driverID
+        // Get the driverID        
         const driverID = request.query.driverID;
+        const date = new Date();
 
         // Sort rides in order.
-        if (driverID) {
-            this.ride.find({
-                driverID: driverID
-            }).sort(
-                {date: '1'}
-            ).then((rides) => {
-                response.send(rides)
-            });
-        } else {
-            return null;
+        try {
+            if (driverID) {
+                this.ride.find({
+                    driverID: driverID,
+                    date: {
+                        $gte: date
+                    }
+                }).sort(
+                    {date: '1'}
+                ).then((rides) => {
+                    response.send(rides)
+                });
+            } else {
+                response.send();
+            }
+        } catch {
+            response.send();
         }
     }
 
