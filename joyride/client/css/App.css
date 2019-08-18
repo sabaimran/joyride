@@ -61,7 +61,10 @@ p.AboutPage {
   margin-right: 20%;
   padding: 15px 30px;
   border-radius: 5px;
+<<<<<<< HEAD
   margin-top: 2%;
+=======
+>>>>>>> 29e5f2039d72bd5e9927d56934fa020e1b9eeb42
 }
 
 .UserAccountContainer {
@@ -70,11 +73,28 @@ p.AboutPage {
   margin-left: 25%;
   margin-right: 25%;
   background-color:  rgb(105, 146, 221);
+<<<<<<< HEAD
+=======
+  padding: 15px 30px;
+}
+
+.UserAccountFormInput {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.LoginContainer {
+  text-align: left;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  background-color:  rgb(105, 146, 221);
+>>>>>>> 29e5f2039d72bd5e9927d56934fa020e1b9eeb42
   padding: 15px 30px;
   border-radius: 10px;
   margin-top: 2%;
 }
 
+<<<<<<< HEAD
 .UserAccountFormInput {
   font-family: 'Open Sans', sans-serif;
 }
@@ -89,6 +109,8 @@ p.AboutPage {
   margin-top: 2%;
 }
 
+=======
+>>>>>>> 29e5f2039d72bd5e9927d56934fa020e1b9eeb42
 .LoginFormInput {
   font-family: 'Open Sans', sans-serif;
 }
@@ -175,7 +197,10 @@ ul.RideEntry {
   width: 50%;
   margin-left: 25%;
   margin-right: 25%;
+<<<<<<< HEAD
   margin-top: 2%;
+=======
+>>>>>>> 29e5f2039d72bd5e9927d56934fa020e1b9eeb42
   padding: 15px 30px;
 }
 
