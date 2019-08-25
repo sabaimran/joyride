@@ -7,15 +7,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 /**
- * Page for creating a new ride entry.
+ * Page for editing a ride entry.
  */
-class NewRide extends Component {
+class EditRide extends Component {
 
+    // @TODO change this so that as prop only the ride id is passed in; other info can be extracted from there.
     constructor(props) {
         super(props);
         this.state = {
-            firstname: '',
-            lastname: '',
+            firstname: this.props.location.state.firstname,
+            lastname: this.props.lastname,
             category: 'ChicagoToChampaign',
             departure: 'oakbrook',
             destination: 'union',
@@ -57,15 +58,6 @@ class NewRide extends Component {
                     }));
             }
             return response.json();
-        }).then(function(signinResult) {
-            // If there is a user signed in, populate the fisrt and last name fields.
-            if(signinResult.success) {
-                self.setState(state => ({
-                    firstname: signinResult.founduser.firstname,
-                    lastname: signinResult.founduser.lastname,
-                    driverID: signinResult.founduser._id
-                }));
-            }
         }).catch(function(err) {
             console.log('Request failed', err);
         });
@@ -224,7 +216,7 @@ class NewRide extends Component {
 
         if (this.state.submitted) {
             return (
-                <Redirect to="/" />
+                <Redirect to="/login" />
             )
         }
         return (
@@ -259,4 +251,4 @@ class NewRide extends Component {
     }
 }
 
-export default NewRide;
+export default EditRide;

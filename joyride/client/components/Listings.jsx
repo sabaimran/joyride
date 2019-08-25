@@ -115,7 +115,7 @@ class Listings extends Component {
     }
 
     render() {
-        // this.getListOfRides();
+        // showShowEdit should be flipped to false after testing.
         return (
             <div className="Listing">
                 <Heading ChiToChamp={this.state.ChiToChamp} /> 
@@ -124,7 +124,7 @@ class Listings extends Component {
                     <DatePicker className="searchFilter" name="searchDate" selected={this.state.searchDate} onChange={this.handleDateChange} dateFormat="MMMM d, yyyy" minDate={new Date()}/>
                     <br></br>
                 </div>
-                <DynamicRides rides={this.state.Rides}/>
+                <DynamicRides rides={this.state.Rides} shouldShowEdit={true}/>
             </div>
         );
     }    
