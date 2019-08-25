@@ -74,6 +74,7 @@ class Listings extends Component {
 
                 displayRides.push({
                     key: ride._id,
+                    rideID: ride._id,
                     driverID: ride.driverID,
                     departure: departurePlace,
                     destination: destinationPlace,
@@ -124,7 +125,7 @@ class Listings extends Component {
                     <DatePicker className="searchFilter" name="searchDate" selected={this.state.searchDate} onChange={this.handleDateChange} dateFormat="MMMM d, yyyy" minDate={new Date()}/>
                     <br></br>
                 </div>
-                <DynamicRides rides={this.state.Rides} shouldShowEdit={true}/>
+                <DynamicRides rides={this.state.Rides} shouldShowEdit={false}/>
             </div>
         );
     }    

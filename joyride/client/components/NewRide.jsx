@@ -69,7 +69,6 @@ class NewRide extends Component {
         }).catch(function(err) {
             console.log('Request failed', err);
         });
-
     }
 
     /**

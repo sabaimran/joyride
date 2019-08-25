@@ -91,6 +91,7 @@ export default class RideController implements Controller {
      */
     private getRideById = (request: express.Request, response: express.Response) => {
         const id = request.params.id;
+        console.log(id);
         this.ride.findById(id).then((ride) => {
             response.send(ride)
         });

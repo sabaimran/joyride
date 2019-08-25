@@ -191,6 +191,24 @@ input, select, textarea, option {
   font-family: 'Open Sans', sans-serif;
 }
 
+.editButton {
+  background-color: rgb(139, 129, 228);
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.editButton:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
 textarea {
   width: 100%;
 }

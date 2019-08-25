@@ -43,7 +43,9 @@ class RideEntry extends Component {
             return (
                 <button className="editButton" onClick={this.handleEditRide} type="button">Edit</button>
             );
-        }
+        } else {
+            return null;
+        }           
     }
 
     handleEditRide() {
@@ -89,15 +91,15 @@ class RideEntry extends Component {
             return (
                 <Redirect to={{
                     pathname: '/editride',
-                    state: { firstname: this.state.user.firstname }
+                    state: { rideID: this.props.rideID }
                 }} />
             )
         } else {
             return (
                 <div className="RideEntry">
+                    <this.showEdit/>
                     <h1 className="RideEntryField">{this.state.user.firstname+" "+this.state.user.lastname}</h1>
                     <this.showDate/>
-                    <this.showEdit />
                     <div className="RideEntryField">Pickup: {this.props.departure}</div>
                     <div className="RideEntryField">Drop-off: {this.props.destination}</div>
                 </div>

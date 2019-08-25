@@ -98,6 +98,7 @@ class MyAccount extends Component {
 
                 displayRides.push({
                     key: ride._id,
+                    rideID: ride._id,
                     driverID: ride.driverID,
                     departure: departurePlace,
                     destination: destinationPlace,
@@ -177,7 +178,7 @@ class MyAccount extends Component {
                     <h1>Hi, {this.state.user.firstname} </h1>
                     <p>{this.state.user.aboutme}</p>
                     <p id="userRides">I'm driving!</p>
-                    <DynamicRides rides={this.state.rides}/>
+                    <DynamicRides rides={this.state.rides} shouldShowEdit={true}/>
                 </div>
             )
         } else {
