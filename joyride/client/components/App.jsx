@@ -11,6 +11,7 @@ import Login from './Login.jsx';
 import LogOut from './LogOut.jsx';
 import MyAccount from './MyAccount.jsx';
 import DropdownMenu from './DropdownMenu.jsx';
+import EditRide from './EditRide.jsx';
 
 const tractor = require('../images/tractor-72-194019.png');
 
@@ -112,7 +113,9 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/logout" component={LogOut} />
           <Route path="/myaccount" component={MyAccount} />
+          <Route path="/editride" component={EditRide} />
         </div>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"></link>
       </Router>
       );
     }

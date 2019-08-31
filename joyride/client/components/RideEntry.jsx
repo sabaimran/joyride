@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import request from 'request';
+import { Redirect } from 'react-router-dom';
 
 /**
  * The basic architecture for displaying a ride in Listings.jsx.
@@ -10,10 +11,14 @@ class RideEntry extends Component {
 
         this.state = {
             user: '',
-            userNotFound: false
+            userNotFound: false,
+            shouldShowEdit: this.props.shouldShowEdit,
+            editRide: false
         }
 
         this.showDate = this.showDate.bind(this);
+        this.showEdit = this.showEdit.bind(this);
+        this.handleEditRide = this.handleEditRide.bind(this);
         this.getUser(this.props.driverID);
     }
 
@@ -31,6 +36,22 @@ class RideEntry extends Component {
         return (
             <div className="RideEntryField" id="datestamp">{hours}:{minutes}</div>
         );
+    }
+
+    showEdit() {
+        if (this.state.shouldShowEdit) {
+            return (
+                <button className="editButton" onClick={this.handleEditRide} type="button">Edit</button>
+            );
+        } else {
+            return null;
+        }           
+    }
+
+    handleEditRide() {
+        this.setState({
+            editRide: true
+        });
     }
     
     /**
@@ -63,16 +84,24 @@ class RideEntry extends Component {
      * Render a listing.
      */
     render() {
+        // TODO: add a button to toggle the mode to edit. This button will only be visible if the driver id matches the userid. Should the edit button show up on the listings page? What should the edit page look like? Like the listing or like the new ride entry page? Answer: more like the new ride entry page. 
         if (this.state.userNotFound) {
             return(null);
+        } else if (this.state.editRide) {
+            return (
+                <Redirect to={{
+                    pathname: '/editride',
+                    state: { rideID: this.props.rideID }
+                }} />
+            )
         } else {
             return (
                 <div className="RideEntry">
+                    <this.showEdit/>
                     <h1 className="RideEntryField">{this.state.user.firstname+" "+this.state.user.lastname}</h1>
                     <this.showDate/>
                     <div className="RideEntryField">Pickup: {this.props.departure}</div>
                     <div className="RideEntryField">Drop-off: {this.props.destination}</div>
-                    {/* <p className="RideEntryField">{this.props.date.toString()}</p> */}
                 </div>
             );
         }

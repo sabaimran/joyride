@@ -5,26 +5,31 @@ import LocationConstants from './LocationConstants.ts';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import request from 'request';
 
 /**
- * Page for creating a new ride entry.
+ * Page for editing a ride entry.
  */
-class NewRide extends Component {
+class EditRide extends Component {
 
+    // @TODO change this so that as prop only the ride id is passed in; other info can be extracted from there.
     constructor(props) {
         super(props);
         this.state = {
+            rideID: this.props.location.state.rideID,
             firstname: '',
             lastname: '',
-            category: 'ChicagoToChampaign',
-            departure: 'oakbrook',
-            destination: 'union',
+            category: '',
+            departure: '',
+            destination: '',
             date: new Date(),
             errorMessage: '',
             loggedin: true,
             driverID: '',
             submitted: false
         };
+
+        this.getRideByID();
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,13 +38,11 @@ class NewRide extends Component {
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
         this.Errors = this.Errors.bind(this);
 
-        this.signedInUser();
-
         // Check for active token. If not, then prompt user to sign in or register.
     }
 
     /**
-     * See if user is signed in. If so, open the new ride form. If not, prompt them to sign in.
+     * See if user is signed in. If so, open the edit ride form. If not, prompt them to sign in.
      */
     signedInUser() {
         const uri = `http://localhost:${process.env.PORT}/user/checktoken`;
@@ -52,22 +55,59 @@ class NewRide extends Component {
             // Check if login worked. If not, then show not logged in. 
             if (response.status == 404 || 
                 response.status == 401) {
-                    self.setState(state => ({
+                    self.setState(() => ({
                         loggedin: false
                     }));
             }
             return response.json();
         }).then(function(signinResult) {
-            // If there is a user signed in, populate the fisrt and last name fields.
+            // If there is a user signed in, populate the first and last name fields.
             if(signinResult.success) {
-                self.setState(state => ({
-                    firstname: signinResult.founduser.firstname,
-                    lastname: signinResult.founduser.lastname,
-                    driverID: signinResult.founduser._id
-                }));
+                if (signinResult.founduser._id !== self.state.driverID) {
+                    console.log('logged in user is not driver of this ride');
+                    self.setState(() => ({
+                        loggedin: false
+                    }));
+                } else {
+                    self.setState(() => ({
+                        firstname: signinResult.founduser.firstname,
+                        lastname: signinResult.founduser.lastname
+                    }));
+                }
             }
         }).catch(function(err) {
             console.log('Request failed', err);
+        });
+    }
+
+    getRideByID() {
+        var uri = `http://localhost:${process.env.PORT}/ride/${this.state.rideID}`;
+        self = this;
+        request.get(uri, function (error, response, body) {
+            // Print the error if one occurred
+            if (error) {
+                console.error('error:', error); 
+            }
+            // Print the response status code if a response was received
+            console.log('statusCode:', response && response.statusCode); 
+            // Print the HTML for all rides query.
+            console.log('body:', body); 
+
+            const ride = JSON.parse(body);
+
+            const currentDate = new Date(ride.date);
+
+            self.setState({
+                category: ride.category,
+                departure: ride.departure,
+                destination: ride.destination,
+                date: currentDate,
+                driverID: ride.driverID
+            }, () => {
+                self.signedInUser();
+            });
+
+            console.log(ride);
         });
     }
 
@@ -119,7 +159,6 @@ class NewRide extends Component {
         this.setState({
             date: date
         });
-        console.log('date of ride: '+this.state.date);
     }
 
     /**
@@ -127,35 +166,26 @@ class NewRide extends Component {
      */
     handleSubmit(event) {
         event.preventDefault();
-        if (!this.state.firstname || 
-            !this.state.lastname) {
-                this.setState({
-                    errorMessage: "Need to fill in a name!"
-                });
-        } else {
-            // Make the post request
-            const uri = `http://localhost:${process.env.PORT}/ride`;
+        // Make the put request
+        const uri = `http://localhost:${process.env.PORT}/ride/${this.state.rideID}`;
 
-            // Get user id and send it in with the post request. 
+        const formdata = JSON.stringify(this.state);
+        self = this;
 
-            const formdata = JSON.stringify(this.state);
-            self = this;
-
-            fetch(uri, {
-                method: "POST",
-                body: formdata,
-                headers: {
-                "Content-Type": "application/json"
-                }
-            }).then(function(response) {
-                self.setState({
-                    submitted: true
-                });
-                return response.json();
-            }).catch(function(err) {
-                console.log('Request failed', err);
+        fetch(uri, {
+            method: "PUT",
+            body: formdata,
+            headers: {
+            "Content-Type": "application/json"
+            }
+        }).then(function(response) {
+            self.setState({
+                submitted: true
             });
-        }
+            return response.json();
+        }).catch(function(err) {
+            console.log('Request failed', err);
+        });
     }
 
     /**
@@ -200,7 +230,6 @@ class NewRide extends Component {
      * Display errors if there are any.
      */
     Errors() {
-        console.log(this.state.errorMessage);
         return (
             <div className="Form-Errors">{this.state.errorMessage}</div>
         )
@@ -223,12 +252,12 @@ class NewRide extends Component {
 
         if (this.state.submitted) {
             return (
-                <Redirect to="/" />
+                <Redirect to="/login" />
             )
         }
         return (
             <div className="NewRideForm-container">
-                <h1 className="formInput">Create a new ride</h1>
+                <h1 className="formInput">Edit your ride</h1>
                 <this.Errors/>
                 <form className="NewRideForm" onSubmit={this.handleSubmit}>
                     <label className="NewRideFormInput">First name</label>
@@ -258,4 +287,4 @@ class NewRide extends Component {
     }
 }
 
-export default NewRide;
+export default EditRide;

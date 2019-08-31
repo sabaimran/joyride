@@ -38,11 +38,15 @@ class DynamicRides extends Component {
                     rideGroups.push(<h1 key={startDate}>{startDate.getMonth()+1} / {startDate.getDate()}</h1>)
                 }
                 rideGroups.push(
-                    <RideEntry key={ride.key} driverID={ride.driverID} departure={ride.departure} destination={ride.destination} date={ride.date}/>
+                    <RideEntry key={ride.key} rideID={ride.rideID} driverID={ride.driverID} departure={ride.departure} destination={ride.destination} date={ride.date} shouldShowEdit={this.props.shouldShowEdit}/>
                 );
             }
+            return rideGroups;
+        } else {
+            return (
+                <div id="NoRides">No rides yet!</div>
+            );
         }
-        return rideGroups;
     }
 
     render () {

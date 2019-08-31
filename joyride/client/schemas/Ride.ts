@@ -3,7 +3,7 @@ import "mongoose";
 import { IRide } from '../interfaces/IRide';
 
 /**
- * @TODO add: price, # of seats, and change `name` to "user id"
+ * @TODO add: price, # of seats
  */
 
 /**
