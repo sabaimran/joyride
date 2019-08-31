@@ -115,6 +115,7 @@ class App extends Component {
           <Route path="/myaccount" component={MyAccount} />
           <Route path="/editride" component={EditRide} />
         </div>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"></link>
       </Router>
       );
     }
