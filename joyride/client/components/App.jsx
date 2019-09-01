@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import tractor from './tractor.svg';
-import '../css/App.css';
 import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
 
 import Listings from './Listings.jsx';
@@ -12,6 +10,8 @@ import LogOut from './LogOut.jsx';
 import MyAccount from './MyAccount.jsx';
 import DropdownMenu from './DropdownMenu.jsx';
 import EditRide from './EditRide.jsx';
+
+import '../css/App.css';
 
 const tractor = require('../images/tractor-72-194019.png');
 
@@ -92,9 +92,9 @@ class App extends Component {
             <Link to="/">
               <img id="logo" src={tractor} className="App-logo" alt="logo" />
             </Link>
-                    <h2>JOYRIDE</h2>
-                    <DropdownMenu width={this.state.screenWidth} />
-            <div className="mainMenu">
+            <h2>JOYRIDE</h2>
+            <DropdownMenu width={this.state.screenWidth} isUserSignedIn={this.state.isUserSignedIn} />
+            <div className="mainMenu" hidden={this.state.screenWidth <= 415}>
               <NavLink className="menuOption" to="/myaccount" hidden={!this.state.isUserSignedIn}>
                 My Account
               </NavLink>

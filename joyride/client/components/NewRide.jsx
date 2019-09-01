@@ -211,10 +211,7 @@ class NewRide extends Component {
      */
     render() {
         console.log('this.state.loggedin: ', this.state.loggedin)
-        /**
-         * @TODO
-         * If no user is logged in, then redirect to the login screen (Or signup?).
-         */
+
         if (!this.state.loggedin) {
             return (
                 <Redirect to="/login"/>
