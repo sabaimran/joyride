@@ -35,11 +35,13 @@ html {
 }
 
 .App-header {
-  background-color: #123C69;
-  height: 150px;
-  padding: 20px;
-  color: white;
-  text-align: left;
+    background-color: #123C69;
+    height: 150px;
+    padding: 20px;
+    color: white;
+    text-align: left;
+    background-image: url(https://i.imgur.com/yGKdmgQ.jpg);
+    background-size: cover;
 }
 
 .AboutPage {
@@ -95,11 +97,18 @@ p.AboutPage {
 }
 
 input[type=submit] {
-  width:20%;
-  cursor: pointer;
-  border: none;
-  font-size: 20px;
-  font-family: 'Open Sans', sans-serif;
+    width: 20%;
+    cursor: pointer;
+    border: none;
+    font-size: 20px;
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    background-color: lightblue;
+}
+
+input[type=submit]:hover {
+    background-color: black;
+    color: lightblue;
 }
 
 .Form-Errors {
