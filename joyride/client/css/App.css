@@ -331,4 +331,11 @@ input, select {
     .Listing {
         margin: 0px;
     }
+
+    p.AboutPage {
+        margin-left: 5%;
+        margin-right: 5%;
+        padding: 15px 30px;
+        text-align: left;
+    }
 }
