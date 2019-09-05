@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import tractor from './tractor.svg';
-import '../css/App.css';
 import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
 
 import Listings from './Listings.jsx';
@@ -13,30 +11,41 @@ import MyAccount from './MyAccount.jsx';
 import DropdownMenu from './DropdownMenu.jsx';
 import EditRide from './EditRide.jsx';
 
+import '../css/App.css';
+
 const tractor = require('../images/tractor-72-194019.png');
 
 /**
  * Main app entrypoint for React.
- * @TODO determine which entry points I need and how to structure the header.
- * @TODO create a landing page for successful submissions.
- * @TODO create an account page with ability to manage rides.
  */
 class App extends Component {
 
   constructor(props) {
     super(props);
 
-    this.scrHeight = window.innerHeight;
-    this.scrWidth = window.innerWidth;
-
     this.state = {
-        isUserSignedIn: false
-    };
+        isUserSignedIn: false,
+        screenWidth: window.innerWidth,
+        screenHeight: window.innerHeight
+      };
+
+      this.updateWidth = this.updateWidth.bind(this);
   }
 
-  componentDidMount() {
-    this.signedInUser();
-  }
+    componentDidMount() {
+      this.signedInUser();
+      window.addEventListener("resize", this.updateWidth);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateWidth);
+    }
+
+    updateWidth() {
+        this.setState({
+            screenWidth: window.innerWidth
+        });
+    }
 
   /**
    * See if user is signed in.
@@ -84,8 +93,8 @@ class App extends Component {
               <img id="logo" src={tractor} className="App-logo" alt="logo" />
             </Link>
             <h2>JOYRIDE</h2>
-            <DropdownMenu width={this.scrWidth}/>
-            <div className="mainMenu">
+            <DropdownMenu width={this.state.screenWidth} isUserSignedIn={this.state.isUserSignedIn} />
+            <div className="mainMenu" hidden={this.state.screenWidth <= 415}>
               <NavLink className="menuOption" to="/myaccount" hidden={!this.state.isUserSignedIn}>
                 My Account
               </NavLink>
@@ -115,6 +124,7 @@ class App extends Component {
           <Route path="/myaccount" component={MyAccount} />
           <Route path="/editride" component={EditRide} />
         </div>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"></link>
       </Router>
       );
     }

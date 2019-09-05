@@ -35,11 +35,13 @@ html {
 }
 
 .App-header {
-  background-color: #123C69;
-  height: 150px;
-  padding: 20px;
-  color: white;
-  text-align: left;
+    background-color: #123C69;
+    height: 150px;
+    padding: 20px;
+    color: white;
+    text-align: left;
+    background-image: url(https://i.imgur.com/yGKdmgQ.jpg);
+    background-size: cover;
 }
 
 .AboutPage {
@@ -55,6 +57,7 @@ p.AboutPage {
 }
 
 .Listing {
+    display: flow-root;
   background-color: rgb(105, 146, 221);
   text-align: left;
   margin-left: 20%;
@@ -62,6 +65,14 @@ p.AboutPage {
   padding: 15px 30px;
   border-radius: 5px;
   margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.listitemDropdown {
+    list-style-type: none;
+    margin: 5px;
+    background: azure;
+    text-align: center;
 }
 
 .UserAccountContainer {
@@ -73,6 +84,7 @@ p.AboutPage {
   padding: 15px 30px;
   border-radius: 10px;
   margin-top: 2%;
+  display: flow-root;
 }
 
 .UserAccountFormInput {
@@ -87,6 +99,7 @@ p.AboutPage {
   background-color:  rgb(105, 146, 221);
   padding: 15px 30px;
   margin-top: 2%;
+  display: flow-root;
 }
 
 .LoginFormInput {
@@ -94,11 +107,18 @@ p.AboutPage {
 }
 
 input[type=submit] {
-  width:20%;
-  cursor: pointer;
-  border: none;
-  font-size: 20px;
-  font-family: 'Open Sans', sans-serif;
+    width: 20%;
+    cursor: pointer;
+    border: none;
+    font-size: 20px;
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    background-color: lightblue;
+}
+
+input[type=submit]:hover {
+    background-color: black;
+    color: lightblue;
 }
 
 .Form-Errors {
@@ -217,6 +237,7 @@ td#datestamp.RideEntryField {
   margin-right: 25%;
   margin-top: 2%;
   padding: 15px 30px;
+  display: flow-root;
 }
 
 h1.formInput {
@@ -259,20 +280,20 @@ label {
 }
 
 input, select {
-  margin: 0px 0px 15px 0px;
-	display: block;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	width: 100%;
-	padding: 8px;
-	border-radius: 6px;
-	-webkit-border-radius:6px;
-	-moz-border-radius:6px;
-	border: 2px solid #fff;
-	box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
-	-moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
-	-webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+    margin: 0px 0px 15px 0px;
+    display: block;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border: 2px solid #fff;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+    -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
 }
 
 #new-form-button {
@@ -308,8 +329,27 @@ input, select {
   font-weight: bold;
 }
 
+.dropdownMenu {
+    width: 100%;
+}
+
+.dropdown-menu-container {
+    float: right;
+    width: 100%;
+}
+
+.menuOptionMobile {
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    position: relative;
+    color: rgb(196, 141, 221);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .menuOption:hover {
-  color: rgb(75, 187, 84);
+    color: rgb(75, 187, 84);
 }
 
 .mainMenu {
@@ -363,4 +403,42 @@ input, select {
 @keyframes App-logo-move {
   from { transform: translate(-10px,15px); }
   to { transform: translate(90px,15px); }
+}
+
+@media screen and (max-width: 760px) {
+    .Listing {
+        margin: 0px;
+    }
+
+    p.AboutPage {
+        margin-left: 5%;
+        margin-right: 5%;
+        padding: 15px 30px;
+        text-align: left;
+    }
+
+    .UserAccountContainer {
+        margin: 0px;
+        width: auto;
+    }
+
+    input[type=submit] {
+        width: auto;
+    }
+
+    .LoginContainer {
+        width: auto;
+        margin: 0px;
+    }
+
+    .NewRideForm-container {
+        width: auto;
+        margin: 0px;
+    }
+
+    .searchFilter {
+        margin: 4px 2px;
+        text-align: center;
+        border-radius: 20px;
+    }
 }

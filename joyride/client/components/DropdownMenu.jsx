@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 /**
  * A dropdown menu to make the mobile version more appealing. TODO: add the NavLinks here as a vertical list.
@@ -39,7 +40,7 @@ class DropdownMenu extends Component {
   
     render() {
         console.log('width of scrn ',this.props.width);
-        if (this.props.width > 400) {
+        if (this.props.width > 415) {
             return ( null );
         } else {
             return (
@@ -48,9 +49,38 @@ class DropdownMenu extends Component {
                         Dropdown menu.
                     </button>
                     {this.state.dropdownVisible && (
-                        <div className="dropdown-menu">
-                        Drop it.
-                        </div>
+                        <nav className="dropdownMenu">
+                            <li className="listitemDropdown" hidden={!this.props.isUserSignedIn}>
+                                <Link className="menuOptionMobile" to="/myaccount" hidden={!this.props.isUserSignedIn}>
+                                    My Account
+                                </Link>
+                            </li>
+                            <li className="listitemDropdown" hidden={!this.props.isUserSignedIn}>
+                                <Link className="menuOptionMobile" to="/newRide" hidden={!this.props.isUserSignedIn}>
+                                    New Ride
+                                </Link>
+                            </li>
+                            <li className="listitemDropdown" hidden={this.props.isUserSignedIn}>
+                                <Link className="menuOptionMobile" to="/register">
+                                    Sign up
+                                </Link>
+                            </li>
+                            <li className="listitemDropdown">
+                                <Link className="menuOptionMobile" to="/about">
+                                    About me
+                                </Link>
+                            </li>
+                            <li className="listitemDropdown" hidden={this.props.isUserSignedIn}>
+                                <Link className="menuOptionMobile" to="/login" hidden={this.props.isUserSignedIn}>
+                                    Log in
+                                </Link>
+                            </li>
+                            <li className="listitemDropdown" hidden={!this.props.isUserSignedIn}>
+                                <Link className="menuOptionMobile" to="/logout" hidden={!this.props.isUserSignedIn}>
+                                    Log out
+                                </Link>
+                            </li>
+                        </nav>
                     )}
                 </div>
             );
