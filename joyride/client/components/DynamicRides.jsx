@@ -38,7 +38,7 @@ class DynamicRides extends Component {
                     rideGroups.push(<h1 key={startDate}>{startDate.getMonth()+1} / {startDate.getDate()}</h1>)
                 }
                 rideGroups.push(
-                    <RideEntry key={ride.key} rideID={ride.rideID} driverID={ride.driverID} departure={ride.departure} destination={ride.destination} date={ride.date} shouldShowEdit={this.props.shouldShowEdit}/>
+                    <RideEntry key={ride.key} rideID={ride.rideID} driverID={ride.driverID} departure={ride.departure} destination={ride.destination} date={ride.date} numberOfSeats={ride.numberOfSeats} price={ride.price} shouldShowEdit={this.props.shouldShowEdit}/>
                 );
             }
             return rideGroups;

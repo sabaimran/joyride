@@ -17,7 +17,8 @@ class RideEntry extends Component {
         }
 
         this.showDate = this.showDate.bind(this);
-        this.showEdit = this.showEdit.bind(this);
+        this.showButton = this.showButton.bind(this);
+        this.showPrice = this.showPrice.bind(this);
         this.handleEditRide = this.handleEditRide.bind(this);
         this.getUser(this.props.driverID);
     }
@@ -34,18 +35,46 @@ class RideEntry extends Component {
         const minutes = (date.getMinutes()<10 ? '0' : '')+date.getMinutes();
 
         return (
-            <div className="RideEntryField" id="datestamp">{hours}:{minutes}</div>
+            <td className="RideEntryField" id="datestamp">{hours}:{minutes}</td>
         );
     }
 
-    showEdit() {
+    /**
+     * Show the button (edit or book) of ride if applicable.
+     */
+    showButton() {
         if (this.state.shouldShowEdit) {
             return (
-                <button className="editButton" onClick={this.handleEditRide} type="button">Edit</button>
+                <td>
+                    <button className="editButton" onClick={this.handleEditRide} type="button">Edit</button>
+                </td>
             );
         } else {
             return null;
         }           
+    }
+
+    /**
+     * Render price of ride.
+     */
+    showPrice() {
+        if(this.props.price == 0) {
+            return(
+                <td>
+                    <p className="RideEntryFieldPrice">
+                        free
+                    </p>
+                </td>
+            );
+        } else {
+            return(
+                <td>
+                    <p className="RideEntryFieldPrice">
+                        ${this.props.price}
+                    </p>
+                </td>
+            )
+        }
     }
 
     handleEditRide() {
@@ -96,13 +125,31 @@ class RideEntry extends Component {
             )
         } else {
             return (
-                <div className="RideEntry">
-                    <this.showEdit/>
-                    <h1 className="RideEntryField">{this.state.user.firstname+" "+this.state.user.lastname}</h1>
-                    <this.showDate/>
-                    <div className="RideEntryField">Pickup: {this.props.departure}</div>
-                    <div className="RideEntryField">Drop-off: {this.props.destination}</div>
-                </div>
+                <table className="RideEntry">
+                    <tbody>
+                        <tr>
+                            <td className="RideEntryName">{this.state.user.firstname+" "+this.state.user.lastname}</td>
+                            <this.showDate/>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul className="RideEntryField">
+                                    <li className="RideEntryField">Pickup: {this.props.departure}</li>
+                                    <li className="RideEntryField">Drop-off: {this.props.destination}</li>
+                                </ul>
+                            </td>
+                            <this.showPrice />
+                        </tr>
+                        <tr>
+                            <td>
+                                <p className="RideEntryFieldNumber">
+                                    {this.props.numberOfSeats}
+                                </p>
+                            </td>
+                            <this.showButton/>
+                        </tr>
+                    </tbody>
+                </table>
             );
         }
     }

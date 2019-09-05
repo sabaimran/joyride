@@ -133,6 +133,7 @@ input[type=submit]:hover {
   border-radius: 12px;
   margin-bottom: 2%;
   box-shadow: 10px 10px 5px grey;
+  width: 100%;
 }
 
 #timestamp {
@@ -163,6 +164,7 @@ input[type=submit]:hover {
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 12px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .RideEntryField {
@@ -171,19 +173,56 @@ input[type=submit]:hover {
   line-height: 1.0em;
 }
 
-h1.RideEntryField {
-  display: inline-block;
+ul.RideEntryField {
+  counter-reset: list;
+  border-left: 2px solid lightgrey;
+  margin: 1em;
+  padding: 0;
 }
 
-div#datestamp {
+ul li.RideEntryField {
+  list-style: none;
+  margin: 0 0 2.5em 0;
+  padding: 0;
+}
+
+ul li.RideEntryField:before {
+  content: '';
+  display: -webkit-inline-box;
+  width: 2em;
+  height: 2em;
+  margin: -8px 0.5em -8px -17px;
+  border-radius: 50%;
+  background: lightgrey;
+}
+
+.RideEntryName {
+  padding: 0%;
+  padding-bottom: 8px;
+  line-height: 1.0em;
+  font-weight: 800;
+  font-size: x-large;
+}
+
+td#datestamp.RideEntryField {
   float: right;
   margin-block-start: 0.67em;
   margin-block-end: 0.67em;
-  font-size: 1.3em;
+  font-weight: 700;
+  font-size: x-large;
 }
 
-ul.RideEntry {
-  padding: 0px;
+.RideEntryFieldNumber {
+  padding: 0%;
+  padding-bottom: 8px;
+  line-height: 1.5em;
+}
+
+.RideEntryFieldPrice {
+  padding: 0%;
+  padding-bottom: 8px;
+  line-height: 1.5em;
+  text-align: right;
 }
 
 .NewRideForm {
@@ -212,15 +251,15 @@ input, select, textarea, option {
   font-family: 'Open Sans', sans-serif;
 }
 
-.editButton {
+button.editButton {
   background-color: rgb(139, 129, 228);
   color: black;
   border: none;
   padding: 10px 15px;
   text-align: center;
   text-decoration: none;
-  display: block;
-  font-size: 16px;
+  float: right;
+  font-size: large;
   cursor: pointer;
   border-radius: 12px;
 }
@@ -337,8 +376,8 @@ input, select {
 }
 
 .toggleButton:hover {
-  background-color: #4CAF50; /* Green */
-  color: white;
+  background-color: #AC3B61;
+  color: rgb(255, 255, 255);
 }
 
 .customCalendar {

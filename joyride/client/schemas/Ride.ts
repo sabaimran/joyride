@@ -14,7 +14,9 @@ const rideSchema = new Schema({
     date: Date,
     destination: String,
     departure: String,
-    category: String
+    category: String,
+    price: Number,
+    numberOfSeats: Number
 }, {
     collection: 'Rides'
 });
