@@ -102,7 +102,9 @@ class MyAccount extends Component {
                     driverID: ride.driverID,
                     departure: departurePlace,
                     destination: destinationPlace,
-                    date: ride.date
+                    date: ride.date,
+                    numberOfSeats: ride.numberOfSeats,
+                    price: ride.price
                 })
             }
 

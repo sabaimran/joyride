@@ -78,7 +78,9 @@ class Listings extends Component {
                     driverID: ride.driverID,
                     departure: departurePlace,
                     destination: destinationPlace,
-                    date: ride.date
+                    date: ride.date,
+                    price: ride.price,
+                    numberOfSeats: ride.numberOfSeats
                 })
             }
 

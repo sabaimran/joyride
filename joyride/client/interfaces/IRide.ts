@@ -6,5 +6,7 @@ export interface IRide {
     date: Date,
     destination: String,
     departure: String,
-    category: String
+    category: String,
+    price: number,
+    numberOfSeats: number
 }

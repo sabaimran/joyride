@@ -23,13 +23,16 @@ class NewRide extends Component {
             errorMessage: '',
             loggedin: true,
             driverID: '',
-            submitted: false
+            submitted: false,
+            price: 0,
+            numberOfSeats: 0
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleNumberChange = this.handleNumberChange.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
         this.Errors = this.Errors.bind(this);
 
@@ -86,6 +89,22 @@ class NewRide extends Component {
     }
 
     /**
+     * Handle change when input is a number type.
+     * @param {} event 
+     */
+    handleNumberChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        if (target.validity.valid) {
+            this.setState({
+                [name]: value
+            });
+        }
+    }
+
+    /**
      * Update category and departure/destination state when category is changed.
      * @param {} event 
      */
@@ -132,6 +151,10 @@ class NewRide extends Component {
                 this.setState({
                     errorMessage: "Need to fill in a name!"
                 });
+        } else if (this.state.numberOfSeats <= 0) {
+            this.setState({
+                errorMessage: "Number of seats must be greater than 0."
+            });
         } else {
             // Make the post request
             const uri = `http://localhost:${process.env.PORT}/ride`;
@@ -237,6 +260,9 @@ class NewRide extends Component {
                     <label className="NewRideFormInput">Last name</label>
                     <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} readOnly />
 
+                    <label className="NewRideFormInput">Number of Seats</label>
+                    <input type="text" name="numberOfSeats" pattern="[0-9]*" value={this.state.numberOfSeats} onChange={this.handleNumberChange} />
+
                     <label className="NewRideFormInput">Choose your category</label>
                     <select name="category" value={this.state.category} onChange={this.handleCategoryChange}>
                         <option value='ChicagoToChampaign'>Chicago to Champaign</option>
@@ -250,6 +276,9 @@ class NewRide extends Component {
                     <this.DynamicDropDownMenu stop="departure" />
                     <label className="NewRideFormInput">Pick your destination</label>
                     <this.DynamicDropDownMenu stop="destination" />
+
+                    <label className="NewRideFormInput">Price of Ride</label>
+                    <input type="text" name="price" pattern="[0-9]*" value={this.state.price} onChange={this.handleNumberChange} />
                     
                     <input className="NewRideFormInput" type="submit" value="Submit"/>
                 </form>
