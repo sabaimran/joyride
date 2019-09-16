@@ -229,6 +229,18 @@ td#datestamp.RideEntryField {
   font-family: 'Open Sans', sans-serif;
 }
 
+input[type=text].NewRideFormInput {
+  width: 85%;
+}
+
+select.NewRideFormInput {
+  width: 85%;
+}
+
+.NewRideTwoColumns {
+  width: 50%;
+}
+
 .NewRideForm-container {
   background-color: rgb(105, 146, 221);
   text-align: left;
@@ -238,6 +250,7 @@ td#datestamp.RideEntryField {
   margin-top: 2%;
   padding: 15px 30px;
   display: flow-root;
+  font-size: 20px;
 }
 
 h1.formInput {
