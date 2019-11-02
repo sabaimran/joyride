@@ -251,6 +251,7 @@ select.NewRideFormInput {
   padding: 15px 30px;
   display: flow-root;
   font-size: 20px;
+  border-radius: 10px;
 }
 
 h1.formInput {

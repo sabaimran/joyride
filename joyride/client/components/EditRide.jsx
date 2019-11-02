@@ -35,6 +35,7 @@ class EditRide extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleNumberChange = this.handleNumberChange.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
         this.Errors = this.Errors.bind(this);
 
@@ -101,6 +102,8 @@ class EditRide extends Component {
                 category: ride.category,
                 departure: ride.departure,
                 destination: ride.destination,
+                price: ride.price,
+                numberOfSeats: ride.numberOfSeats,
                 date: currentDate,
                 driverID: ride.driverID
             }, () => {
@@ -123,6 +126,22 @@ class EditRide extends Component {
         this.setState({
             [name]: value
         });
+    }
+
+    /**
+     * Handle change when input is a number type.
+     * @param {} event 
+     */
+    handleNumberChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        if (target.validity.valid) {
+            this.setState({
+                [name]: value
+            });
+        }
     }
 
     /**
@@ -248,7 +267,7 @@ class EditRide extends Component {
 
         if (this.state.submitted) {
             return (
-                <Redirect to="/login" />
+                <Redirect to="/myaccount" />
             )
         }
         return (
