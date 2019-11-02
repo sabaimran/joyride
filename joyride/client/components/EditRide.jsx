@@ -35,6 +35,7 @@ class EditRide extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleNumberChange = this.handleNumberChange.bind(this);
         this.DynamicDropDownMenu = this.DynamicDropDownMenu.bind(this);
         this.Errors = this.Errors.bind(this);
 
@@ -101,6 +102,8 @@ class EditRide extends Component {
                 category: ride.category,
                 departure: ride.departure,
                 destination: ride.destination,
+                price: ride.price,
+                numberOfSeats: ride.numberOfSeats,
                 date: currentDate,
                 driverID: ride.driverID
             }, () => {
@@ -123,6 +126,22 @@ class EditRide extends Component {
         this.setState({
             [name]: value
         });
+    }
+
+    /**
+     * Handle change when input is a number type.
+     * @param {} event 
+     */
+    handleNumberChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        if (target.validity.valid) {
+            this.setState({
+                [name]: value
+            });
+        }
     }
 
     /**
@@ -236,14 +255,10 @@ class EditRide extends Component {
     }
 
     /**
-     * A form for entering input to create a new ride entry in the database.
+     * A form for entering input to edit a ride entry in the database.
      */
     render() {
         console.log('this.state.loggedin: ', this.state.loggedin)
-        /**
-         * @TODO
-         * If no user is logged in, then redirect to the login screen (Or signup?).
-         */
         if (!this.state.loggedin) {
             return (
                 <Redirect to="/login"/>
@@ -252,7 +267,7 @@ class EditRide extends Component {
 
         if (this.state.submitted) {
             return (
-                <Redirect to="/login" />
+                <Redirect to="/myaccount" />
             )
         }
         return (
@@ -260,27 +275,56 @@ class EditRide extends Component {
                 <h1 className="formInput">Edit your ride</h1>
                 <this.Errors/>
                 <form className="NewRideForm" onSubmit={this.handleSubmit}>
-                    <label className="NewRideFormInput">First name</label>
-                    <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} readOnly />
-
-                    <label className="NewRideFormInput">Last name</label>
-                    <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} readOnly />
-
-                    <label className="NewRideFormInput">Choose your category</label>
-                    <select name="category" value={this.state.category} onChange={this.handleCategoryChange}>
-                        <option value='ChicagoToChampaign'>Chicago to Champaign</option>
-                        <option value='ChampaignToChicago'>Champaign to Chicago</option>
-                    </select>
-
-                    <label className="NewRideFormInput">Travel Date</label>
-                    <DatePicker className="customCalendar" name="date" selected={this.state.date} onChange={this.handleDateChange} showTimeInput timeInputLabel="Pickup time" minDate={new Date()}/>
-
-                    <label className="NewRideFormInput">Pick your departure</label>
-                    <this.DynamicDropDownMenu stop="departure" />
-                    <label className="NewRideFormInput">Pick your destination</label>
-                    <this.DynamicDropDownMenu stop="destination" />
-                    
-                    <input className="NewRideFormInput" type="submit" value="Submit"/>
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td colSpan="1" className="NewRideTwoColumns">
+                                    <label>First name</label>
+                                    <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} readOnly />
+                                </td>
+                                <td colSpan="1" className="NewRideTwoColumns">
+                                    <label>Last name</label>
+                                    <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} readOnly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan="2">
+                                    <label>Choose your category</label>
+                                    <select name="category" value={this.state.category} onChange={this.handleCategoryChange}>
+                                        <option value='ChicagoToChampaign'>Chicago to Champaign</option>
+                                        <option value='ChampaignToChicago'>Champaign to Chicago</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan="1">
+                                    <label>Pick your departure</label>
+                                    <this.DynamicDropDownMenu stop="departure" />
+                                </td>
+                                <td colSpan="1">
+                                    <label>Pick your destination</label>
+                                    <this.DynamicDropDownMenu stop="destination" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan="1">
+                                    <label>Number of Seats</label>
+                                    <input type="text" name="numberOfSeats" pattern="[0-9]*" value={this.state.numberOfSeats} onChange={this.handleNumberChange} />                                   
+                                </td>
+                                <td colSpan="1">
+                                    <label>Price of Ride</label>
+                                    <input type="text" name="price" pattern="[0-9]*" value={this.state.price} onChange={this.handleNumberChange} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan="2">
+                                    <label>Travel Date</label>
+                                    <DatePicker className="customCalendar" name="date" selected={this.state.date} onChange={this.handleDateChange} showTimeInput timeInputLabel="Pickup time" minDate={new Date()}/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="submit" value="Submit"/>
                 </form>
             </div>
         );
