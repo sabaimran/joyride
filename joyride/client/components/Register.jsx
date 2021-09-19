@@ -58,8 +58,9 @@ export default class Register extends Component {
             this.setState({
                 errorMessage: 'Must enter in a valid first and last name.'
             });
-        } else if (!this.state.email ||
-            !this.state.email.match(illinoisEmail)) {
+        } else if (!this.state.email 
+            // || !this.state.email.match(illinoisEmail)
+            ) {
             this.setState({
                 errorMessage: 'Must enter a valid @illinois.edu email address.'
             });

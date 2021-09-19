@@ -121,6 +121,7 @@ export default class UserController implements Controller {
                 const isCorrectPassword = await bcrypt.compare(loginData.password, founduser.password.toString());
                 if (isCorrectPassword) {
                     // Create a token and attach it to the header.
+                    console.log(founduser);
                     const tokenData = this.createToken(founduser.id);
                     console.log('set cookie');
                     response.setHeader('Set-Cookie', [this.createCookie(tokenData)]);

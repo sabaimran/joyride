@@ -83,8 +83,9 @@ class Login extends Component {
         var errorMessage = '';
 
         // First make sure appropriate data is passed in.
-        if (!this.state.email ||
-            !this.state.email.match(illinoisEmail)) {
+        if (!this.state.email 
+            //|| !this.state.email.match(illinoisEmail)
+            ) {
                 errorMessage = 'Must enter a valid @illinois.edu email address.';
         } else if (!this.state.password) {
             errorMessage = 'Enter in your password!';

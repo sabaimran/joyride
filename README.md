@@ -10,6 +10,7 @@ MONGO_USER={input}
 MONGO_PASSWORD={input}
 MONGO_PATH={input}
 PORT={input}
+PRIVATE_KEY={input}
 ``` 
 4. Run `yarn install` to install all dependencies.
 5. `npm run serve` to compile the client side code and start the server.
