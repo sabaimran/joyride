@@ -13,6 +13,7 @@
     "bcrypt": "^3.0.8",
     "config": "^3.3.1",
     "cookie-parser": "^1.4.5",
+    "css-loader": "^5.1.1",
     "dotenv": "^8.2.0",
     "ejs": "^2.7.4",
     "eslint": "^3.19.0",
@@ -76,7 +77,7 @@
     "check-types": "tsc",
     "tempbuild": "babel server --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline && node .\\lib\\basicserver.js",
     "makebabel": "babel server client --out-dir lib --extensions \".ts,.tsx,.js,.jsx,\" --source-maps inline",
-    "startserver": "node .\\lib\\fullserver.js",
+    "startserver": "node ./lib/fullserver.js",
     "serve": "npm run webpack && npm run makebabel && npm run startserver"
   }
 }

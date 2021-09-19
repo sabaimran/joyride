@@ -39,7 +39,6 @@ class DropdownMenu extends Component {
     }
   
     render() {
-        console.log('width of scrn ',this.props.width);
         if (this.props.width > 415) {
             return ( null );
         } else {

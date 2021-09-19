@@ -55,10 +55,10 @@ class App {
       MONGO_PATH,
     } = process.env;
 
-    
     const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`;
+    console.log(uri);
     // mongoose way
-    mongoose.connect(uri, {useNewUrlParser: true});
+    mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function() {
